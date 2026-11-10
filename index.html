@@ -374,7 +374,7 @@ const L10N={
    {k:'H5',n:'Ngoại vi & Poka-Yoke',a:'peri',s:['Đầu đọc mã 2D công nghiệp có giá gá bên cạnh trái bàn thao tác','2 súng vặn vít điện kiểm soát lực, tín hiệu OK/NG + bộ đếm vít','Balancer treo súng, cảm biến hiện diện trên đồ gá']},
    {k:'H6',n:'Tủ điện PLC/IO & cảnh báo',a:'plc',s:['PLC mini hoặc Remote I/O Ethernet','Đèn tháp 3 màu có còi, nút dừng khẩn cấp, Start/Reset','Tủ điện 24 VDC, CB, relay an toàn']},
    {k:'H7',n:'Khung bàn thao tác ESD & đồ gá',a:'jig',s:['Nhôm định hình 1800×900×850 mm, khung trên 2200 mm','Thảm ESD nối đất, kệ 5 tầng 30 hộp linh kiện (6×5), tấm chiếu trắng','Đồ gá định vị theo model, chốt và cảm biến']},
-   {k:'H8',n:'Máy cấp vít tự động (Auto Screw Feeder)',a:'feeder',s:['Bố trí trên mặt bàn bên phải, phía trước kệ linh kiện để thuận tiện lấy vít','Mâm rung cấp và định vị vít M3 liên tục vào cửa lấy vít','Cảm biến quang xác nhận vít sẵn sàng, tự ngắt rung chống kẹt vít']}
+   {k:'H8',n:'Máy cấp vít tự động kép ×2 (Dual Auto Screw Feeders)',a:'feeder',s:['Bố trí 2 máy cấp vít (Feeder 1 M3 & Feeder 2 M4) đặt cạnh nhau bên phải mặt bàn','Mâm rung cấp và định vị vít M3 liên tục vào cửa lấy vít','Cảm biến quang xác nhận vít sẵn sàng, tự ngắt rung chống kẹt vít']}
   ],
   sw:[
    {k:'S1',n:'Module chỉ dẫn người lắp ráp',s:['Soạn SOP không cần lập trình: ảnh tham chiếu → vị trí hiển thị → vùng nhận dạng → trình tự','Chiếu nội dung theo từng bước, video thao tác mẫu','Quản lý phiên bản SOP theo model, đăng nhập công nhân, giao diện Việt/Anh/Hàn']},
@@ -676,7 +676,7 @@ const binFront=id=>{const b=bins[id];return new V3(b.x,b.y+0.16,b.z+BD/2+0.10);}
 /* ---------------- projection panel, monitors ---------------- */
 const panelG=new THREE.Group(); panelG.position.set(0,1.75,-0.405); panelG.rotation.x=-0.10; scene.add(panelG);
 box(1.26,0.25,0.012,M.panel,0,0,0,panelG); box(1.28,0.02,0.02,M.aluDark,0,-0.13,-0.004,panelG);
-const texPanel=mkCanvas(1240,240);
+const texPanel=mkCanvas(2480,480);
 const panelProj=new THREE.Mesh(new THREE.PlaneGeometry(1.24,0.24),new THREE.MeshBasicMaterial({map:texPanel.tex,transparent:true,toneMapped:false,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2}));
 panelProj.position.z=0.0065; panelG.add(panelProj);
 
@@ -732,49 +732,63 @@ const towerSeg={};
 cyl(0.034,0.012,M.dark,0.97,1.837,-0.43);
 
 /* ---------------- screwdrivers + balancers ---------------- */
-/* ---------------- automatic screw feeder (top-right corner of tabletop) ---------------- */
-const feederG=new THREE.Group();
-feederG.position.set(0.64,TOPY,0.05);
-scene.add(feederG);
-// Main chassis (ESD dark grey)
-const fBody=box(0.13,0.11,0.17,std(0x2d3436,{roughness:.4,metalness:.3}),0,0.055,0,feederG);
-edges(fBody,0x111111,.45);
-// Rear vibrating hopper chamber
-box(0.11,0.055,0.08,std(0x1e272e,{roughness:.5,metalness:.4}),0,0.13,-0.03,feederG);
-// Transparent acrylic hopper lid
-box(0.106,0.006,0.076,new THREE.MeshStandardMaterial({color:0x88ccff,transparent:true,opacity:.45,roughness:.1}),0,0.161,-0.03,feederG);
-// Loose M3 screws inside hopper
-for(let k=0;k<10;k++){
-  const sm=cyl(0.0025,0.009,M.steel,(rnd()-.5)*0.07,0.12+rnd()*0.015,-0.03+(rnd()-.5)*0.04,feederG,6);
-  sm.rotation.set(rnd()*2,rnd()*3,rnd()*2);
+/* ---------------- automatic screw feeders: dual setup (Feeder 1 left, Feeder 2 right) ---------------- */
+function createScrewFeeder(x, labelText, screwRadius, screwLen, isLeft){
+  const g=new THREE.Group();
+  g.position.set(x,TOPY,0.05);
+  scene.add(g);
+  // Main chassis (ESD dark grey)
+  const fBody=box(0.13,0.11,0.17,std(0x2d3436,{roughness:.4,metalness:.3}),0,0.055,0,g);
+  edges(fBody,0x111111,.45);
+  // Rear vibrating hopper chamber
+  box(0.11,0.055,0.08,std(0x1e272e,{roughness:.5,metalness:.4}),0,0.13,-0.03,g);
+  // Transparent acrylic hopper lid
+  box(0.106,0.006,0.076,new THREE.MeshStandardMaterial({color:0x88ccff,transparent:true,opacity:.45,roughness:.1}),0,0.161,-0.03,g);
+  // Loose screws inside hopper
+  for(let k=0;k<10;k++){
+    const sm=cyl(screwRadius,screwLen,M.steel,(rnd()-.5)*0.07,0.12+rnd()*0.015,-0.03+(rnd()-.5)*0.04,g,6);
+    sm.rotation.set(rnd()*2,rnd()*3,rnd()*2);
+  }
+  // Polished stainless steel vibrating track / rail
+  const fTrack=box(0.018,0.012,0.10,M.steel,0,0.10,0.025,g);
+  fTrack.rotation.x=0.08;
+  for(let k=0;k<4;k++){ cyl(screwRadius*1.1,screwLen*0.8,M.steel,0,0.115-k*0.004,0.005+k*0.018,g,6); }
+  // Front pick-up block
+  box(0.038,0.032,0.032,std(0x0984e3,{roughness:.35}),0,0.086,0.075,g);
+  // Upright screw ready at pick-up mouth
+  const screwReady=new THREE.Group();
+  screwReady.position.set(0,0.104,0.082);
+  cyl(screwRadius*1.8,screwLen*0.4,M.screw,0,0.004,0,screwReady,10);
+  cyl(screwRadius,screwLen,M.steel,0,-0.002,0,screwReady,8);
+  g.add(screwReady);
+  // Pick sensor LED indicator
+  const led=new THREE.Mesh(new THREE.SphereGeometry(0.0045,10,8),new THREE.MeshBasicMaterial({color:0x2ed573,toneMapped:false}));
+  led.position.set(0.026,0.104,0.075);
+  g.add(led);
+  // Front label
+  const fLabel=new THREE.Mesh(new THREE.PlaneGeometry(0.085,0.022),new THREE.MeshBasicMaterial({map:(()=>{
+    const C=mkCanvas(220,64),c=C.ctx;
+    c.fillStyle='#0f172a';c.fillRect(0,0,220,64);
+    c.fillStyle=isLeft?'#22c55e':'#38bdf8';c.font=`700 24px ${FD}`;c.fillText(labelText,10,42);
+    C.tex.needsUpdate=true;return C.tex;
+  })(),toneMapped:false}));
+  fLabel.position.set(0,0.038,0.086);
+  g.add(fLabel);
+  // Power rocker switch
+  box(0.014,0.018,0.008,M.red,-0.042,0.038,0.087,g);
+  return {g,screwReady,led};
 }
-// Polished stainless steel vibrating track / rail
-const fTrack=box(0.018,0.012,0.10,M.steel,0,0.10,0.025,feederG);
-fTrack.rotation.x=0.08;
-for(let k=0;k<4;k++){ cyl(0.003,0.007,M.steel,0,0.115-k*0.004,0.005+k*0.018,feederG,6); }
-// Front pick-up block
-box(0.038,0.032,0.032,std(0x0984e3,{roughness:.35}),0,0.086,0.075,feederG);
-// Upright screw ready at pick-up mouth
-const feederScrewReady=new THREE.Group();
-feederScrewReady.position.set(0,0.104,0.082);
-cyl(0.0045,0.0035,M.screw,0,0.004,0,feederScrewReady,10);
-cyl(0.0025,0.009,M.steel,0,-0.002,0,feederScrewReady,8);
-feederG.add(feederScrewReady);
-// Pick sensor LED indicator (green = ready, amber = picking)
-const feederLed=new THREE.Mesh(new THREE.SphereGeometry(0.0045,10,8),new THREE.MeshBasicMaterial({color:0x2ed573,toneMapped:false}));
-feederLed.position.set(0.026,0.104,0.075);
-feederG.add(feederLed);
-// Front label
-const fLabel=new THREE.Mesh(new THREE.PlaneGeometry(0.075,0.022),new THREE.MeshBasicMaterial({map:(()=>{
-  const C=mkCanvas(200,64),c=C.ctx;
-  c.fillStyle='#0f172a';c.fillRect(0,0,200,64);
-  c.fillStyle='#22c55e';c.font=`700 28px ${FD}`;c.fillText('FEEDER · M3',12,42);
-  C.tex.needsUpdate=true;return C.tex;
-})(),toneMapped:false}));
-fLabel.position.set(0,0.038,0.086);
-feederG.add(fLabel);
-// Power rocker switch
-box(0.014,0.018,0.008,M.red,-0.042,0.038,0.087,feederG);
+
+// Feeder 1 (Trái): vị trí lấy vít chính
+const f1Obj=createScrewFeeder(0.55,'FEEDER 1 · M3',0.0025,0.009,true);
+const feederG=f1Obj.g;
+const feederScrewReady=f1Obj.screwReady;
+const feederLed=f1Obj.led;
+
+// Feeder 2 (Phải): máy cấp vít thứ hai đặt bên phải
+const f2Obj=createScrewFeeder(0.72,'FEEDER 2 · M4',0.0032,0.012,false);
+const feeder2G=f2Obj.g;
+
 const FEEDER_PICK=new V3(feederG.position.x,TOPY+0.11,feederG.position.z+0.082);
 
 function makeDriver(){
@@ -1089,31 +1103,73 @@ function drawProd(st){
   }
   c.shadowBlur=0; T.tex.needsUpdate=true;
 }
-function binPx(id){const b=bins[id];return (b.x+0.62)/1.24*1240;}
+function binPx(id){const b=bins[id];return (b.x+0.62)/1.24*texPanel.w;}
 function drawPanel(st){
-  const T=texPanel,c=T.ctx,i=st.i; const ph=st.error?Math.floor(performance.now()/250)%2:0;
+  const T=texPanel,c=T.ctx,W=T.w,H=T.h,i=st.i; const ph=st.error?Math.floor(performance.now()/250)%2:0;
   const sig=[i,st.woLoaded,st.error,ph,st.bin.B2,st.inspected,st.screwsDone,sim.cycles].join('|'); if(sig===T.sig) return; T.sig=sig;
-  c.clearRect(0,0,T.w,T.h);
-  const BL='#0a5bb0',GR='#0c9a50',RD='#d3271d',INK='#13202d';
-  c.fillStyle='rgba(10,91,176,.08)';c.fillRect(0,0,T.w,T.h);
-  c.fillStyle=BL;c.fillRect(0,0,T.w,10);
+  c.clearRect(0,0,W,H);
+  const BL='#004b99',GR='#059669',RD='#dc2626',INK='#0f172a',MUTED='#475569';
+  // Crisp card background with high contrast
+  c.fillStyle='#f8fafc';c.fillRect(0,0,W,H);
+  // Top blue border band
+  c.fillStyle=BL;c.fillRect(0,0,W,16);
+  // Bottom subtle frame line
+  c.fillStyle='#cbd5e1';c.fillRect(0,H-10,W,10);
+  
   const X=L10N[LANG].panel;
-  c.font=`700 34px ${FD}`;c.fillStyle=BL;c.fillText(X.station,24,58);
-  c.font=`600 22px ${FM}`;c.fillStyle=INK;c.fillText(st.woLoaded?'WO-261026-0153 · HX-BR200 · SN '+serial():X.waiting,24,92);
   let msg='',col=INK;
   if(i===0) msg=st.woLoaded?X.loaded:X.scan;
   if(i===1||i===2){
-    const tx=binPx('B2'); const okB2=st.bin.B2==='ok';
-    c.fillStyle=okB2?GR:GR; arrow(c,tx,110,tx,228,16,okB2?GR:GR);
-    c.font=`700 40px ${FD}`;c.fillStyle=GR;c.fillText(okB2?'B2 ✓':'B2',tx+34,200);
-    if(st.error){ const ex=binPx('B3'); arrow(c,ex,110,ex,228,16,ph?RD:'#ff8a80'); c.fillStyle=RD;c.font=`700 40px ${FD}`;c.fillText(X.b3wrong,ex+34,200); }
-    msg=st.error?X.wrong:(okB2?X.picked:X.pick); col=st.error?RD:GR;
+    msg=st.error?X.wrong:(st.bin.B2==='ok'?X.picked:X.pick); col=st.error?RD:GR;
   }
   if(i===3) {msg=X.place;col=BL;}
   if(i===4) {msg=X.screw(st.screwsDone);col=BL;}
   if(i===5) {msg=st.inspected?X.passed:X.inspect;col=st.inspected?GR:BL;}
   if(i===6) {msg=X.done;col=GR;}
-  c.font=`700 46px ${FD}`;c.fillStyle=col; c.textAlign='right'; c.fillText(msg,T.w-28,72); c.textAlign='left';
+
+  const hasArrow=(i===1||i===2);
+  if(!hasArrow){
+    // Perfectly vertically & horizontally balanced layout for steps 0, 3, 4, 5, 6
+    // Left: Station title + WO info + Subtitle
+    c.fillStyle=BL;c.font=`700 52px ${FD}`;
+    c.fillText(X.station,52,185);
+    c.fillStyle=INK;c.font=`600 34px ${FM}`;
+    c.fillText(st.woLoaded?'WO-261026-0153 · Model: HX-BR200 · SN '+serial():X.waiting,52,260);
+    c.fillStyle=MUTED;c.font=`500 26px ${FD}`;
+    c.fillText('HỆ THỐNG CHỈ DẪN LẮP RÁP BẰNG HÌNH CHIẾU & AI (PAS)',52,325);
+    
+    // Right: Step status message vertically centered
+    c.textAlign='right';
+    c.font=`700 58px ${FD}`;c.fillStyle=col;
+    c.fillText(msg,W-52,215);
+    c.font=`600 32px ${FM}`;c.fillStyle=MUTED;
+    c.fillText(`BƯỚC ${st.i+1}/7 · TIẾN ĐỘ CHU TRÌNH`,W-52,285);
+    c.textAlign='left';
+  } else {
+    // Balanced layout for Steps 1 & 2 (with downward pointer arrow to bin B2)
+    // Left: Station header
+    c.fillStyle=BL;c.font=`700 46px ${FD}`;
+    c.fillText(X.station,52,115);
+    c.fillStyle=INK;c.font=`600 30px ${FM}`;
+    c.fillText(st.woLoaded?'WO-261026-0153 · HX-BR200 · SN '+serial():X.waiting,52,170);
+    
+    // Right: Status
+    c.textAlign='right';
+    c.font=`700 52px ${FD}`;c.fillStyle=col;
+    c.fillText(msg,W-52,135);
+    c.textAlign='left';
+    
+    // Downward arrow to bin B2
+    const tx=binPx('B2'); const okB2=st.bin.B2==='ok';
+    arrow(c,tx,200,tx,450,26,okB2?GR:GR);
+    c.font=`700 54px ${FD}`;c.fillStyle=GR;c.fillText(okB2?'Ô B2 ✓':'Ô B2 (BR-02)',tx+45,360);
+    
+    if(st.error){
+      const ex=binPx('B3');
+      arrow(c,ex,200,ex,450,26,ph?RD:'#ff8a80');
+      c.fillStyle=RD;c.font=`700 54px ${FD}`;c.fillText(X.b3wrong,ex+45,360);
+    }
+  }
   T.tex.needsUpdate=true;
 }
 function fmtClock(sec){sec=Math.floor(sec);const h=Math.floor(sec/3600)%24,m=Math.floor(sec/60)%60,s=sec%60;return [h,m,s].map(v=>String(v).padStart(2,'0')).join(':');}
@@ -1174,11 +1230,14 @@ function drawLive(st,now){
   const mz=z=>wy0+(z+0.10)/0.55*(H-wy0-24);
   c.strokeStyle='#3d5a48';c.lineWidth=2;c.strokeRect(mx(JIG.x-0.2),mz(JIG.z-0.15),mx(JIG.x+0.2)-mx(JIG.x-0.2),mz(JIG.z+0.15)-mz(JIG.z-0.15));
   c.fillStyle='#55705f';c.font=`500 14px ${FM}`;c.fillText('JIG',mx(JIG.x-0.19),mz(JIG.z-0.15)+18);
-  // Auto Screw Feeder on live schematic
+  // Dual Auto Screw Feeders on live schematic
   const fz=mz(0.05);
-  c.fillStyle='#203347';c.fillRect(mx(0.56),fz-16,mx(0.72)-mx(0.56),32);
-  c.strokeStyle='#3880e0';c.lineWidth=1.5;c.strokeRect(mx(0.56),fz-16,mx(0.72)-mx(0.56),32);
-  c.fillStyle='#85b6ff';c.font=`600 11px ${FM}`;c.fillText('FEEDER',mx(0.575),fz+4);
+  c.fillStyle='#203347';c.fillRect(mx(0.485),fz-16,mx(0.615)-mx(0.485),32);
+  c.strokeStyle='#3880e0';c.lineWidth=1.5;c.strokeRect(mx(0.485),fz-16,mx(0.615)-mx(0.485),32);
+  c.fillStyle='#85b6ff';c.font=`600 10px ${FM}`;c.fillText('FEEDER 1',mx(0.50),fz+4);
+  c.fillStyle='#203347';c.fillRect(mx(0.655),fz-16,mx(0.785)-mx(0.655),32);
+  c.strokeStyle='#3880e0';c.lineWidth=1.5;c.strokeRect(mx(0.655),fz-16,mx(0.785)-mx(0.655),32);
+  c.fillStyle='#85b6ff';c.font=`600 10px ${FM}`;c.fillText('FEEDER 2',mx(0.67),fz+4);
   c.fillStyle='#d9e2ea';c.fillRect(mx(-0.88),mz(0.11),mx(-0.68)-mx(-0.88),mz(0.39)-mz(0.11));
   const handPt=(p)=>{ if(p.z<-0.12){ let best=null,bd=9; for(const id in bins){const d=binOpen(id).distanceTo(p);if(d<bd){bd=d;best=id;}} const b=bins[best];const ri='ABCDE'.indexOf(best[0]); return [mx(b.x),54+ri*28+12]; } return [mx(p.x),mz(Math.min(p.z,0.44))]; };
   [['L',arms.L.W||st.L],['R',arms.R.W||st.R]].forEach(([k,p])=>{ if(!p) return; const [x,y]=handPt(p);
@@ -1277,7 +1336,7 @@ const ANCHORS={
   peri:{k:'H5',p:new V3(0.77,1.56,0.205),view:[[1.6,1.7,1.4],[0.45,1.2,0.1]]},
   plc:{k:'H6',p:new V3(0.97,1.86,-0.43),view:[[1.9,1.4,1.5],[0.6,1.0,-0.1]]},
   jig:{k:'H7',p:new V3(0.18,PY+0.03,0.30),view:[[0.75,1.45,0.95],[0.15,0.92,0.12]]},
-  feeder:{k:'H8',p:new V3(0.64,TOPY+0.16,0.05),view:[[1.15,1.45,0.45],[0.55,0.95,0.05]]},
+  feeder:{k:'H8',p:new V3(0.635,TOPY+0.16,0.05),view:[[1.25,1.45,0.45],[0.635,0.95,0.05]]},
   mes:{k:'MES',p:new V3(-0.55,0.54,0.03),view:[[-0.58,0.65,0.88],[-0.55,0.38,-0.05]],server:true}
 };
 const labelsEl=$('labels'); const labels=[];
