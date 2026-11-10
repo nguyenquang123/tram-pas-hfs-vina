@@ -1,7 +1,7 @@
 # Trạm PAS (Projection Assembly System) · HFS VINA
 
 > **Đơn vị phụ trách:** HFS VINA – Innovation Team  
-> **Số bản vẽ:** `HFS-PAS-2026-01` (Rev A · Concept)  
+> **Số bản vẽ:** `HFS-PAS-2026-01` (Rev01 Concept · TheQuang)  
 > **Kích thước tiêu chuẩn:** 1800 × 900 × 2200 mm  
 
 ---

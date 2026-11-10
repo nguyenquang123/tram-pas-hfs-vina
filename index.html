@@ -53,7 +53,7 @@ h1 .pas{color:var(--accent)}
 .tb-grid div:nth-child(2n){border-right:0}
 .tb-grid div:nth-last-child(-n+2){border-bottom:0}
 .tb-grid dt{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-.tb-grid dd{margin:2px 0 0;font-family:var(--f-mono);font-size:13px;font-variant-numeric:tabular-nums}
+.tb-grid dd{margin:2px 0 0;font-family:var(--f-mono);font-size:13px;line-height:1.35;font-variant-numeric:tabular-nums}
 @media (max-width:760px){.tb{grid-template-columns:1fr}.tb-grid{border-left:0;border-top:1px solid var(--line)}}
 
 /* workspace */
@@ -161,8 +161,8 @@ h1 .pas{color:var(--accent)}
 .hw-item ul{margin:4px 0 0;padding-left:16px;color:var(--muted);font-size:12.5px}
 .hw-item li{margin:1px 0}
 .arch{width:100%;height:auto;display:block}
-.arch text{font-family:var(--f-body);font-size:10.5px;fill:var(--fg)}
-.arch .lab{fill:var(--muted);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase}
+.arch text{font-family:var(--f-body);font-size:10.5px;fill:var(--fg);font-weight:500}
+.arch .lab{fill:var(--muted);font-size:8.5px;letter-spacing:normal;text-transform:uppercase}
 .arch .bx{fill:var(--surface-2);stroke:var(--line)}
 .arch .core{fill:var(--accent-soft);stroke:var(--accent)}
 .arch .mes{fill:color-mix(in srgb,var(--proj) 14%,var(--surface));stroke:var(--proj)}
@@ -177,7 +177,7 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
   <header class="tb">
     <div class="tb-main">
       <div class="tb-top">
-        <p class="eyebrow" data-t="eyebrow">HFS VINA · Innovation Team – Smart Assembly System</p>
+        <p class="eyebrow" data-t="eyebrow">HFS VINA · Innovation Team – Project Assembly System</p>
         <div class="lang" role="group" aria-label="Ngôn ngữ / 언어">
           <button type="button" data-lang="vi" lang="vi" aria-pressed="true">Tiếng Việt</button>
           <button type="button" data-lang="ko" lang="ko" aria-pressed="false">한국어</button>
@@ -188,7 +188,7 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
     </div>
     <dl class="tb-grid">
       <div><dt data-t="dwg">Số bản vẽ</dt><dd>HFS-PAS-2026-01</dd></div>
-      <div><dt data-t="rev">Phiên bản</dt><dd>Rev A · Concept</dd></div>
+      <div><dt data-t="rev">Phiên bản</dt><dd>Rev01 Concept<br><span style="font-size:11px;opacity:0.85;font-weight:600">TheQuang</span></dd></div>
       <div><dt data-t="date">Ngày</dt><dd data-t="dateVal">26/10/2026</dd></div>
       <div><dt data-t="size">Kích thước trạm</dt><dd>1800×900×2200 mm</dd></div>
     </dl>
@@ -265,32 +265,39 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
 
       <div class="pane" id="p-sw" role="tabpanel" aria-labelledby="t-sw" hidden>
         <h3 data-t="swH">Luồng dữ liệu trong trạm</h3>
-        <svg class="arch" viewBox="0 0 360 330" role="img" aria-label="Sơ đồ luồng dữ liệu: thiết bị đầu vào vào Step Engine và AI Vision, điều khiển máy chiếu, HMI, PLC, ghi hồ sơ và gửi MES/SPC" data-t-aria="ariaArch">
+        <svg class="arch" viewBox="0 0 380 334" role="img" aria-label="Sơ đồ luồng dữ liệu: thiết bị đầu vào vào Step Engine và AI Vision, điều khiển máy chiếu, HMI, PLC, ghi hồ sơ và gửi MES/SPC" data-t-aria="ariaArch">
           <defs><marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path class="ah" d="M0 0L8 4L0 8z"/></marker></defs>
-          <text class="lab" x="10" y="14" data-t="aIn">Đầu vào</text>
-          <rect class="bx" x="8" y="22" width="104" height="30" rx="5"/><text x="18" y="41" data-t="aCam">Camera AI ×2</text>
-          <rect class="bx" x="8" y="60" width="104" height="30" rx="5"/><text x="18" y="79" data-t="aReader">Đầu đọc mã 2D</text>
-          <rect class="bx" x="8" y="98" width="104" height="30" rx="5"/><text x="18" y="117" data-t="aDriver">Súng vặn vít</text>
-          <rect class="bx" x="8" y="136" width="104" height="30" rx="5"/><text x="18" y="155" data-t="aJigSensor">Cảm biến đồ gá</text>
-          <text class="lab" x="140" y="14" data-t="aSw">Phần mềm PAS</text>
-          <rect class="core" x="138" y="22" width="104" height="54" rx="6"/><text x="148" y="44">S2 · AI Vision</text><text x="148" y="62" class="lab" data-t="aS2sub">tay · vít · mẫu chuẩn</text>
-          <rect class="core" x="138" y="96" width="104" height="70" rx="6"/><text x="148" y="118">S1 · Step Engine</text><text x="148" y="136" class="lab" data-t="aS1sub1">SOP · trình tự</text><text x="148" y="152" class="lab" data-t="aS1sub2">khóa bước khi lỗi</text>
-          <text class="lab" x="268" y="14" data-t="aOut">Đầu ra</text>
-          <rect class="bx" x="266" y="22" width="86" height="30" rx="5"/><text x="276" y="41" data-t="aProj">Máy chiếu</text>
-          <rect class="bx" x="266" y="60" width="86" height="30" rx="5"/><text x="276" y="79" data-t="aHmi">HMI 21,5"</text>
-          <rect class="bx" x="266" y="98" width="86" height="44" rx="5"/><text x="276" y="117" data-t="aPlc">PLC · đèn tháp</text><text x="276" y="133" class="lab" data-t="aPlcSub">còi · khóa</text>
-          <rect class="core" x="138" y="200" width="104" height="44" rx="6"/><text x="148" y="219" data-t="aS3">S3 · Truy xuất</text><text x="148" y="235" class="lab" data-t="aS3sub">hồ sơ theo serial</text>
-          <rect class="mes" x="138" y="276" width="104" height="44" rx="6"/><text x="148" y="295">MES / SPC HFS</text><text x="148" y="311" class="lab">REST · SQL · OPC UA</text>
-          <path class="ln" d="M112 37H138" marker-end="url(#ah)"/>
-          <path class="ln" d="M112 75H126V120H138" marker-end="url(#ah)"/>
-          <path class="ln" d="M112 113H126" />
-          <path class="ln" d="M112 151H126V140H138" marker-end="url(#ah)"/>
+          <!-- Col 1: Đầu vào -->
+          <text class="lab" x="8" y="14" data-t="aIn">Đầu vào</text>
+          <rect class="bx" x="6" y="22" width="100" height="30" rx="5"/><text x="56" y="41" text-anchor="middle" data-t="aCam">Camera AI ×2</text>
+          <rect class="bx" x="6" y="60" width="100" height="30" rx="5"/><text x="56" y="79" text-anchor="middle" data-t="aReader">Đầu đọc mã 2D</text>
+          <rect class="bx" x="6" y="98" width="100" height="30" rx="5"/><text x="56" y="117" text-anchor="middle" data-t="aDriver">Súng vặn vít</text>
+          <rect class="bx" x="6" y="136" width="100" height="30" rx="5"/><text x="56" y="155" text-anchor="middle" data-t="aJigSensor">Cảm biến đồ gá</text>
+
+          <!-- Col 2: Phần mềm PAS & MES -->
+          <text class="lab" x="126" y="14" data-t="aSw">Phần mềm PAS</text>
+          <rect class="core" x="124" y="22" width="132" height="54" rx="6"/><text x="190" y="43" text-anchor="middle" font-weight="600">S2 · AI Vision</text><text x="190" y="61" text-anchor="middle" class="lab" data-t="aS2sub">tay · vít · mẫu chuẩn</text>
+          <rect class="core" x="124" y="96" width="132" height="72" rx="6"/><text x="190" y="117" text-anchor="middle" font-weight="600">S1 · Step Engine</text><text x="190" y="135" text-anchor="middle" class="lab" data-t="aS1sub1">SOP · trình tự</text><text x="190" y="151" text-anchor="middle" class="lab" data-t="aS1sub2">khóa bước khi lỗi</text>
+          <rect class="core" x="124" y="200" width="132" height="46" rx="6"/><text x="190" y="220" text-anchor="middle" font-weight="600" data-t="aS3">S3 · Truy xuất</text><text x="190" y="236" text-anchor="middle" class="lab" data-t="aS3sub">hồ sơ theo serial</text>
+          <rect class="mes" x="124" y="276" width="132" height="46" rx="6"/><text x="190" y="296" text-anchor="middle" font-weight="600">MES / SPC HFS</text><text x="190" y="312" text-anchor="middle" class="lab">REST · SQL · OPC UA</text>
+
+          <!-- Col 3: Đầu ra -->
+          <text class="lab" x="278" y="14" data-t="aOut">Đầu ra</text>
+          <rect class="bx" x="276" y="22" width="98" height="30" rx="5"/><text x="325" y="41" text-anchor="middle" data-t="aProj">Máy chiếu</text>
+          <rect class="bx" x="276" y="60" width="98" height="30" rx="5"/><text x="325" y="79" text-anchor="middle" data-t="aHmi">HMI 21,5"</text>
+          <rect class="bx" x="276" y="98" width="98" height="46" rx="5"/><text x="325" y="117" text-anchor="middle" data-t="aPlc">PLC · đèn tháp</text><text x="325" y="133" text-anchor="middle" class="lab" data-t="aPlcSub">còi · khóa</text>
+
+          <!-- Connectors -->
+          <path class="ln" d="M106 37H124" marker-end="url(#ah)"/>
+          <path class="ln" d="M106 75H115V120H124" marker-end="url(#ah)"/>
+          <path class="ln" d="M106 113H115"/>
+          <path class="ln" d="M106 151H115V140H124" marker-end="url(#ah)"/>
           <path class="ln" d="M190 76V96" marker-end="url(#ah)"/>
-          <path class="ln" d="M242 120H254V37H266" marker-end="url(#ah)"/>
-          <path class="ln" d="M254 75H266" marker-end="url(#ah)"/>
-          <path class="ln" d="M254 120H266" marker-end="url(#ah)"/>
-          <path class="ln" d="M190 166V200" marker-end="url(#ah)"/>
-          <path class="ln" d="M190 244V276" marker-end="url(#ah)"/>
+          <path class="ln" d="M256 120H266V37H276" marker-end="url(#ah)"/>
+          <path class="ln" d="M266 75H276" marker-end="url(#ah)"/>
+          <path class="ln" d="M266 120H276" marker-end="url(#ah)"/>
+          <path class="ln" d="M190 168V200" marker-end="url(#ah)"/>
+          <path class="ln" d="M190 246V276" marker-end="url(#ah)"/>
         </svg>
         <ul class="hw" id="swList"></ul>
         <p class="note" data-t="note">Toàn bộ suy luận AI chạy tại IPC của trạm (on-premise), không phụ thuộc internet. Dữ liệu chỉ đi ra mạng nội bộ HFS tới MES/SPC.</p>
@@ -313,7 +320,7 @@ const L10N={
  vi:{
   dec:',', sample:'ăâđ', title:'Trạm PAS HFS VINA',
   ui:{
-   eyebrow:'HFS VINA · Innovation Team – Smart Assembly System', h1:' · Trạm lắp ráp chiếu sáng có AI kiểm soát',
+   eyebrow:'HFS VINA · Innovation Team – Project Assembly System', h1:' · Trạm lắp ráp chiếu sáng có AI kiểm soát',
    sub:'Mô hình 3D trạm lắp ráp chỉ dẫn bằng máy chiếu, camera AI theo dõi thao tác tay, súng vặn vít kiểm soát lực và truy xuất dữ liệu về MES/SPC. Kéo để xoay, cuộn hoặc chụm hai ngón để phóng to.',
    dwg:'Số bản vẽ', rev:'Phiên bản', date:'Ngày', dateVal:'26/10/2026', size:'Kích thước trạm',
    ariaStage:'Mô hình 3D và mô phỏng', ariaTower:'Trạng thái đèn tháp', ariaViews:'Góc nhìn', ariaModel:'Mô hình 3D trạm PAS',
@@ -406,7 +413,7 @@ const L10N={
  ko:{
   dec:'.', sample:'가나다', title:'PAS 스테이션 HFS VINA',
   ui:{
-   eyebrow:'HFS VINA · Innovation Team – Smart Assembly System', h1:' · AI 감시형 프로젝션 조립 스테이션',
+   eyebrow:'HFS VINA · Innovation Team – Project Assembly System', h1:' · AI 감시형 프로젝션 조립 스테이션',
    sub:'프로젝터로 작업을 안내하고, AI 카메라가 손동작을 추적하며, 토크 제어 전동 드라이버와 MES/SPC 데이터 추적을 갖춘 조립 스테이션의 3D 모델입니다. 드래그로 회전, 스크롤 또는 두 손가락 핀치로 확대할 수 있습니다.',
    dwg:'도면 번호', rev:'리비전', date:'날짜', dateVal:'2026-10-26', size:'스테이션 크기',
    ariaStage:'3D 모델 및 시뮬레이션', ariaTower:'타워램프 상태', ariaViews:'시점', ariaModel:'PAS 스테이션 3D 모델',
@@ -1124,7 +1131,7 @@ function drawHMI(st){
     c.fillStyle=cur?(st.error?'#3a1513':'#123a63'):'#122130';rr(c,16,y,420,48,8);c.fill();
     c.beginPath();c.arc(44,y+24,15,0,Math.PI*2);c.fillStyle=done?'#1fae5b':cur?(st.error?'#e0352b':'#2f8cff'):'#2a3b4d';c.fill();
     c.fillStyle='#fff';c.font=`700 19px ${FD}`;c.textAlign='center';c.fillText(done?'✓':String(k+1),44,y+31);c.textAlign='left';
-    c.fillStyle=cur?'#fff':'#b8c7d6';c.font=`${cur?600:500} 20px ${FB}`;c.fillText(s.name,70,y+31);});
+    c.fillStyle=cur?'#fff':'#b8c7d6';c.font=`${cur?600:500} 18px ${FB}`;c.fillText(s.name,70,y+31);});
   const px=458,pw=W-px-18; c.fillStyle='#122130';rr(c,px,120,pw,250,10);c.fill();
   const ct=tableContent(st); c.fillStyle=ct.tone==='err'?'#ff6b5e':ct.tone==='ok'?'#4be08c':'#ffffff';c.font=`700 36px ${FD}`;c.fillText(ct.head,px+20,170);
   c.fillStyle='#c9d6e3';c.font=`500 22px ${FB}`;let y=214;ct.lines.forEach(l=>{y=wrapText(c,l,px+20,y,pw-40,32);});
