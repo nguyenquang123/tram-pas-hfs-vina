@@ -374,7 +374,7 @@ const L10N={
    {k:'S2',n:'Hiệu chuẩn máy chiếu & AI Vision',s:['Hiệu chuẩn camera–máy chiếu tự động bằng mẫu chiếu, bù méo','Nhận diện bàn tay và vùng lấy, đếm vít, kiểm tra đủ/đúng/hướng','So sánh mẫu chuẩn, ngưỡng chỉnh theo sản phẩm, chạy GPU tại trạm']},
    {k:'S3',n:'Truy xuất nguồn gốc & kết nối MES/SPC',s:['Hồ sơ theo serial: người làm, thời gian từng bước, lực siết, ảnh','Dashboard thời gian thực, báo cáo năng suất và lỗi','Kết nối MES của HFS (REST/SQL/OPC UA), biểu đồ SPC, Cp/Cpk']}
   ],
-  anchors:{proj:'Máy chiếu dẫn hướng',cam:'Camera AI ×2',led:'Đèn LED bar / dome',hmi:'IPC & HMI',peri:'Đầu đọc 2D & súng vặn vít',feeder:'Máy cấp vít tự động',plc:'PLC/IO & đèn tháp',jig:'Bàn ESD & đồ gá',mes:'Server MES/SPC (HFS)'},
+  anchors:{proj:'Máy chiếu dẫn hướng',cam:'Camera AI ×2',led:'Đèn LED bar / dome',hmi:'IPC & HMI',peri:'Đầu đọc 2D & súng vặn vít',feeder:'Máy cấp vít tự động',plc:'PLC/IO & đèn tháp',jig:'Bàn ESD & đồ gá',mes:'Cổng kết nối MES/SPC (IPC dưới gầm bàn)'},
   table:{
    loaded:['ĐÃ TẢI SOP v3.2',['Model HX-BR200 · Lệnh WO-261026-0153','7 bước · Lực siết 0,50 N·m ±10%']],
    scan:['QUÉT MÃ LỆNH SẢN XUẤT',['Đưa mã 2D trên phiếu công đoạn vào vùng quét']],
@@ -467,7 +467,7 @@ const L10N={
    {k:'S2',n:'프로젝터 캘리브레이션 & AI Vision',s:['투영 패턴을 이용한 카메라–프로젝터 자동 캘리브레이션, 왜곡 보정','손 및 피킹 영역 인식, 나사 카운트, 수량/종류/방향 검사','기준 이미지 비교, 제품별 임계값 조정, 스테이션 GPU에서 실행']},
    {k:'S3',n:'이력 추적 & MES/SPC 연동',s:['시리얼별 기록: 작업자, 단계별 시간, 체결 토크, 이미지','실시간 대시보드, 생산성 및 불량 리포트','HFS MES 연동 (REST/SQL/OPC UA), SPC 차트, Cp/Cpk']}
   ],
-  anchors:{proj:'안내 프로젝터',cam:'AI 카메라 ×2',led:'LED 바 / 돔 조명',hmi:'IPC & HMI',peri:'2D 리더 & 전동 드라이버',feeder:'자동 나사 공급기',plc:'PLC/IO & 타워램프',jig:'ESD 작업대 & 지그',mes:'MES/SPC 서버 (HFS)'},
+  anchors:{proj:'안내 프로젝터',cam:'AI 카메라 ×2',led:'LED 바 / 돔 조명',hmi:'IPC & HMI',peri:'2D 리더 & 전동 드라이버',feeder:'자동 나사 공급기',plc:'PLC/IO & 타워램프',jig:'ESD 작업대 & 지그',mes:'MES/SPC 게이트웨이 (작업대 하부 IPC)'},
   table:{
    loaded:['SOP v3.2 로드 완료',['모델 HX-BR200 · 작업지시 WO-261026-0153','7단계 · 체결 토크 0.50 N·m ±10%']],
    scan:['작업지시 코드 스캔',['공정 작업표의 2D 코드를 스캔 영역에 대 주세요']],
@@ -543,7 +543,7 @@ const camera=new THREE.PerspectiveCamera(36,1,0.05,60);
 const controls=new THREE.OrbitControls(camera,renderer.domElement);
 controls.enableDamping=true; controls.dampingFactor=0.08;
 controls.maxPolarAngle=Math.PI*0.49; controls.minDistance=0.5; controls.maxDistance=8;
-camera.position.set(2.2,2.35,3.05); controls.target.set(-0.25,1.08,0.0);
+camera.position.set(2.15,2.30,2.95); controls.target.set(0.0,1.10,0.0);
 
 (function makeEnv(){
   const pm=new THREE.PMREMGenerator(renderer); const s=new THREE.Scene();
@@ -842,7 +842,16 @@ const screwHeads=SCREWS.map(p=>{const g=new THREE.Group();g.position.copy(p);sce
 /* ---------------- under-bench: IPC, UPS, controllers, cabinet ---------------- */
 const ipc=box(0.40,0.38,0.20,M.dark,-0.55,0.345,-0.08); edges(ipc,0x000000,.45);
 for(let k=0;k<6;k++) box(0.30,0.008,0.002,M.black,-0.55,0.25+k*0.035,0.0215,null,true);
-const ipcLed=new THREE.Mesh(new THREE.CircleGeometry(0.006,12),new THREE.MeshBasicMaterial({color:0x2fe07a,toneMapped:false})); ipcLed.position.set(-0.40,0.50,0.0205); scene.add(ipcLed);
+// Front nameplate for IPC / MES Gateway
+const ipcLbl=new THREE.Mesh(new THREE.PlaneGeometry(0.20,0.036),new THREE.MeshBasicMaterial({map:(()=>{const C=mkCanvas(400,72),c=C.ctx;c.fillStyle='#0f1722';c.fillRect(0,0,400,72);c.strokeStyle='#2c7be5';c.lineWidth=3;c.strokeRect(3,3,394,66);c.fillStyle='#2fe07a';c.fillRect(12,22,8,28);c.fillStyle='#e2e8f0';c.font=`700 26px ${FD}`;c.fillText('IPC · MES GATEWAY',28,47);C.tex.needsUpdate=true;return C.tex;})(),toneMapped:false}));
+ipcLbl.position.set(-0.55,0.485,0.0215); scene.add(ipcLbl);
+// Status LEDs: PWR (green), MES LINK (cyan), DATA TX/RX (amber activity)
+const ipcLed=new THREE.Mesh(new THREE.CircleGeometry(0.0055,12),new THREE.MeshBasicMaterial({color:0x2fe07a,toneMapped:false})); ipcLed.position.set(-0.39,0.485,0.022); scene.add(ipcLed);
+const ipcMesLed=new THREE.Mesh(new THREE.CircleGeometry(0.0055,12),new THREE.MeshBasicMaterial({color:0x00d2ff,toneMapped:false})); ipcMesLed.position.set(-0.41,0.485,0.022); scene.add(ipcMesLed);
+const ipcTxLed=new THREE.Mesh(new THREE.CircleGeometry(0.0055,12),new THREE.MeshBasicMaterial({color:0xffaa00,toneMapped:false})); ipcTxLed.position.set(-0.43,0.485,0.022); scene.add(ipcTxLed);
+// Dual RJ45 Gigabit Ethernet ports
+box(0.022,0.016,0.006,M.frame,-0.67,0.485,0.022); box(0.016,0.010,0.007,M.black,-0.67,0.485,0.0225);
+box(0.022,0.016,0.006,M.frame,-0.64,0.485,0.022); box(0.016,0.010,0.007,M.black,-0.64,0.485,0.0225);
 box(0.16,0.25,0.40,M.dark,-0.22,0.28,-0.10);
 for(let k=0;k<2;k++){ const b=box(0.24,0.075,0.18,std(0x3a4048),0.06,0.195+k*0.08,-0.05); const d=new THREE.Mesh(new THREE.PlaneGeometry(0.06,0.025),new THREE.MeshBasicMaterial({color:0x1fd36a,toneMapped:false})); d.position.set(0.0,0.195+k*0.08,0.0405); scene.add(d); }
 const cab=box(0.56,0.70,0.68,M.cab,0.575,0.43,-0.05); edges(cab,0x6b7068,.35);
@@ -852,13 +861,16 @@ const cabLbl=new THREE.Mesh(new THREE.PlaneGeometry(0.14,0.04),new THREE.MeshBas
 cabLbl.position.set(0.50,0.70,0.295); scene.add(cabLbl);
 cyl(0.014,0.012,M.greenBtn,0.44,0.62,0.30).rotation.x=Math.PI/2; cyl(0.014,0.012,std(0xf2a900),0.50,0.62,0.30).rotation.x=Math.PI/2; cyl(0.014,0.012,M.red,0.56,0.62,0.30).rotation.x=Math.PI/2;
 
-/* MES/SPC server (customer side) */
-const srv=box(0.48,1.15,0.55,M.dark,-1.72,0.575,-0.10); edges(srv,0x000000,.5);
-for(let k=0;k<8;k++){const l=new THREE.Mesh(new THREE.PlaneGeometry(0.38,0.02),new THREE.MeshBasicMaterial({color:k%3?0x2a3540:0x2c7be5,toneMapped:false}));l.position.set(-1.72,0.25+k*0.11,0.176);scene.add(l);}
-const cablePath=new THREE.CatmullRomCurve3([new V3(-0.55,0.30,-0.18),new V3(-0.62,0.03,-0.26),new V3(-1.05,0.02,-0.24),new V3(-1.40,0.03,-0.14),new V3(-1.475,0.24,-0.10)]);
-const cableMesh=new THREE.Mesh(new THREE.TubeGeometry(cablePath,40,0.006,6,false),M.cable); scene.add(cableMesh);
-const packets=[0,1,2,3].map(()=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.018,14,10),new THREE.MeshBasicMaterial({color:0x2f8cff,toneMapped:false}));m.visible=false;scene.add(m);return m;});
-
+/* Under-bench internal data trunking connecting PLC, controllers and IPC/MES Gateway */
+const cablePath=new THREE.CatmullRomCurve3([
+  new V3(0.50,0.48,-0.05),
+  new V3(0.10,0.50,-0.05),
+  new V3(-0.22,0.50,-0.06),
+  new V3(-0.40,0.485,-0.02),
+  new V3(-0.43,0.485,0.022)
+]);
+const cableMesh=new THREE.Mesh(new THREE.TubeGeometry(cablePath,32,0.005,6,false),M.cable); scene.add(cableMesh);
+const packets=[0,1,2,3].map(()=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.014,14,10),new THREE.MeshBasicMaterial({color:0x00e5ff,toneMapped:false}));m.visible=false;scene.add(m);return m;});
 /* ---------------- projection surfaces ---------------- */
 const texTable=mkCanvas(1040,640);
 const tableProj=new THREE.Mesh(new THREE.PlaneGeometry(0.52,0.32),new THREE.MeshBasicMaterial({map:texTable.tex,transparent:true,depthWrite:false,toneMapped:false,polygonOffset:true,polygonOffsetFactor:-2}));
@@ -1223,6 +1235,7 @@ function applyState(now){
   projFrustum.visible=showFov(); cam1Fr.visible=showFov()&&(st.i<=3);
   // packets
   packets.forEach((m,k)=>{ if(!st.packets){m.visible=false;return;} const u=((sim.t-0.05)/0.85)*1.6-k*0.2; if(u<0||u>1){m.visible=false;return;} m.visible=true; m.position.copy(cablePath.getPointAt(u)); });
+  if(typeof ipcTxLed!=='undefined'&&ipcTxLed){ ipcTxLed.material.color.setHex((st.packets&&(Math.sin(now*0.035)>0))?0xffaa00:0x332200); }
   // projected content
   drawTable(st); drawProd(st); drawPanel(st); drawHMI(st); drawLive(st,now);
   return st;
@@ -1260,12 +1273,12 @@ const ANCHORS={
   plc:{k:'H6',p:new V3(0.97,1.86,-0.43),view:[[1.9,1.4,1.5],[0.6,1.0,-0.1]]},
   jig:{k:'H7',p:new V3(0.18,PY+0.03,0.30),view:[[0.75,1.45,0.95],[0.15,0.92,0.12]]},
   feeder:{k:'H8',p:new V3(0.65,TOPY+0.16,-0.25),view:[[1.15,1.45,0.2],[0.55,0.92,-0.15]]},
-  mes:{k:'MES',p:new V3(-1.72,1.20,-0.10),view:[[-0.3,1.5,2.3],[-1.15,0.75,-0.15]],server:true}
+  mes:{k:'MES',p:new V3(-0.55,0.54,0.03),view:[[-0.58,0.65,0.88],[-0.55,0.38,-0.05]],server:true}
 };
 const labelsEl=$('labels'); const labels=[];
 for(const key in ANCHORS){const a=ANCHORS[key];const el=document.createElement('button');el.type='button';el.className='lbl'+(a.server?' server':'');el.innerHTML=`<span class="dot"></span><span class="tag"><em>${a.k}</em><span class="nm"></span></span>`;el.querySelector('.nm').textContent=T.anchors[key];el.addEventListener('click',()=>focusAnchor(key));labelsEl.appendChild(el);labels.push({el,a,key,tag:el.querySelector('.tag'),nm:el.querySelector('.nm'),w:0});}
 function focusAnchor(key){const a=ANCHORS[key];flyTo(a.view[0],a.view[1]);labels.forEach(L=>L.el.classList.toggle('sel',L.key===key));document.querySelectorAll('.hw-item[data-a]').forEach(b=>b.classList.toggle('sel',b.dataset.a===key));setViewBtn(null);}
-const VIEWS={overview:[[2.2,2.35,3.05],[-0.25,1.08,0]],operator:[[-0.02,1.98,1.12],[0,1.0,-0.12]],top:[[0.01,3.7,0.55],[0,0.9,-0.02]],jig:[[0.62,1.38,0.82],[0.15,0.93,0.14]],cabinet:[[1.85,0.85,1.65],[0.45,0.5,0]]};
+const VIEWS={overview:[[2.15,2.30,2.95],[0.0,1.10,0.0]],operator:[[-0.02,1.98,1.12],[0,1.0,-0.12]],top:[[0.01,3.7,0.55],[0,0.9,-0.02]],jig:[[0.62,1.38,0.82],[0.15,0.93,0.14]],cabinet:[[1.85,0.85,1.65],[0.45,0.5,0]]};
 function setViewBtn(v){document.querySelectorAll('.views button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===v)));}
 document.querySelectorAll('.views button').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.view;flyTo(...VIEWS[v]);setViewBtn(v);labels.forEach(L=>L.el.classList.remove('sel'));}));
 let tween=null;
