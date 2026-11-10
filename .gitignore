@@ -1,0 +1,7 @@
+# Ignore local Excel notes
+*.xlsx
+
+# Ignore OS files
+Thumbs.db
+.DS_Store
+
