@@ -48,12 +48,12 @@ h1 .pas{color:var(--accent)}
 .lang button{font:600 12px var(--f-body);border:0;background:none;color:var(--muted);border-radius:999px;padding:4px 11px;cursor:pointer;white-space:nowrap}
 .lang button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
 .lang button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.tb-grid{margin:0;display:grid;grid-template-columns:repeat(2,minmax(130px,auto));border-left:1px solid var(--line)}
-.tb-grid div{padding:9px 16px;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.tb-grid{margin:0;display:grid;grid-template-columns:repeat(2,minmax(170px,1fr));grid-template-rows:repeat(2,1fr);border-left:1px solid var(--line)}
+.tb-grid div{padding:12px 18px;display:flex;flex-direction:column;justify-content:center;min-height:64px;box-sizing:border-box;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
 .tb-grid div:nth-child(2n){border-right:0}
 .tb-grid div:nth-last-child(-n+2){border-bottom:0}
-.tb-grid dt{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-.tb-grid dd{margin:2px 0 0;font-family:var(--f-mono);font-size:13px;line-height:1.35;font-variant-numeric:tabular-nums}
+.tb-grid dt{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);line-height:1.2}
+.tb-grid dd{margin:4px 0 0;font-family:var(--f-mono);font-size:13px;line-height:1.35;font-variant-numeric:tabular-nums;color:var(--fg)}
 @media (max-width:760px){.tb{grid-template-columns:1fr}.tb-grid{border-left:0;border-top:1px solid var(--line)}}
 
 /* workspace */
@@ -188,8 +188,8 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
     </div>
     <dl class="tb-grid">
       <div><dt data-t="dwg">Số bản vẽ</dt><dd>HFS-PAS-2026-01</dd></div>
-      <div><dt data-t="rev">Phiên bản</dt><dd>Rev01 Concept<br><span style="font-size:11px;opacity:0.85;font-weight:600">TheQuang</span></dd></div>
-      <div><dt data-t="date">Ngày</dt><dd data-t="dateVal">26/10/2026</dd></div>
+      <div><dt data-t="rev">Phiên bản</dt><dd>Rev01 Concept<br>TheQuang</dd></div>
+      <div><dt data-t="date">Ngày</dt><dd data-t="dateVal">11/10/2026</dd></div>
       <div><dt data-t="size">Kích thước trạm</dt><dd>1800×900×2200 mm</dd></div>
     </dl>
   </header>
@@ -304,7 +304,7 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
       </div>
     </aside>
   </main>
-  <footer class="foot"><span data-t="foot1">Concept minh họa · kích thước, số ô linh kiện, số vít và giá trị lực là ví dụ, sẽ chốt theo sản phẩm thực tế sau khảo sát.</span><span>HFS VINA · Innovation Team · 2026</span></footer>
+  <footer class="foot"><span data-t="foot1">Concept minh họa (tham khảo từ dự án nhà máy OKI ở Hải Phòng của Nhật Bản) · kích thước, số ô linh kiện, số vít và giá trị lực là ví dụ, sẽ chốt theo sản phẩm thực tế sau khảo sát.</span><span>HFS VINA · Innovation Team · 2026</span></footer>
 </div>
 
 <script src="libs/three.min.js"></script>
@@ -322,7 +322,7 @@ const L10N={
   ui:{
    eyebrow:'HFS VINA · Innovation Team – Project Assembly System', h1:' · Trạm lắp ráp chiếu sáng có AI kiểm soát',
    sub:'Mô hình 3D trạm lắp ráp chỉ dẫn bằng máy chiếu, camera AI theo dõi thao tác tay, súng vặn vít kiểm soát lực và truy xuất dữ liệu về MES/SPC. Kéo để xoay, cuộn hoặc chụm hai ngón để phóng to.',
-   dwg:'Số bản vẽ', rev:'Phiên bản', date:'Ngày', dateVal:'26/10/2026', size:'Kích thước trạm',
+   dwg:'Số bản vẽ', rev:'Phiên bản', date:'Ngày', dateVal:'11/10/2026', size:'Kích thước trạm',
    ariaStage:'Mô hình 3D và mô phỏng', ariaTower:'Trạng thái đèn tháp', ariaViews:'Góc nhìn', ariaModel:'Mô hình 3D trạm PAS',
    vOverview:'Tổng thể', vOperator:'Góc công nhân', vTop:'Từ trên xuống', vJig:'Đồ gá', vCabinet:'Tủ điện',
    hint:'Kéo: xoay · Chuột phải: dời · Cuộn: zoom', pause:'Tạm dừng', play:'Chạy mô phỏng', prev:'Bước trước', next:'Bước sau',
@@ -336,7 +336,7 @@ const L10N={
    aS2sub:'tay · vít · mẫu chuẩn', aS1sub1:'SOP · trình tự', aS1sub2:'khóa bước khi lỗi', aOut:'Đầu ra', aProj:'Máy chiếu', aHmi:'HMI 21,5"',
    aPlc:'PLC · đèn tháp', aPlcSub:'còi · khóa', aS3:'S3 · Truy xuất', aS3sub:'hồ sơ theo serial',
    note:'Toàn bộ suy luận AI chạy tại IPC của trạm (on-premise), không phụ thuộc internet. Dữ liệu chỉ đi ra mạng nội bộ HFS tới MES/SPC.',
-   foot1:'Concept minh họa · kích thước, số ô linh kiện, số vít và giá trị lực là ví dụ, sẽ chốt theo sản phẩm thực tế sau khảo sát.',
+   foot1:'Concept minh họa (tham khảo từ dự án nhà máy OKI ở Hải Phòng của Nhật Bản) · kích thước, số ô linh kiện, số vít và giá trị lực là ví dụ, sẽ chốt theo sản phẩm thực tế sau khảo sát.',
    noThree:'Không tải được thư viện 3D. Hãy tải lại trang.', noWebgl:'Trình duyệt này không bật được WebGL nên không hiển thị mô hình 3D.',
    chipStep:n=>`BƯỚC ${n}/7`, chipErr:'Lấy sai ô B3 · đã khóa bước', stepAria:(n,name)=>`Bước ${n}: ${name}`,
    tower:{r:'Lỗi · khóa bước',a:'Chờ lệnh',g:'Đang chạy'}, paper:'PHIẾU CÔNG ĐOẠN'
@@ -415,7 +415,7 @@ const L10N={
   ui:{
    eyebrow:'HFS VINA · Innovation Team – Project Assembly System', h1:' · AI 감시형 프로젝션 조립 스테이션',
    sub:'프로젝터로 작업을 안내하고, AI 카메라가 손동작을 추적하며, 토크 제어 전동 드라이버와 MES/SPC 데이터 추적을 갖춘 조립 스테이션의 3D 모델입니다. 드래그로 회전, 스크롤 또는 두 손가락 핀치로 확대할 수 있습니다.',
-   dwg:'도면 번호', rev:'리비전', date:'날짜', dateVal:'2026-10-26', size:'스테이션 크기',
+   dwg:'도면 번호', rev:'리비전', date:'날짜', dateVal:'11/10/2026', size:'스테이션 크기',
    ariaStage:'3D 모델 및 시뮬레이션', ariaTower:'타워램프 상태', ariaViews:'시점', ariaModel:'PAS 스테이션 3D 모델',
    vOverview:'전체 보기', vOperator:'작업자 시점', vTop:'상면도', vJig:'지그', vCabinet:'제어반',
    hint:'드래그: 회전 · 우클릭: 이동 · 스크롤: 확대/축소', pause:'일시정지', play:'시뮬레이션 실행', prev:'이전 단계', next:'다음 단계',
@@ -429,7 +429,7 @@ const L10N={
    aS2sub:'손 · 나사 · 기준 이미지', aS1sub1:'SOP · 작업 순서', aS1sub2:'오류 시 단계 잠금', aOut:'출력', aProj:'프로젝터', aHmi:'HMI 21.5"',
    aPlc:'PLC · 타워램프', aPlcSub:'부저 · 인터록', aS3:'S3 · 이력 추적', aS3sub:'시리얼별 기록',
    note:'모든 AI 추론은 스테이션 IPC(온프레미스)에서 실행되며 인터넷에 의존하지 않습니다. 데이터는 HFS 내부망을 통해 MES/SPC로만 전송됩니다.',
-   foot1:'예시 컨셉 · 치수, 부품 빈 수, 나사 수, 토크 값은 예시이며 현장 조사 후 실제 제품에 맞춰 확정합니다.',
+   foot1:'예시 컨셉 (일본 OKI 하이퐁 공장 프로젝트 참조) · 치수, 부품 빈 수, 나사 수, 토크 값은 예시이며 현장 조사 후 실제 제품에 맞춰 확정합니다.',
    noThree:'3D 라이브러리를 불러오지 못했습니다. 페이지를 새로고침하세요.', noWebgl:'이 브라우저에서는 WebGL을 사용할 수 없어 3D 모델을 표시할 수 없습니다.',
    chipStep:n=>`단계 ${n}/7`, chipErr:'B3 빈 오피킹 · 단계 잠금됨', stepAria:(n,name)=>`단계 ${n}: ${name}`,
    tower:{r:'오류 · 단계 잠금',a:'지시 대기',g:'가동 중'}, paper:'공정 작업표'
