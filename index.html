@@ -733,66 +733,64 @@ const towerSeg={};
 cyl(0.034,0.012,M.dark,0.97,1.837,-0.43);
 
 /* ---------------- screwdrivers + balancers ---------------- */
-/* ---------------- automatic screw feeders: dual setup (rotated right, hoppers shifted to the right) ---------------- */
-function createScrewFeeder(x, z, labelText, screwRadius, screwLen, isLeft){
+/* ---------------- automatic screw feeders: dual setup (Feeder 1 left, Feeder 2 right) ---------------- */
+function createScrewFeeder(x, labelText, screwRadius, screwLen, isLeft){
   const g=new THREE.Group();
-  g.position.set(x,TOPY,z);
+  g.position.set(x,TOPY,0.05);
   scene.add(g);
-  // Main chassis: width 0.17 (along X), height 0.11, depth 0.13 (along Z)
-  const fBody=box(0.17,0.11,0.13,std(0x2d3436,{roughness:.4,metalness:.3}),0,0.055,0,g);
+  // Main chassis (ESD dark grey)
+  const fBody=box(0.13,0.11,0.17,std(0x2d3436,{roughness:.4,metalness:.3}),0,0.055,0,g);
   edges(fBody,0x111111,.45);
-  // Vibrating hopper chamber shifted to the RIGHT (+X)
-  box(0.08,0.055,0.11,std(0x1e272e,{roughness:.5,metalness:.4}),0.035,0.135,0,g);
+  // Rear vibrating hopper chamber
+  box(0.11,0.055,0.08,std(0x1e272e,{roughness:.5,metalness:.4}),0,0.13,-0.03,g);
   // Transparent acrylic hopper lid
-  box(0.076,0.006,0.106,new THREE.MeshStandardMaterial({color:0x88ccff,transparent:true,opacity:.45,roughness:.1}),0.035,0.165,0,g);
-  // Loose screws inside hopper on the right
+  box(0.106,0.006,0.076,new THREE.MeshStandardMaterial({color:0x88ccff,transparent:true,opacity:.45,roughness:.1}),0,0.161,-0.03,g);
+  // Loose screws inside hopper
   for(let k=0;k<10;k++){
-    const sm=cyl(screwRadius,screwLen,M.steel,0.035+(rnd()-.5)*0.05,0.12+rnd()*0.015,(rnd()-.5)*0.07,g,6);
+    const sm=cyl(screwRadius,screwLen,M.steel,(rnd()-.5)*0.07,0.12+rnd()*0.015,-0.03+(rnd()-.5)*0.04,g,6);
     sm.rotation.set(rnd()*2,rnd()*3,rnd()*2);
   }
-  // Polished stainless steel vibrating track / rail feeding from right to left
-  const fTrack=box(0.085,0.012,0.018,M.steel,-0.022,0.10,0,g);
-  fTrack.rotation.z=0.06;
-  for(let k=0;k<4;k++){ cyl(screwRadius*1.1,screwLen*0.8,M.steel,-0.005-k*0.016,0.112-k*0.003,0,g,6); }
-  // Left pick-up block
-  box(0.032,0.032,0.038,std(0x0984e3,{roughness:.35}),-0.068,0.086,0,g);
-  // Upright screw ready at pick-up mouth (left side, facing towards operator & jig)
+  // Polished stainless steel vibrating track / rail
+  const fTrack=box(0.018,0.012,0.10,M.steel,0,0.10,0.025,g);
+  fTrack.rotation.x=0.08;
+  for(let k=0;k<4;k++){ cyl(screwRadius*1.1,screwLen*0.8,M.steel,0,0.115-k*0.004,0.005+k*0.018,g,6); }
+  // Front pick-up block
+  box(0.038,0.032,0.032,std(0x0984e3,{roughness:.35}),0,0.086,0.075,g);
+  // Upright screw ready at pick-up mouth
   const screwReady=new THREE.Group();
-  screwReady.position.set(-0.072,0.104,0);
+  screwReady.position.set(0,0.104,0.082);
   cyl(screwRadius*1.8,screwLen*0.4,M.screw,0,0.004,0,screwReady,10);
   cyl(screwRadius,screwLen,M.steel,0,-0.002,0,screwReady,8);
   g.add(screwReady);
   // Pick sensor LED indicator
   const led=new THREE.Mesh(new THREE.SphereGeometry(0.0045,10,8),new THREE.MeshBasicMaterial({color:0x2ed573,toneMapped:false}));
-  led.position.set(-0.068,0.104,0.026);
+  led.position.set(0.026,0.104,0.075);
   g.add(led);
-  // Front panel label (facing operator along +Z)
-  const fLabel=new THREE.Mesh(new THREE.PlaneGeometry(0.095,0.022),new THREE.MeshBasicMaterial({map:(()=>{
-    const C=mkCanvas(240,64),c=C.ctx;
-    c.fillStyle='#0f172a';c.fillRect(0,0,240,64);
+  // Front label
+  const fLabel=new THREE.Mesh(new THREE.PlaneGeometry(0.085,0.022),new THREE.MeshBasicMaterial({map:(()=>{
+    const C=mkCanvas(220,64),c=C.ctx;
+    c.fillStyle='#0f172a';c.fillRect(0,0,220,64);
     c.fillStyle=isLeft?'#22c55e':'#38bdf8';c.font=`700 24px ${FD}`;c.fillText(labelText,10,42);
     C.tex.needsUpdate=true;return C.tex;
   })(),toneMapped:false}));
-  fLabel.position.set(0.005,0.038,0.066);
+  fLabel.position.set(0,0.038,0.086);
   g.add(fLabel);
   // Power rocker switch
-  box(0.016,0.018,0.008,M.red,-0.058,0.038,0.067,g);
-  // Status display
-  box(0.024,0.016,0.004,M.black,0.062,0.038,0.066,g);
+  box(0.014,0.018,0.008,M.red,-0.042,0.038,0.087,g);
   return {g,screwReady,led};
 }
 
-// Feeder 1 (M3) - máy chính: đặt so le phía trước, gờ cao lệch phải
-const f1Obj=createScrewFeeder(0.53,0.10,'FEEDER 1 · M3',0.0025,0.009,true);
+// Feeder 1 (Trái): vị trí lấy vít chính
+const f1Obj=createScrewFeeder(0.55,'FEEDER 1 · M3',0.0025,0.009,true);
 const feederG=f1Obj.g;
 const feederScrewReady=f1Obj.screwReady;
 const feederLed=f1Obj.led;
 
-// Feeder 2 (M4) - máy phụ: đặt so le phía sau lệch phải, gờ cao lệch ngoài cùng bên phải
-const f2Obj=createScrewFeeder(0.72,0.03,'FEEDER 2 · M4',0.0032,0.012,false);
+// Feeder 2 (Phải): máy cấp vít thứ hai đặt bên phải
+const f2Obj=createScrewFeeder(0.72,'FEEDER 2 · M4',0.0032,0.012,false);
 const feeder2G=f2Obj.g;
 
-const FEEDER_PICK=new V3(feederG.position.x-0.072,TOPY+0.11,feederG.position.z);
+const FEEDER_PICK=new V3(feederG.position.x,TOPY+0.11,feederG.position.z+0.082);
 
 function makeDriver(){
   const g=new THREE.Group();
@@ -1425,7 +1423,7 @@ const ANCHORS={
   peri:{k:'H5',p:new V3(0.77,1.56,0.205),view:[[1.6,1.7,1.4],[0.45,1.2,0.1]]},
   plc:{k:'H6',p:new V3(0.97,1.86,-0.43),view:[[1.9,1.4,1.5],[0.6,1.0,-0.1]]},
   jig:{k:'H7',p:new V3(0.18,PY+0.03,0.30),view:[[0.75,1.45,0.95],[0.15,0.92,0.12]]},
-  feeder:{k:'H8',p:new V3(0.625,TOPY+0.16,0.065),view:[[1.25,1.45,0.45],[0.625,0.95,0.065]]},
+  feeder:{k:'H8',p:new V3(0.635,TOPY+0.16,0.05),view:[[1.25,1.45,0.45],[0.635,0.95,0.05]]},
   mes:{k:'MES',p:new V3(-0.55,0.54,0.03),view:[[-0.58,0.65,0.88],[-0.55,0.38,-0.05]],server:true}
 };
 const labelsEl=$('labels'); const labels=[];
