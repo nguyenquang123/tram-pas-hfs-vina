@@ -367,7 +367,7 @@ const L10N={
    {k:'H5',n:'Ngoại vi & Poka-Yoke',a:'peri',s:['Đầu đọc mã 2D công nghiệp có chân đế','2 súng vặn vít điện kiểm soát lực, tín hiệu OK/NG + bộ đếm vít','Balancer treo súng, cảm biến hiện diện trên đồ gá']},
    {k:'H6',n:'Tủ điện PLC/IO & cảnh báo',a:'plc',s:['PLC mini hoặc Remote I/O Ethernet','Đèn tháp 3 màu có còi, nút dừng khẩn cấp, Start/Reset','Tủ điện 24 VDC, CB, relay an toàn']},
    {k:'H7',n:'Khung bàn thao tác ESD & đồ gá',a:'jig',s:['Nhôm định hình 1800×900×850 mm, khung trên 2200 mm','Thảm ESD nối đất, kệ 5 tầng 30 hộp linh kiện (6×5), tấm chiếu trắng','Đồ gá định vị theo model, chốt và cảm biến']},
-   {k:'H8',n:'Máy cấp vít tự động (Auto Screw Feeder)',a:'feeder',s:['Đặt góc trên cùng bên phải mặt bàn thao tác','Mâm rung cấp và định vị vít M3 liên tục vào cửa lấy vít','Cảm biến quang xác nhận vít sẵn sàng, tự ngắt rung chống kẹt vít']}
+   {k:'H8',n:'Máy cấp vít tự động (Auto Screw Feeder)',a:'feeder',s:['Bố trí trên mặt bàn bên phải, phía trước kệ linh kiện để thuận tiện lấy vít','Mâm rung cấp và định vị vít M3 liên tục vào cửa lấy vít','Cảm biến quang xác nhận vít sẵn sàng, tự ngắt rung chống kẹt vít']}
   ],
   sw:[
    {k:'S1',n:'Module chỉ dẫn người lắp ráp',s:['Soạn SOP không cần lập trình: ảnh tham chiếu → vị trí hiển thị → vùng nhận dạng → trình tự','Chiếu nội dung theo từng bước, video thao tác mẫu','Quản lý phiên bản SOP theo model, đăng nhập công nhân, giao diện Việt/Anh/Hàn']},
@@ -460,7 +460,7 @@ const L10N={
    {k:'H5',n:'주변장치 & 포카요케',a:'peri',s:['거치대 포함 산업용 2D 코드 리더','토크 제어 전동 드라이버 2대, OK/NG 신호 + 나사 카운터','드라이버 밸런서, 지그 재석 센서']},
    {k:'H6',n:'PLC/IO 제어반 & 경보',a:'plc',s:['미니 PLC 또는 이더넷 리모트 I/O','부저 내장 3색 타워램프, 비상정지, Start/Reset 버튼','24 VDC 제어반, 차단기, 안전 릴레이']},
    {k:'H7',n:'ESD 작업대 프레임 & 지그',a:'jig',s:['알루미늄 프로파일 1800×900×850 mm, 상부 프레임 2200 mm','접지 ESD 매트, 5단 선반 부품 빈 30개 (6×5), 백색 투영판','모델별 위치결정 지그, 핀 및 센서']},
-   {k:'H8',n:'자동 나사 공급기 (Auto Screw Feeder)',a:'feeder',s:['작업대 우측 상단 모서리에 배치','진동 트랙 방식으로 M3 나사 자동 정렬 및 픽업구 공급','광전 센서로 나사 대기 감지 및 걸림 방지']}
+   {k:'H8',n:'자동 나사 공급기 (Auto Screw Feeder)',a:'feeder',s:['부품 선반 전면 우측 작업대 위에 배치하여 간섭 없이 나사 픽업','진동 트랙 방식으로 M3 나사 자동 정렬 및 픽업구 공급','광전 센서로 나사 대기 감지 및 걸림 방지']}
   ],
   sw:[
    {k:'S1',n:'작업자 안내 모듈',s:['코딩 없는 SOP 작성: 기준 이미지 → 표시 위치 → 인식 영역 → 순서','단계별 내용 투영, 표준 작업 영상','모델별 SOP 버전 관리, 작업자 로그인, 베트남어/영어/한국어 UI']},
@@ -727,7 +727,7 @@ cyl(0.034,0.012,M.dark,0.97,1.837,-0.43);
 /* ---------------- screwdrivers + balancers ---------------- */
 /* ---------------- automatic screw feeder (top-right corner of tabletop) ---------------- */
 const feederG=new THREE.Group();
-feederG.position.set(0.65,TOPY,-0.25);
+feederG.position.set(0.64,TOPY,0.05);
 scene.add(feederG);
 // Main chassis (ESD dark grey)
 const fBody=box(0.13,0.11,0.17,std(0x2d3436,{roughness:.4,metalness:.3}),0,0.055,0,feederG);
@@ -1170,9 +1170,10 @@ function drawLive(st,now){
   c.strokeStyle='#3d5a48';c.lineWidth=2;c.strokeRect(mx(JIG.x-0.2),mz(JIG.z-0.15),mx(JIG.x+0.2)-mx(JIG.x-0.2),mz(JIG.z+0.15)-mz(JIG.z-0.15));
   c.fillStyle='#55705f';c.font=`500 14px ${FM}`;c.fillText('JIG',mx(JIG.x-0.19),mz(JIG.z-0.15)+18);
   // Auto Screw Feeder on live schematic
-  c.fillStyle='#203347';c.fillRect(mx(0.56),wy0+8,mx(0.74)-mx(0.56),34);
-  c.strokeStyle='#3880e0';c.lineWidth=1.5;c.strokeRect(mx(0.56),wy0+8,mx(0.74)-mx(0.56),34);
-  c.fillStyle='#85b6ff';c.font=`600 11px ${FM}`;c.fillText('FEEDER',mx(0.575),wy0+28);
+  const fz=mz(0.05);
+  c.fillStyle='#203347';c.fillRect(mx(0.56),fz-16,mx(0.72)-mx(0.56),32);
+  c.strokeStyle='#3880e0';c.lineWidth=1.5;c.strokeRect(mx(0.56),fz-16,mx(0.72)-mx(0.56),32);
+  c.fillStyle='#85b6ff';c.font=`600 11px ${FM}`;c.fillText('FEEDER',mx(0.575),fz+4);
   c.fillStyle='#d9e2ea';c.fillRect(mx(-0.88),mz(0.11),mx(-0.68)-mx(-0.88),mz(0.39)-mz(0.11));
   const handPt=(p)=>{ if(p.z<-0.12){ let best=null,bd=9; for(const id in bins){const d=binOpen(id).distanceTo(p);if(d<bd){bd=d;best=id;}} const b=bins[best];const ri='ABCDE'.indexOf(best[0]); return [mx(b.x),54+ri*28+12]; } return [mx(p.x),mz(Math.min(p.z,0.44))]; };
   [['L',arms.L.W||st.L],['R',arms.R.W||st.R]].forEach(([k,p])=>{ if(!p) return; const [x,y]=handPt(p);
@@ -1272,7 +1273,7 @@ const ANCHORS={
   peri:{k:'H5',p:new V3(0.77,1.56,0.205),view:[[1.6,1.7,1.4],[0.45,1.2,0.1]]},
   plc:{k:'H6',p:new V3(0.97,1.86,-0.43),view:[[1.9,1.4,1.5],[0.6,1.0,-0.1]]},
   jig:{k:'H7',p:new V3(0.18,PY+0.03,0.30),view:[[0.75,1.45,0.95],[0.15,0.92,0.12]]},
-  feeder:{k:'H8',p:new V3(0.65,TOPY+0.16,-0.25),view:[[1.15,1.45,0.2],[0.55,0.92,-0.15]]},
+  feeder:{k:'H8',p:new V3(0.64,TOPY+0.16,0.05),view:[[1.15,1.45,0.45],[0.55,0.95,0.05]]},
   mes:{k:'MES',p:new V3(-0.55,0.54,0.03),view:[[-0.58,0.65,0.88],[-0.55,0.38,-0.05]],server:true}
 };
 const labelsEl=$('labels'); const labels=[];
