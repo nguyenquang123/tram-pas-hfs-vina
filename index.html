@@ -227,6 +227,7 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
         <div class="toggles">
           <label class="tg danger"><input type="checkbox" id="tgErr"> <span data-t="tgErr">Mô phỏng lấy sai ô</span></label>
           <label class="tg"><input type="checkbox" id="tgLabels" checked> <span data-t="tgLabels">Nhãn thiết bị</span></label>
+          <label class="tg"><input type="checkbox" id="tgDim" checked> <span data-t="tgDim">Kích thước trạm</span></label>
           <label class="tg"><input type="checkbox" id="tgFov" checked> <span data-t="tgFov">Vùng chiếu &amp; camera</span></label>
           <label class="tg"><input type="checkbox" id="tgOp" checked> <span data-t="tgOp">Công nhân</span></label>
         </div>
@@ -327,7 +328,7 @@ const L10N={
    vOverview:'Tổng thể', vOperator:'Góc công nhân', vTop:'Từ trên xuống', vJig:'Đồ gá', vCabinet:'Tủ điện',
    hint:'Kéo: xoay · Chuột phải: dời · Cuộn: zoom', pause:'Tạm dừng', play:'Chạy mô phỏng', prev:'Bước trước', next:'Bước sau',
    ariaTimeline:'Tiến trình 7 bước', ariaSpeed:'Tốc độ mô phỏng', sp05:'0,5×',
-   tgErr:'Mô phỏng lấy sai ô', tgLabels:'Nhãn thiết bị', tgFov:'Vùng chiếu & camera', tgOp:'Công nhân',
+   tgErr:'Mô phỏng lấy sai ô', tgLabels:'Nhãn thiết bị', tgDim:'Kích thước trạm', dimLen:'CHIỀU DÀI', dimWid:'CHIỀU RỘNG', dimHgt:'TỔNG CAO', dimTop:'MẶT BÀN', tgFov:'Vùng chiếu & camera', tgOp:'Công nhân',
    kOut:'Sản lượng (mô phỏng)', unit:'sp', kCt:'Cycle time ước tính', unitCt:'s/sp', kBlk:'Lỗi thao tác đã chặn', kFpy:'Đạt lần đầu (FPY)',
    logH:'Nhật ký sự kiện trạm · gửi MES', ariaPanel:'Thông tin hệ thống', tabFlow:'Vận hành', tabHw:'Phần cứng', tabSw:'Phần mềm',
    hwH:'7 cụm phần cứng · bấm để xem trên mô hình', swH:'Luồng dữ liệu trong trạm',
@@ -420,7 +421,7 @@ const L10N={
    vOverview:'전체 보기', vOperator:'작업자 시점', vTop:'상면도', vJig:'지그', vCabinet:'제어반',
    hint:'드래그: 회전 · 우클릭: 이동 · 스크롤: 확대/축소', pause:'일시정지', play:'시뮬레이션 실행', prev:'이전 단계', next:'다음 단계',
    ariaTimeline:'7단계 진행', ariaSpeed:'시뮬레이션 속도', sp05:'0.5×',
-   tgErr:'오피킹 오류 시뮬레이션', tgLabels:'장비 라벨', tgFov:'투영 영역 & 카메라', tgOp:'작업자',
+   tgErr:'오피킹 오류 시뮬레이션', tgLabels:'장비 라벨', tgDim:'스테이션 치수', dimLen:'길이 (LENGTH)', dimWid:'폭 (WIDTH)', dimHgt:'전체 높이', dimTop:'작업면 높이', tgFov:'투영 영역 & 카메라', tgOp:'작업자',
    kOut:'생산량 (시뮬레이션)', unit:'개', kCt:'예상 사이클 타임', unitCt:'초/개', kBlk:'차단된 작업 오류', kFpy:'초도 합격률 (FPY)',
    logH:'스테이션 이벤트 로그 · MES 전송', ariaPanel:'시스템 정보', tabFlow:'운영', tabHw:'하드웨어', tabSw:'소프트웨어',
    hwH:'하드웨어 7개 모듈 · 클릭하면 모델에서 확인', swH:'스테이션 내 데이터 흐름',
@@ -918,6 +919,92 @@ function glow(color,scale,pos){const s=new THREE.Sprite(new THREE.SpriteMaterial
 towerSeg.g.glow=glow(0x22ff70,0.22,new V3(0.97,1.695,-0.39)); towerSeg.a.glow=glow(0xffb000,0.22,new V3(0.97,1.75,-0.39)); towerSeg.r.glow=glow(0xff3020,0.24,new V3(0.97,1.805,-0.39));
 const lensSprite=glow(0xd8ffe6,0.12,new V3(0,2.02,0.10));
 
+/* ---------------- 3D station dimensions & annotations ---------------- */
+const dimGroup=new THREE.Group(); scene.add(dimGroup);
+const dimMat=new THREE.MeshBasicMaterial({color:0x0284c7,toneMapped:false});
+const coneGeo=new THREE.ConeGeometry(0.016,0.05,16); coneGeo.translate(0,-0.025,0);
+function makeArrowTip(tipPos,dir,parent){
+  const m=new THREE.Mesh(coneGeo,dimMat); m.position.copy(tipPos);
+  m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir.clone().normalize());
+  (parent||dimGroup).add(m); return m;
+}
+function makeDimRod(p1,p2,r,parent){
+  const d=p2.clone().sub(p1),len=d.length();
+  const m=new THREE.Mesh(new THREE.CylinderGeometry(r||0.0022,r||0.0022,len,8),dimMat);
+  m.position.copy(p1).add(p2).multiplyScalar(0.5);
+  m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.clone().normalize());
+  (parent||dimGroup).add(m); return m;
+}
+
+// 1. Length (Dài - 1800 mm) along X in front of tabletop
+makeDimRod(new V3(-0.90,TOPY,0.44),new V3(-0.90,TOPY,0.57),0.0016,dimGroup);
+makeDimRod(new V3(0.90,TOPY,0.44),new V3(0.90,TOPY,0.57),0.0016,dimGroup);
+makeDimRod(new V3(-0.90,TOPY,0.54),new V3(0.90,TOPY,0.54),0.0022,dimGroup);
+makeArrowTip(new V3(-0.90,TOPY,0.54),new V3(-1,0,0),dimGroup);
+makeArrowTip(new V3(0.90,TOPY,0.54),new V3(1,0,0),dimGroup);
+
+// 2. Width / Depth (Rộng - 900 mm) along Z on right flank
+makeDimRod(new V3(0.89,TOPY,-0.45),new V3(1.05,TOPY,-0.45),0.0016,dimGroup);
+makeDimRod(new V3(0.89,TOPY,0.45),new V3(1.05,TOPY,0.45),0.0016,dimGroup);
+makeDimRod(new V3(1.02,TOPY,-0.45),new V3(1.02,TOPY,0.45),0.0022,dimGroup);
+makeArrowTip(new V3(1.02,TOPY,-0.45),new V3(0,0,-1),dimGroup);
+makeArrowTip(new V3(1.02,TOPY,0.45),new V3(0,0,1),dimGroup);
+
+// 3. Height (Cao - 2200 mm & Tabletop 850 mm) along Y on left flank
+makeDimRod(new V3(-0.89,0.02,-0.20),new V3(-1.14,0.02,-0.20),0.0016,dimGroup);
+makeDimRod(new V3(-0.89,TOPY,-0.20),new V3(-1.14,TOPY,-0.20),0.0016,dimGroup);
+makeDimRod(new V3(-0.89,2.22,-0.20),new V3(-1.14,2.22,-0.20),0.0016,dimGroup);
+
+// Inner height (Tabletop 850 mm)
+makeDimRod(new V3(-1.00,0.02,-0.20),new V3(-1.00,TOPY,-0.20),0.0022,dimGroup);
+makeArrowTip(new V3(-1.00,0.02,-0.20),new V3(0,-1,0),dimGroup);
+makeArrowTip(new V3(-1.00,TOPY,-0.20),new V3(0,1,0),dimGroup);
+
+// Outer total height (Canopy 2200 mm)
+makeDimRod(new V3(-1.10,0.02,-0.20),new V3(-1.10,2.22,-0.20),0.0022,dimGroup);
+makeArrowTip(new V3(-1.10,0.02,-0.20),new V3(0,-1,0),dimGroup);
+makeArrowTip(new V3(-1.10,2.22,-0.20),new V3(0,1,0),dimGroup);
+
+// Dimension Billboard Badges
+const dimBadges={
+  len:{pos:new V3(0.0,TOPY+0.07,0.54),w:0.32,h:0.104,val:'1800 mm',tagKey:'dimLen'},
+  wid:{pos:new V3(1.04,TOPY+0.07,0.0),w:0.32,h:0.104,val:'900 mm',tagKey:'dimWid'},
+  hgt:{pos:new V3(-1.10,1.54,-0.20),w:0.32,h:0.104,val:'2200 mm',tagKey:'dimHgt'},
+  top:{pos:new V3(-1.00,0.43,-0.20),w:0.32,h:0.104,val:'850 mm',tagKey:'dimTop'}
+};
+for(const k in dimBadges){
+  const b=dimBadges[k];
+  b.canvas=mkCanvas(340,110);
+  const mat=new THREE.SpriteMaterial({map:b.canvas.tex,depthTest:false,toneMapped:false});
+  b.sprite=new THREE.Sprite(mat);
+  b.sprite.renderOrder=999;
+  b.sprite.scale.set(b.w,b.h,1);
+  b.sprite.position.copy(b.pos);
+  dimGroup.add(b.sprite);
+}
+function drawDimBadges(){
+  for(const k in dimBadges){
+    const b=dimBadges[k],c=b.canvas.ctx;
+    c.clearRect(0,0,340,110);
+    c.fillStyle='rgba(12,24,41,0.92)';
+    rr(c,4,4,332,102,16);
+    c.fill();
+    c.lineWidth=3.5;
+    c.strokeStyle='#0284c7';
+    c.stroke();
+    c.textAlign='center';
+    c.textBaseline='middle';
+    c.font=`700 22px ${FB}`;
+    c.fillStyle='#38bdf8';
+    c.fillText(T.ui[b.tagKey]||b.tagKey,170,36);
+    c.font=`700 42px ${FM}`;
+    c.fillStyle='#ffffff';
+    c.fillText(b.val,170,76);
+    b.canvas.tex.needsUpdate=true;
+  }
+}
+drawDimBadges();
+
 /* ---------------- operator ghost ---------------- */
 const op={root:new THREE.Group(),upper:new THREE.Group()};
 op.root.position.set(-0.02,0,0.58); scene.add(op.root);
@@ -1351,6 +1438,7 @@ function flyTo(p,t,ms){tween={p0:camera.position.clone(),t0:controls.target.clon
 // toggles
 $('tgErr').addEventListener('change',e=>{sim.err=e.target.checked; if(sim.step===2) {sim.t=0;} renderDetail(); logLine(sim.err?T.log.errOn:T.log.errOff,'info');});
 $('tgLabels').addEventListener('change',()=>{});
+$('tgDim').addEventListener('change',e=>{dimGroup.visible=e.target.checked;});
 $('tgOp').addEventListener('change',e=>{const v=e.target.checked;op.root.visible=v;for(const k of ['L','R']){const a=arms[k];a.up.visible=a.fo.visible=a.el.visible=a.sh.visible=v;}});
 $('speed').addEventListener('change',e=>{sim.speed=+e.target.value;});
 $('play').addEventListener('click',()=>{sim.playing=!sim.playing;syncPlay();});
@@ -1387,7 +1475,7 @@ function setLang(l){
   STEPS=STEP_NUM.map((n,k)=>Object.assign({},n,T.steps[k])); HW=T.hw; SW=T.sw;
   applyStatic(); buildLists();
   labels.forEach(L=>{L.nm.textContent=T.anchors[L.key];L.w=0;});
-  const refresh=()=>{texTable.sig=texProd.sig=texPanel.sig=texHMI.sig='';labels.forEach(L=>{L.w=0;});drawPaper();};
+  const refresh=()=>{texTable.sig=texProd.sig=texPanel.sig=texHMI.sig='';labels.forEach(L=>{L.w=0;});drawPaper();drawDimBadges();};
   refresh(); renderDetail(); syncPlay(); lastUI=''; rebootLog();
   if(document.fonts&&document.fonts.load) Promise.all([document.fonts.load(`700 40px ${FD}`,T.sample),document.fonts.load(`600 40px ${FB}`,T.sample)]).then(refresh,refresh);
 }
@@ -1442,6 +1530,7 @@ controls.addEventListener('start',()=>{tween=null;setViewBtn(null);});
 // boot: pre-fill log as if the station has run up to step 2
 (function boot(){
   if(host.clientWidth<640) $('tgLabels').checked=false;
+  dimGroup.visible=$('tgDim').checked;
   rebootLog();
   renderDetail(); syncPlay();
   let started=false; const go=()=>{if(started)return;started=true;texTable.sig=texProd.sig=texPanel.sig=texHMI.sig='';requestAnimationFrame(loop);}; setTimeout(go,1500);
