@@ -364,7 +364,7 @@ const L10N={
    {k:'H2',n:'Camera AI nhận diện ×2',a:'cam',s:['CAM-1 5 MP: theo dõi tay toàn vùng thao tác, 30 fps','CAM-2 12 MP: kiểm tra Poka-Yoke và ngoại quan cuối','Ống kính công nghiệp méo thấp, cáp khóa vít']},
    {k:'H3',n:'Đèn chiếu sáng phụ',a:'led',s:['2 đèn LED bar 600 mm chiếu đều bàn và kệ','Đèn dome/vòng cho vùng kiểm tra cuối','Bộ điều khiển đèn có trigger từ IPC']},
    {k:'H4',n:'Máy tính IPC & màn hình HMI',a:'hmi',s:['IPC Core i7, 32 GB, GPU NVIDIA RTX 8 GB cho AI','HMI cảm ứng 21,5" + màn hình 2 cho video/live camera','UPS online 1,5 kVA']},
-   {k:'H5',n:'Ngoại vi & Poka-Yoke',a:'peri',s:['Đầu đọc mã 2D công nghiệp có chân đế','2 súng vặn vít điện kiểm soát lực, tín hiệu OK/NG + bộ đếm vít','Balancer treo súng, cảm biến hiện diện trên đồ gá']},
+   {k:'H5',n:'Ngoại vi & Poka-Yoke',a:'peri',s:['Đầu đọc mã 2D công nghiệp có giá gá bên cạnh trái bàn thao tác','2 súng vặn vít điện kiểm soát lực, tín hiệu OK/NG + bộ đếm vít','Balancer treo súng, cảm biến hiện diện trên đồ gá']},
    {k:'H6',n:'Tủ điện PLC/IO & cảnh báo',a:'plc',s:['PLC mini hoặc Remote I/O Ethernet','Đèn tháp 3 màu có còi, nút dừng khẩn cấp, Start/Reset','Tủ điện 24 VDC, CB, relay an toàn']},
    {k:'H7',n:'Khung bàn thao tác ESD & đồ gá',a:'jig',s:['Nhôm định hình 1800×900×850 mm, khung trên 2200 mm','Thảm ESD nối đất, kệ 5 tầng 30 hộp linh kiện (6×5), tấm chiếu trắng','Đồ gá định vị theo model, chốt và cảm biến']},
    {k:'H8',n:'Máy cấp vít tự động (Auto Screw Feeder)',a:'feeder',s:['Bố trí trên mặt bàn bên phải, phía trước kệ linh kiện để thuận tiện lấy vít','Mâm rung cấp và định vị vít M3 liên tục vào cửa lấy vít','Cảm biến quang xác nhận vít sẵn sàng, tự ngắt rung chống kẹt vít']}
@@ -374,7 +374,7 @@ const L10N={
    {k:'S2',n:'Hiệu chuẩn máy chiếu & AI Vision',s:['Hiệu chuẩn camera–máy chiếu tự động bằng mẫu chiếu, bù méo','Nhận diện bàn tay và vùng lấy, đếm vít, kiểm tra đủ/đúng/hướng','So sánh mẫu chuẩn, ngưỡng chỉnh theo sản phẩm, chạy GPU tại trạm']},
    {k:'S3',n:'Truy xuất nguồn gốc & kết nối MES/SPC',s:['Hồ sơ theo serial: người làm, thời gian từng bước, lực siết, ảnh','Dashboard thời gian thực, báo cáo năng suất và lỗi','Kết nối MES của HFS (REST/SQL/OPC UA), biểu đồ SPC, Cp/Cpk']}
   ],
-  anchors:{proj:'Máy chiếu dẫn hướng',cam:'Camera AI ×2',led:'Đèn LED bar / dome',hmi:'IPC & HMI',peri:'Đầu đọc 2D & súng vặn vít',feeder:'Máy cấp vít tự động',plc:'PLC/IO & đèn tháp',jig:'Bàn ESD & đồ gá',mes:'Cổng kết nối MES/SPC (IPC dưới gầm bàn)'},
+  anchors:{proj:'Máy chiếu dẫn hướng',cam:'Camera AI ×2',led:'Đèn LED bar / dome',hmi:'IPC & HMI',peri:'Đầu đọc 2D & súng vặn vít',feeder:'Máy cấp vít tự động',plc:'PLC/IO & đèn tháp',jig:'Bàn ESD & đồ gá',mes:'Cổng kết nối MES/SPC'},
   table:{
    loaded:['ĐÃ TẢI SOP v3.2',['Model HX-BR200 · Lệnh WO-261026-0153','7 bước · Lực siết 0,50 N·m ±10%']],
    scan:['QUÉT MÃ LỆNH SẢN XUẤT',['Đưa mã 2D trên phiếu công đoạn vào vùng quét']],
@@ -457,7 +457,7 @@ const L10N={
    {k:'H2',n:'AI 인식 카메라 ×2',a:'cam',s:['CAM-1 5 MP: 작업 영역 전체 손 추적, 30 fps','CAM-2 12 MP: 포카요케 및 최종 외관 검사','저왜곡 산업용 렌즈, 나사 고정식 케이블']},
    {k:'H3',n:'보조 조명',a:'led',s:['600 mm LED 바 2개로 작업대와 선반 균일 조명','최종 검사 영역용 돔/링 조명','IPC 트리거 지원 조명 컨트롤러']},
    {k:'H4',n:'IPC & HMI 모니터',a:'hmi',s:['IPC Core i7, 32 GB, AI용 NVIDIA RTX 8 GB GPU','21.5" 터치 HMI + 영상/라이브 카메라용 보조 모니터','온라인 UPS 1.5 kVA']},
-   {k:'H5',n:'주변장치 & 포카요케',a:'peri',s:['거치대 포함 산업용 2D 코드 리더','토크 제어 전동 드라이버 2대, OK/NG 신호 + 나사 카운터','드라이버 밸런서, 지그 재석 센서']},
+   {k:'H5',n:'주변장치 & 포카요케',a:'peri',s:['작업대 좌측 측면 홀스터에 거치된 산업용 2D 코드 리더','토크 제어 전동 드라이버 2대, OK/NG 신호 + 나사 카운터','드라이버 밸런서, 지그 재석 센서']},
    {k:'H6',n:'PLC/IO 제어반 & 경보',a:'plc',s:['미니 PLC 또는 이더넷 리모트 I/O','부저 내장 3색 타워램프, 비상정지, Start/Reset 버튼','24 VDC 제어반, 차단기, 안전 릴레이']},
    {k:'H7',n:'ESD 작업대 프레임 & 지그',a:'jig',s:['알루미늄 프로파일 1800×900×850 mm, 상부 프레임 2200 mm','접지 ESD 매트, 5단 선반 부품 빈 30개 (6×5), 백색 투영판','모델별 위치결정 지그, 핀 및 센서']},
    {k:'H8',n:'자동 나사 공급기 (Auto Screw Feeder)',a:'feeder',s:['부품 선반 전면 우측 작업대 위에 배치하여 간섭 없이 나사 픽업','진동 트랙 방식으로 M3 나사 자동 정렬 및 픽업구 공급','광전 센서로 나사 대기 감지 및 걸림 방지']}
@@ -467,7 +467,7 @@ const L10N={
    {k:'S2',n:'프로젝터 캘리브레이션 & AI Vision',s:['투영 패턴을 이용한 카메라–프로젝터 자동 캘리브레이션, 왜곡 보정','손 및 피킹 영역 인식, 나사 카운트, 수량/종류/방향 검사','기준 이미지 비교, 제품별 임계값 조정, 스테이션 GPU에서 실행']},
    {k:'S3',n:'이력 추적 & MES/SPC 연동',s:['시리얼별 기록: 작업자, 단계별 시간, 체결 토크, 이미지','실시간 대시보드, 생산성 및 불량 리포트','HFS MES 연동 (REST/SQL/OPC UA), SPC 차트, Cp/Cpk']}
   ],
-  anchors:{proj:'안내 프로젝터',cam:'AI 카메라 ×2',led:'LED 바 / 돔 조명',hmi:'IPC & HMI',peri:'2D 리더 & 전동 드라이버',feeder:'자동 나사 공급기',plc:'PLC/IO & 타워램프',jig:'ESD 작업대 & 지그',mes:'MES/SPC 게이트웨이 (작업대 하부 IPC)'},
+  anchors:{proj:'안내 프로젝터',cam:'AI 카메라 ×2',led:'LED 바 / 돔 조명',hmi:'IPC & HMI',peri:'2D 리더 & 전동 드라이버',feeder:'자동 나사 공급기',plc:'PLC/IO & 타워램프',jig:'ESD 작업대 & 지그',mes:'MES/SPC 게이트웨이'},
   table:{
    loaded:['SOP v3.2 로드 완료',['모델 HX-BR200 · 작업지시 WO-261026-0153','7단계 · 체결 토크 0.50 N·m ±10%']],
    scan:['작업지시 코드 스캔',['공정 작업표의 2D 코드를 스캔 영역에 대 주세요']],
@@ -790,13 +790,19 @@ DRV_X.forEach((x,i)=>{
   drivers.push({g:d,rest,line,top:new V3(x,2.07,0.205)});
 });
 
-/* ---------------- scanner, e-stop, paper ---------------- */
-const scanStand=new V3(-0.56,TOPY,0.37);
-cyl(0.045,0.012,M.dark,scanStand.x,TOPY+0.006,scanStand.z); box(0.02,0.08,0.02,M.dark,scanStand.x,TOPY+0.05,scanStand.z-0.02);
+/* ---------------- 2D barcode scanner (mounted on left flank of workstation) ---------------- */
+const scanStand=new V3(-0.945,TOPY-0.01,0.28);
+// Side bracket mounted to left edge & profile of table
+box(0.012,0.07,0.06,M.dark,-0.906,TOPY-0.02,scanStand.z);
+box(0.04,0.014,0.03,M.frame,-0.925,TOPY+0.005,scanStand.z);
+// Holster cradle for scanner
+const holster=box(0.052,0.075,0.07,std(0x28313b,{roughness:.4}),scanStand.x,scanStand.y+0.04,scanStand.z);
+holster.rotation.z=0.20; holster.rotation.x=-0.10;
+box(0.042,0.068,0.06,M.black,scanStand.x,scanStand.y+0.042,scanStand.z);
 const scanner=new THREE.Group(); scene.add(scanner);
 box(0.05,0.05,0.09,M.dark,0,0.04,0,scanner); box(0.052,0.012,0.092,M.yellow,0,0.062,0,scanner); box(0.035,0.09,0.035,M.dark,0,-0.02,0.03,scanner);
 const scanWin=new THREE.Mesh(new THREE.PlaneGeometry(0.04,0.03),new THREE.MeshBasicMaterial({color:0x8a1f1f,toneMapped:false})); scanWin.rotation.x=Math.PI/2; scanWin.position.set(0,0.0145,-0.02); scanner.add(scanWin);
-const scanRest=new V3(scanStand.x,TOPY+0.075,scanStand.z);
+const scanRest=new V3(scanStand.x,TOPY+0.08,scanStand.z);
 const beamGeo=new THREE.BufferGeometry(); beamGeo.setAttribute('position',new THREE.Float32BufferAttribute(new Array(9).fill(0),3));
 const beam=new THREE.Mesh(beamGeo,new THREE.MeshBasicMaterial({color:0xff3b30,transparent:true,opacity:.45,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,depthWrite:false,toneMapped:false})); scene.add(beam); beam.visible=false;
 
@@ -861,16 +867,8 @@ const cabLbl=new THREE.Mesh(new THREE.PlaneGeometry(0.14,0.04),new THREE.MeshBas
 cabLbl.position.set(0.50,0.70,0.295); scene.add(cabLbl);
 cyl(0.014,0.012,M.greenBtn,0.44,0.62,0.30).rotation.x=Math.PI/2; cyl(0.014,0.012,std(0xf2a900),0.50,0.62,0.30).rotation.x=Math.PI/2; cyl(0.014,0.012,M.red,0.56,0.62,0.30).rotation.x=Math.PI/2;
 
-/* Under-bench internal data trunking connecting PLC, controllers and IPC/MES Gateway */
-const cablePath=new THREE.CatmullRomCurve3([
-  new V3(0.50,0.48,-0.05),
-  new V3(0.10,0.50,-0.05),
-  new V3(-0.22,0.50,-0.06),
-  new V3(-0.40,0.485,-0.02),
-  new V3(-0.43,0.485,0.022)
-]);
-const cableMesh=new THREE.Mesh(new THREE.TubeGeometry(cablePath,32,0.005,6,false),M.cable); scene.add(cableMesh);
-const packets=[0,1,2,3].map(()=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.014,14,10),new THREE.MeshBasicMaterial({color:0x00e5ff,toneMapped:false}));m.visible=false;scene.add(m);return m;});
+/* Under-bench IPC / MES Gateway (no exposed cables between cabinets) */
+const packets=[];
 /* ---------------- projection surfaces ---------------- */
 const texTable=mkCanvas(1040,640);
 const tableProj=new THREE.Mesh(new THREE.PlaneGeometry(0.52,0.32),new THREE.MeshBasicMaterial({map:texTable.tex,transparent:true,depthWrite:false,toneMapped:false,polygonOffset:true,polygonOffsetFactor:-2}));
@@ -901,7 +899,7 @@ const lensSprite=glow(0xd8ffe6,0.12,new V3(0,2.02,0.10));
 
 /* ---------------- operator ghost ---------------- */
 const op={root:new THREE.Group(),upper:new THREE.Group()};
-op.root.position.set(-0.02,0,0.84); scene.add(op.root);
+op.root.position.set(-0.02,0,0.58); scene.add(op.root);
 for(const sx of [-1,1]){ const l=new THREE.Mesh(new THREE.CapsuleGeometry(0.065,0.70,6,12),M.ghost); l.position.set(sx*0.09,0.44,0); op.root.add(l); }
 op.upper.position.set(0,0.95,0); op.root.add(op.upper);
 const torso=new THREE.Mesh(new THREE.CapsuleGeometry(0.15,0.36,6,16),M.ghost); torso.scale.z=0.7; torso.position.set(0,0.24,0); op.upper.add(torso);
@@ -918,8 +916,8 @@ const tmp=new V3();
 function poseOperator(Lt,Rt){
   const base=op.root.position;
   const sL0=base.clone().add(new V3(shoulderL.x,0.95+shoulderL.y,0)), sR0=base.clone().add(new V3(shoulderR.x,0.95+shoulderR.y,0));
-  const need=Math.max(Lt.distanceTo(sL0),Rt.distanceTo(sR0))-0.60;
-  const lean=Math.asin(Math.min(Math.max(need,0)/0.48,0.82));
+  const need=Math.max(Lt.distanceTo(sL0),Rt.distanceTo(sR0))-0.64;
+  const lean=Math.asin(Math.min(Math.max(need,0)/0.55,0.18));
   op.upper.rotation.x=-lean;
   op.root.updateMatrixWorld(true);
   for(const [k,T] of [['L',Lt],['R',Rt]]){
@@ -945,7 +943,7 @@ function path(keys,t){ if(t<=keys[0][0]) return keys[0][1].clone();
   for(let k=0;k<keys.length-1;k++){const [ta,a]=keys[k],[tb,b]=keys[k+1]; if(t<=tb){const u=tb>ta?smooth((t-ta)/(tb-ta)):1; return a.clone().lerp(b,u);}}
   return keys[keys.length-1][1].clone(); }
 const stepDur=i=>(i===2&&sim.err)?STEPS[2].durErr:STEPS[i].dur;
-const scanGrab=scanRest.clone().add(new V3(0,0.03,0.0));
+const scanGrab=scanRest.clone().add(new V3(0.02,0.04,0.0));
 const overQR=new V3(QR.x+0.02,TOPY+0.19,QR.z+0.01);
 const above=p=>p.clone().add(new V3(0,0.06,0));
 const SCREW_WIN=[0.06,0.28,0.50,0.72];
@@ -1193,7 +1191,7 @@ function applyState(now){
   // hands & operator
   poseOperator(st.L,st.R);
   // scanner
-  if(st.scanOn){ scanner.position.copy(arms.L.W).add(new V3(0,0.03,0)); } else scanner.position.copy(scanRest);
+  if(st.scanOn){ scanner.position.copy(arms.L.W).add(new V3(0,0.03,0)); scanner.rotation.set(0.12,-0.2,0); } else { scanner.position.copy(scanRest); scanner.rotation.set(-0.10,0,0.20); }
   beam.visible=st.beam;
   if(st.beam){ const h=scanner.position.clone().add(new V3(0,0.012,-0.02)); const p=beamGeo.attributes.position; const a=QR.clone().add(new V3(-0.05,0,0)),b=QR.clone().add(new V3(0.05,0,0));
     p.setXYZ(0,h.x,h.y,h.z);p.setXYZ(1,a.x,a.y+0.003,a.z);p.setXYZ(2,b.x,b.y+0.003,b.z);p.needsUpdate=true; beamGeo.computeBoundingSphere(); beam.material.opacity=0.35+0.2*Math.sin(time*30); }
@@ -1235,7 +1233,6 @@ function applyState(now){
   // frustums
   projFrustum.visible=showFov(); cam1Fr.visible=showFov()&&(st.i<=3);
   // packets
-  packets.forEach((m,k)=>{ if(!st.packets){m.visible=false;return;} const u=((sim.t-0.05)/0.85)*1.6-k*0.2; if(u<0||u>1){m.visible=false;return;} m.visible=true; m.position.copy(cablePath.getPointAt(u)); });
   if(typeof ipcTxLed!=='undefined'&&ipcTxLed){ ipcTxLed.material.color.setHex((st.packets&&(Math.sin(now*0.035)>0))?0xffaa00:0x332200); }
   // projected content
   drawTable(st); drawProd(st); drawPanel(st); drawHMI(st); drawLive(st,now);
@@ -1279,7 +1276,7 @@ const ANCHORS={
 const labelsEl=$('labels'); const labels=[];
 for(const key in ANCHORS){const a=ANCHORS[key];const el=document.createElement('button');el.type='button';el.className='lbl'+(a.server?' server':'');el.innerHTML=`<span class="dot"></span><span class="tag"><em>${a.k}</em><span class="nm"></span></span>`;el.querySelector('.nm').textContent=T.anchors[key];el.addEventListener('click',()=>focusAnchor(key));labelsEl.appendChild(el);labels.push({el,a,key,tag:el.querySelector('.tag'),nm:el.querySelector('.nm'),w:0});}
 function focusAnchor(key){const a=ANCHORS[key];flyTo(a.view[0],a.view[1]);labels.forEach(L=>L.el.classList.toggle('sel',L.key===key));document.querySelectorAll('.hw-item[data-a]').forEach(b=>b.classList.toggle('sel',b.dataset.a===key));setViewBtn(null);}
-const VIEWS={overview:[[2.15,2.30,2.95],[0.0,1.10,0.0]],operator:[[-0.02,1.98,1.12],[0,1.0,-0.12]],top:[[0.01,3.7,0.55],[0,0.9,-0.02]],jig:[[0.62,1.38,0.82],[0.15,0.93,0.14]],cabinet:[[1.85,0.85,1.65],[0.45,0.5,0]]};
+const VIEWS={overview:[[2.15,2.30,2.95],[0.0,1.10,0.0]],operator:[[-0.02,1.90,0.86],[0,1.0,-0.05]],top:[[0.01,3.7,0.55],[0,0.9,-0.02]],jig:[[0.62,1.38,0.82],[0.15,0.93,0.14]],cabinet:[[1.85,0.85,1.65],[0.45,0.5,0]]};
 function setViewBtn(v){document.querySelectorAll('.views button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===v)));}
 document.querySelectorAll('.views button').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.view;flyTo(...VIEWS[v]);setViewBtn(v);labels.forEach(L=>L.el.classList.remove('sel'));}));
 let tween=null;
