@@ -308,7 +308,7 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
 (function(){
 'use strict';
 /* ---------------- i18n (Tiếng Việt / 한국어) ---------------- */
-const STEP_NUM=[{dur:5,real:6},{dur:3.5,real:4},{dur:4.5,durErr:8,real:5},{dur:4.5,real:12},{dur:8,real:24},{dur:4.5,real:6},{dur:4,real:3}];
+const STEP_NUM=[{dur:5,real:6},{dur:3.5,real:4},{dur:4.5,durErr:8,real:5},{dur:4.5,real:12},{dur:9.5,real:24},{dur:4.5,real:6},{dur:4,real:3}];
 const L10N={
  vi:{
   dec:',', sample:'ăâđ', title:'Trạm PAS HFS VINA',
@@ -349,9 +349,9 @@ const L10N={
    {name:'Lắp vào đồ gá theo hình chiếu',actors:['H1 máy chiếu','H7 đồ gá','S1 Step Engine'],
     desc:'Đường viền vị trí và mũi tên hướng lắp được chiếu thẳng lên sản phẩm. Cảm biến trên đồ gá xác nhận chi tiết đã nằm đúng chỗ.',
     roles:[['Máy chiếu','Viền nét đứt đúng vị trí đặt khung đỡ và mũi tên hướng lắp.'],['Đồ gá','Cảm biến hiện diện S1 chuyển ON.'],['HMI','Video thao tác mẫu của công nhân lành nghề.']]},
-   {name:'Siết vít kiểm soát lực',actors:['H5 súng vặn vít','H6 PLC','S2 đếm vít'],
-    desc:'Thứ tự 4 vít được chiếu lên sản phẩm. Súng vặn vít trả tín hiệu OK/NG kèm giá trị lực; đủ 4/4 vít OK mới cho sang bước.',
-    roles:[['Máy chiếu','Vòng tròn đánh số 1→2→3→4 tại từng lỗ vít, vít xong chuyển xanh.'],['Súng vặn vít','Ngắt theo lực, gửi OK/NG và giá trị N·m.'],['PLC','Đếm vít, chặn nếu thiếu vít hoặc NG.'],['Dữ liệu','Lưu lực siết từng vít theo serial.']]},
+   {name:'Siết vít kiểm soát lực (Cấp tự động)',actors:['H5 súng vặn vít','H8 máy cấp vít','H6 PLC'],
+     desc:'Súng siết lấy từng vít M3 từ máy cấp vít tự động ở góc trên bên phải mặt bàn, sau đó siết 4 vít theo thứ tự 1→2→3→4 trên sản phẩm. Súng trả tín hiệu OK/NG kèm giá trị lực; đủ 4/4 vít OK mới hoàn tất bước.',
+     roles:[['Máy cấp vít','Cấp và định vị từng vít M3 vào cửa lấy tự động, cảm biến quang báo sẵn sàng.'],['Súng vặn vít','Hút lấy vít từ máy cấp, siết ngắt theo lực 0,50 N·m, gửi OK/NG.'],['Máy chiếu','Vòng tròn đánh số 1→2→3→4 tại từng lỗ vít, vít xong chuyển xanh.'],['PLC','Đếm đủ 4/4 vít, khóa bước nếu thiếu vít hoặc lực siết NG.']]},
    {name:'Kiểm tra Poka-Yoke bằng AI',actors:['H2 camera 12 MP','H3 đèn dome','S2 AI Vision'],
     desc:'Camera 12 MP chụp dưới đèn dome, so với ảnh mẫu chuẩn: đủ vít, đúng chi tiết, đúng hướng. Tỷ lệ phù hợp đạt ngưỡng thì ĐẠT.',
     roles:[['Đèn dome','Bật sáng đều vùng sản phẩm khi chụp.'],['Camera AI','So sánh mẫu chuẩn: 98,7% ≥ ngưỡng 95%.'],['Nếu NG','Đèn đỏ, giữ sản phẩm trên đồ gá, chiếu vị trí lỗi.']]},
@@ -366,14 +366,15 @@ const L10N={
    {k:'H4',n:'Máy tính IPC & màn hình HMI',a:'hmi',s:['IPC Core i7, 32 GB, GPU NVIDIA RTX 8 GB cho AI','HMI cảm ứng 21,5" + màn hình 2 cho video/live camera','UPS online 1,5 kVA']},
    {k:'H5',n:'Ngoại vi & Poka-Yoke',a:'peri',s:['Đầu đọc mã 2D công nghiệp có chân đế','2 súng vặn vít điện kiểm soát lực, tín hiệu OK/NG + bộ đếm vít','Balancer treo súng, cảm biến hiện diện trên đồ gá']},
    {k:'H6',n:'Tủ điện PLC/IO & cảnh báo',a:'plc',s:['PLC mini hoặc Remote I/O Ethernet','Đèn tháp 3 màu có còi, nút dừng khẩn cấp, Start/Reset','Tủ điện 24 VDC, CB, relay an toàn']},
-   {k:'H7',n:'Khung bàn thao tác ESD & đồ gá',a:'jig',s:['Nhôm định hình 1800×900×850 mm, khung trên 2200 mm','Thảm ESD nối đất, kệ 3 tầng 18 hộp linh kiện, tấm chiếu trắng','Đồ gá định vị theo model, chốt và cảm biến']}
+   {k:'H7',n:'Khung bàn thao tác ESD & đồ gá',a:'jig',s:['Nhôm định hình 1800×900×850 mm, khung trên 2200 mm','Thảm ESD nối đất, kệ 5 tầng 30 hộp linh kiện (6×5), tấm chiếu trắng','Đồ gá định vị theo model, chốt và cảm biến']},
+   {k:'H8',n:'Máy cấp vít tự động (Auto Screw Feeder)',a:'feeder',s:['Đặt góc trên cùng bên phải mặt bàn thao tác','Mâm rung cấp và định vị vít M3 liên tục vào cửa lấy vít','Cảm biến quang xác nhận vít sẵn sàng, tự ngắt rung chống kẹt vít']}
   ],
   sw:[
    {k:'S1',n:'Module chỉ dẫn người lắp ráp',s:['Soạn SOP không cần lập trình: ảnh tham chiếu → vị trí hiển thị → vùng nhận dạng → trình tự','Chiếu nội dung theo từng bước, video thao tác mẫu','Quản lý phiên bản SOP theo model, đăng nhập công nhân, giao diện Việt/Anh/Hàn']},
    {k:'S2',n:'Hiệu chuẩn máy chiếu & AI Vision',s:['Hiệu chuẩn camera–máy chiếu tự động bằng mẫu chiếu, bù méo','Nhận diện bàn tay và vùng lấy, đếm vít, kiểm tra đủ/đúng/hướng','So sánh mẫu chuẩn, ngưỡng chỉnh theo sản phẩm, chạy GPU tại trạm']},
    {k:'S3',n:'Truy xuất nguồn gốc & kết nối MES/SPC',s:['Hồ sơ theo serial: người làm, thời gian từng bước, lực siết, ảnh','Dashboard thời gian thực, báo cáo năng suất và lỗi','Kết nối MES của HFS (REST/SQL/OPC UA), biểu đồ SPC, Cp/Cpk']}
   ],
-  anchors:{proj:'Máy chiếu dẫn hướng',cam:'Camera AI ×2',led:'Đèn LED bar / dome',hmi:'IPC & HMI',peri:'Đầu đọc 2D & súng vặn vít',plc:'PLC/IO & đèn tháp',jig:'Bàn ESD & đồ gá',mes:'Server MES/SPC (HFS)'},
+  anchors:{proj:'Máy chiếu dẫn hướng',cam:'Camera AI ×2',led:'Đèn LED bar / dome',hmi:'IPC & HMI',peri:'Đầu đọc 2D & súng vặn vít',feeder:'Máy cấp vít tự động',plc:'PLC/IO & đèn tháp',jig:'Bàn ESD & đồ gá',mes:'Server MES/SPC (HFS)'},
   table:{
    loaded:['ĐÃ TẢI SOP v3.2',['Model HX-BR200 · Lệnh WO-261026-0153','7 bước · Lực siết 0,50 N·m ±10%']],
    scan:['QUÉT MÃ LỆNH SẢN XUẤT',['Đưa mã 2D trên phiếu công đoạn vào vùng quét']],
@@ -382,7 +383,7 @@ const L10N={
    pickedOk:'ĐÃ LẤY ĐÚNG ✓', pickRight:'BƯỚC 3/7 · LẤY ĐÚNG Ô', pickLines:['Camera AI đang xác nhận thao tác tay','Ô B2 · Khung đỡ BR-02'],
    placed:['ĐÚNG VỊ TRÍ ✓',['Cảm biến đồ gá S1: ON','Chuẩn bị siết vít']],
    place:['BƯỚC 4/7 · LẮP KHUNG ĐỠ',['Đặt BR-02 vào viền sáng trên sản phẩm','Mép gấp hướng sang hai bên']],
-   screw:'BƯỚC 5/7 · SIẾT 4 VÍT M3', screwL1:'Theo thứ tự 1 → 2 → 3 → 4 · 0,50 N·m', screwL2:n=>`Đã siết ${n}/4 vít OK`,
+   screw:'BƯỚC 5/7 · SIẾT 4 VÍT M3 (CẤP TỰ ĐỘNG)', screwL1:'Lấy vít từ máy cấp tự động · siết 1→2→3→4 · 0,50 N·m', screwL2:n=>`Đã siết ${n}/4 vít OK`,
    passed:['AI: ĐẠT 98,7%',['Đủ 4 vít · đúng chi tiết · đúng hướng','Ngưỡng ≥ 95%']],
    inspect:['BƯỚC 6/7 · AI KIỂM TRA',['Giữ tay ngoài vùng chụp','Camera 12 MP đang so mẫu chuẩn']],
    done:'HOÀN THÀNH ✓', doneL1:sn=>'Đã lưu hồ sơ SN '+sn, doneL2:'Gửi MES/SPC · lấy sản phẩm ra'
@@ -398,7 +399,7 @@ const L10N={
   log:{kind:{info:'INFO',ok:'OK',err:'LỖI',data:'MES'},
    e0:'Quét WO-261026-0153 → MES trả BOM, SOP v3.2, lực 0,50 N·m', e1:'Chiếu chỉ dẫn → ô B2 · khung đỡ BR-02 × 1',
    e2ok:'CAM-1: tay trái trong vùng B2 (0.97) → xác nhận', e2err:'CAM-1: tay trong ô B3, SAI linh kiện → đèn đỏ + còi, khóa bước', e2unlock:'Tay vào đúng ô B2 → mở khóa bước',
-   e3:'Đồ gá S1 ON · khung đỡ đúng vị trí', e4:(k,tq)=>`Vít ${k}/4 · ${tq} N·m · OK`, e5:'CAM-2: tỷ lệ phù hợp 98,7% ≥ 95% → ĐẠT',
+   e3:'Đồ gá S1 ON · khung đỡ đúng vị trí', e4:(k,tq)=>`Lấy vít từ máy cấp → Siết vít ${k}/4 · ${tq} N·m · OK`, e5:'CAM-2: tỷ lệ phù hợp 98,7% ≥ 95% → ĐẠT',
    e6a:sn=>`Lưu hồ sơ SN ${sn} · 7 bước, 4 lực siết, 2 ảnh`, e6b:'Gửi MES/SPC · cập nhật biểu đồ lực siết',
    step:(n,name)=>`Bước ${n}/7 · ${name}`, errOn:'Bật mô phỏng lỗi: công nhân sẽ lấy sai ô B3 ở bước 3', errOff:'Tắt mô phỏng lỗi', shift:'Bắt đầu ca · đăng nhập NV-0217'}
  },
@@ -441,9 +442,9 @@ const L10N={
    {name:'투영 안내에 따라 지그에 조립',actors:['H1 프로젝터','H7 지그','S1 Step Engine'],
     desc:'위치 윤곽선과 조립 방향 화살표가 제품 위에 직접 투영됩니다. 지그의 센서가 부품이 제자리에 놓였는지 확인합니다.',
     roles:[['프로젝터','브래킷 장착 위치의 점선 윤곽과 조립 방향 화살표.'],['지그','재석 센서 S1이 ON으로 전환.'],['HMI','숙련 작업자의 표준 작업 영상.']]},
-   {name:'토크 제어 나사 체결',actors:['H5 전동 드라이버','H6 PLC','S2 나사 카운트'],
-    desc:'4개 나사의 체결 순서가 제품 위에 투영됩니다. 전동 드라이버가 토크 값과 함께 OK/NG 신호를 보내며, 4/4 나사가 모두 OK여야 다음 단계로 진행합니다.',
-    roles:[['프로젝터','각 나사 구멍에 1→2→3→4 번호 원 표시, 체결 완료 시 녹색으로 전환.'],['전동 드라이버','설정 토크 도달 시 정지, OK/NG와 N·m 값 전송.'],['PLC','나사 카운트, 누락 또는 NG 시 차단.'],['데이터','시리얼별 나사 토크 저장.']]},
+   {name:'토크 제어 나사 체결 (자동 공급)',actors:['H5 전동 드라이버','H8 자동 나사 공급기','H6 PLC'],
+    desc:'작업대 우측 상단의 자동 나사 공급기에서 나사를 취출하여 1→2→3→4 순서로 4개 M3 나사를 체결합니다. 전동 드라이버가 토크 값과 함께 OK/NG 신호를 보내며, 4/4 나사가 모두 OK여야 다음 단계로 진행합니다.',
+    roles:[['자동 나사 공급기','M3 나사를 픽업 위치로 자동 정렬 공급, 나사 취출 감지.'],['프로젝터','각 나사 구멍에 1→2→3→4 번호 원 표시, 체결 완료 시 녹색으로 전환.'],['전동 드라이버','공급기에서 나사 취출 후 0.50 N·m 정밀 체결, OK/NG 전송.'],['PLC','나사 카운트, 누락 또는 NG 시 차단.']]},
    {name:'AI 포카요케 검사',actors:['H2 12 MP 카메라','H3 돔 조명','S2 AI Vision'],
     desc:'12 MP 카메라가 돔 조명 아래에서 촬영하여 기준 이미지와 비교합니다: 나사 전수, 올바른 부품, 올바른 방향. 일치율이 임계값 이상이면 합격입니다.',
     roles:[['돔 조명','촬영 시 제품 영역을 균일하게 조명.'],['AI 카메라','기준 이미지 비교: 98.7% ≥ 임계값 95%.'],['NG 시','적색등, 제품을 지그에 유지, 불량 위치 투영.']]},
@@ -458,14 +459,15 @@ const L10N={
    {k:'H4',n:'IPC & HMI 모니터',a:'hmi',s:['IPC Core i7, 32 GB, AI용 NVIDIA RTX 8 GB GPU','21.5" 터치 HMI + 영상/라이브 카메라용 보조 모니터','온라인 UPS 1.5 kVA']},
    {k:'H5',n:'주변장치 & 포카요케',a:'peri',s:['거치대 포함 산업용 2D 코드 리더','토크 제어 전동 드라이버 2대, OK/NG 신호 + 나사 카운터','드라이버 밸런서, 지그 재석 센서']},
    {k:'H6',n:'PLC/IO 제어반 & 경보',a:'plc',s:['미니 PLC 또는 이더넷 리모트 I/O','부저 내장 3색 타워램프, 비상정지, Start/Reset 버튼','24 VDC 제어반, 차단기, 안전 릴레이']},
-   {k:'H7',n:'ESD 작업대 프레임 & 지그',a:'jig',s:['알루미늄 프로파일 1800×900×850 mm, 상부 프레임 2200 mm','접지 ESD 매트, 3단 선반 부품 빈 18개, 백색 투영판','모델별 위치결정 지그, 핀 및 센서']}
+   {k:'H7',n:'ESD 작업대 프레임 & 지그',a:'jig',s:['알루미늄 프로파일 1800×900×850 mm, 상부 프레임 2200 mm','접지 ESD 매트, 5단 선반 부품 빈 30개 (6×5), 백색 투영판','모델별 위치결정 지그, 핀 및 센서']},
+   {k:'H8',n:'자동 나사 공급기 (Auto Screw Feeder)',a:'feeder',s:['작업대 우측 상단 모서리에 배치','진동 트랙 방식으로 M3 나사 자동 정렬 및 픽업구 공급','광전 센서로 나사 대기 감지 및 걸림 방지']}
   ],
   sw:[
    {k:'S1',n:'작업자 안내 모듈',s:['코딩 없는 SOP 작성: 기준 이미지 → 표시 위치 → 인식 영역 → 순서','단계별 내용 투영, 표준 작업 영상','모델별 SOP 버전 관리, 작업자 로그인, 베트남어/영어/한국어 UI']},
    {k:'S2',n:'프로젝터 캘리브레이션 & AI Vision',s:['투영 패턴을 이용한 카메라–프로젝터 자동 캘리브레이션, 왜곡 보정','손 및 피킹 영역 인식, 나사 카운트, 수량/종류/방향 검사','기준 이미지 비교, 제품별 임계값 조정, 스테이션 GPU에서 실행']},
    {k:'S3',n:'이력 추적 & MES/SPC 연동',s:['시리얼별 기록: 작업자, 단계별 시간, 체결 토크, 이미지','실시간 대시보드, 생산성 및 불량 리포트','HFS MES 연동 (REST/SQL/OPC UA), SPC 차트, Cp/Cpk']}
   ],
-  anchors:{proj:'안내 프로젝터',cam:'AI 카메라 ×2',led:'LED 바 / 돔 조명',hmi:'IPC & HMI',peri:'2D 리더 & 전동 드라이버',plc:'PLC/IO & 타워램프',jig:'ESD 작업대 & 지그',mes:'MES/SPC 서버 (HFS)'},
+  anchors:{proj:'안내 프로젝터',cam:'AI 카메라 ×2',led:'LED 바 / 돔 조명',hmi:'IPC & HMI',peri:'2D 리더 & 전동 드라이버',feeder:'자동 나사 공급기',plc:'PLC/IO & 타워램프',jig:'ESD 작업대 & 지그',mes:'MES/SPC 서버 (HFS)'},
   table:{
    loaded:['SOP v3.2 로드 완료',['모델 HX-BR200 · 작업지시 WO-261026-0153','7단계 · 체결 토크 0.50 N·m ±10%']],
    scan:['작업지시 코드 스캔',['공정 작업표의 2D 코드를 스캔 영역에 대 주세요']],
@@ -474,7 +476,7 @@ const L10N={
    pickedOk:'올바르게 피킹 ✓', pickRight:'단계 3/7 · 올바른 빈에서 피킹', pickLines:['AI 카메라가 손동작을 확인 중','B2 빈 · 브래킷 BR-02'],
    placed:['정위치 ✓',['지그 센서 S1: ON','나사 체결 준비']],
    place:['단계 4/7 · 브래킷 조립',['제품 위 빛 윤곽선 안에 BR-02 장착','접힌 가장자리가 양옆을 향하도록']],
-   screw:'단계 5/7 · M3 나사 4개 체결', screwL1:'순서 1 → 2 → 3 → 4 · 0.50 N·m', screwL2:n=>`나사 ${n}/4 체결 OK`,
+   screw:'단계 5/7 · M3 나사 4개 체결 (자동 공급)', screwL1:'자동 공급기 나사 취출 · 순서 1→2→3→4 · 0.50 N·m', screwL2:n=>`나사 ${n}/4 체결 OK`,
    passed:['AI: 합격 98.7%',['나사 4개 · 올바른 부품 · 올바른 방향','임계값 ≥ 95%']],
    inspect:['단계 6/7 · AI 검사',['촬영 영역 밖으로 손을 두세요','12 MP 카메라가 기준 이미지와 비교 중']],
    done:'완료 ✓', doneL1:sn=>'SN '+sn+' 기록 저장 완료', doneL2:'MES/SPC 전송 · 제품을 꺼내세요'
@@ -490,7 +492,7 @@ const L10N={
   log:{kind:{info:'INFO',ok:'OK',err:'오류',data:'MES'},
    e0:'WO-261026-0153 스캔 → MES 회신: BOM, SOP v3.2, 토크 0.50 N·m', e1:'안내 투영 → B2 빈 · 브래킷 BR-02 × 1',
    e2ok:'CAM-1: 왼손이 B2 영역 (0.97) → 확인', e2err:'CAM-1: 손이 B3 빈, 잘못된 부품 → 적색등 + 부저, 단계 잠금', e2unlock:'손이 올바른 B2 빈 진입 → 단계 잠금 해제',
-   e3:'지그 S1 ON · 브래킷 정위치', e4:(k,tq)=>`나사 ${k}/4 · ${tq} N·m · OK`, e5:'CAM-2: 일치율 98.7% ≥ 95% → 합격',
+   e3:'지그 S1 ON · 브래킷 정위치', e4:(k,tq)=>`공급기 나사 취출 → 나사 ${k}/4 · ${tq} N·m · OK`, e5:'CAM-2: 일치율 98.7% ≥ 95% → 합격',
    e6a:sn=>`SN ${sn} 기록 저장 · 7단계, 토크 4건, 이미지 2장`, e6b:'MES/SPC 전송 · 체결 토크 차트 갱신',
    step:(n,name)=>`단계 ${n}/7 · ${name}`, errOn:'오류 시뮬레이션 켬: 작업자가 3단계에서 B3 빈을 잘못 집습니다', errOff:'오류 시뮬레이션 끔', shift:'교대 시작 · 작업자 NV-0217 로그인'}
  }
@@ -615,12 +617,18 @@ prof([-0.88,2.2,-0.43],[0.88,2.2,-0.43]); prof([-0.88,2.2,0.18],[0.88,2.2,0.18])
 prof([-0.88,2.2,-0.43],[-0.88,2.2,0.18]); prof([0.88,2.2,-0.43],[0.88,2.2,0.18]); prof([0,2.2,-0.43],[0,2.2,0.18]);
 prof([-0.88,2.2,-0.10],[0.88,2.2,-0.10]); prof([-0.88,2.2,0.14],[0.88,2.2,0.14]);
 for(const x of [-0.88,0.88]) strut([x,1.80,-0.41],[x,2.18,0.15]);
-prof([-0.88,2.04,-0.43],[0.88,2.04,-0.43]); prof([-0.88,1.44,-0.43],[0.88,1.44,-0.43]);
-// rack posts
-for(const x of [-0.80,0.80]) prof([x,0.86,-0.41],[x,1.44,-0.41]);
+prof([-0.88,2.04,-0.43],[0.88,2.04,-0.43]); prof([-0.88,1.66,-0.43],[0.88,1.66,-0.43]);
+// rack posts (5 tiers height)
+for(const x of [-0.80,0.80]) prof([x,0.86,-0.41],[x,1.66,-0.41]);
 
 /* ---------------- parts rack (3 tiers x 6 bins) ---------------- */
-const TIERS=[{r:'A',y:1.27,z:-0.31},{r:'B',y:1.10,z:-0.26},{r:'C',y:0.93,z:-0.21}];
+const TIERS=[
+  {r:'A',y:1.49,z:-0.37},
+  {r:'B',y:1.35,z:-0.33},
+  {r:'C',y:1.21,z:-0.29},
+  {r:'D',y:1.07,z:-0.25},
+  {r:'E',y:0.93,z:-0.21}
+];
 const BW=0.235,BG=0.015,BD=0.18,BH=0.10,BX0=-(6*BW+5*BG)/2;
 const bins={};
 function makeBracket(parent){
@@ -640,7 +648,9 @@ function makeBin(id,x,y,z,row){
   lm.position.set(-BW/2+0.05,0.03,BD/2+0.0008); g.add(lm);
   if(row==='A'){ for(let i=0;i<9;i++){const m=cyl(0.004,0.016,M.steel,(rnd()-.5)*0.16,0.012,(rnd()-.5)*0.11,g,8);m.rotation.set(Math.PI/2*rnd(),rnd()*3,Math.PI/2);} }
   else if(row==='B'){ for(let i=0;i<3;i++){const b=makeBracket(g);b.position.set(0,0.008+i*0.008,0.0);b.rotation.y=(i-1)*0.06;} }
-  else { for(let i=0;i<3;i++){const m=box(0.13,0.004,0.09,M.pcb,(i-1)*0.02,0.008+i*0.005,(i-1)*0.01,g);m.rotation.y=(i-1)*0.12;} }
+  else if(row==='C'){ for(let i=0;i<4;i++){const m=cyl(0.008,0.018,M.steel,(rnd()-.5)*0.14,0.01,(rnd()-.5)*0.10,g,12);m.rotation.x=Math.PI/2;} }
+  else if(row==='D'){ for(let i=0;i<3;i++){const m=box(0.13,0.004,0.09,M.pcb,(i-1)*0.02,0.008+i*0.005,(i-1)*0.01,g);m.rotation.y=(i-1)*0.12;} }
+  else { for(let i=0;i<3;i++){const m=box(0.08,0.025,0.06,M.pom,(i-1)*0.03,0.015,(i-1)*0.01,g);m.rotation.y=(i-1)*0.15;} }
   const hl=new THREE.Mesh(new THREE.PlaneGeometry(BW,0.056),projMat(0x40ff90)); hl.position.set(0,0.028,BD/2+0.0016); hl.visible=false; g.add(hl);
   const pool=new THREE.Mesh(new THREE.PlaneGeometry(BW-0.02,BD-0.02),projMat(0x40ff90,.55)); pool.rotation.x=-Math.PI/2; pool.position.set(0,0.045,0); pool.visible=false; g.add(pool);
   const zone=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(BW-0.012,0.13,0.13)),new THREE.LineDashedMaterial({color:0x3aa0ff,dashSize:0.012,gapSize:0.008,toneMapped:false}));
@@ -657,13 +667,13 @@ const binOpen=id=>{const b=bins[id];return new V3(b.x,b.y+0.085,b.z+BD/2-0.05);}
 const binFront=id=>{const b=bins[id];return new V3(b.x,b.y+0.16,b.z+BD/2+0.10);};
 
 /* ---------------- projection panel, monitors ---------------- */
-const panelG=new THREE.Group(); panelG.position.set(0,1.585,-0.405); panelG.rotation.x=-0.12; scene.add(panelG);
+const panelG=new THREE.Group(); panelG.position.set(0,1.75,-0.405); panelG.rotation.x=-0.10; scene.add(panelG);
 box(1.26,0.25,0.012,M.panel,0,0,0,panelG); box(1.28,0.02,0.02,M.aluDark,0,-0.13,-0.004,panelG);
 const texPanel=mkCanvas(1240,240);
 const panelProj=new THREE.Mesh(new THREE.PlaneGeometry(1.24,0.24),new THREE.MeshBasicMaterial({map:texPanel.tex,transparent:true,toneMapped:false,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2}));
 panelProj.position.z=0.0065; panelG.add(panelProj);
 
-const hmiG=new THREE.Group(); hmiG.position.set(0,1.885,-0.395); hmiG.rotation.x=0.14; scene.add(hmiG);
+const hmiG=new THREE.Group(); hmiG.position.set(0,2.03,-0.395); hmiG.rotation.x=0.14; scene.add(hmiG);
 const hb=box(0.56,0.34,0.035,M.black,0,0,0,hmiG); edges(hb,0x000000,.4);
 box(0.10,0.10,0.04,M.dark,0,0,-0.035,hmiG);
 const texHMI=mkCanvas(1040,600);
@@ -715,10 +725,58 @@ const towerSeg={};
 cyl(0.034,0.012,M.dark,0.97,1.837,-0.43);
 
 /* ---------------- screwdrivers + balancers ---------------- */
+/* ---------------- automatic screw feeder (top-right corner of tabletop) ---------------- */
+const feederG=new THREE.Group();
+feederG.position.set(0.65,TOPY,-0.25);
+scene.add(feederG);
+// Main chassis (ESD dark grey)
+const fBody=box(0.13,0.11,0.17,std(0x2d3436,{roughness:.4,metalness:.3}),0,0.055,0,feederG);
+edges(fBody,0x111111,.45);
+// Rear vibrating hopper chamber
+box(0.11,0.055,0.08,std(0x1e272e,{roughness:.5,metalness:.4}),0,0.13,-0.03,feederG);
+// Transparent acrylic hopper lid
+box(0.106,0.006,0.076,new THREE.MeshStandardMaterial({color:0x88ccff,transparent:true,opacity:.45,roughness:.1}),0,0.161,-0.03,feederG);
+// Loose M3 screws inside hopper
+for(let k=0;k<10;k++){
+  const sm=cyl(0.0025,0.009,M.steel,(rnd()-.5)*0.07,0.12+rnd()*0.015,-0.03+(rnd()-.5)*0.04,feederG,6);
+  sm.rotation.set(rnd()*2,rnd()*3,rnd()*2);
+}
+// Polished stainless steel vibrating track / rail
+const fTrack=box(0.018,0.012,0.10,M.steel,0,0.10,0.025,feederG);
+fTrack.rotation.x=0.08;
+for(let k=0;k<4;k++){ cyl(0.003,0.007,M.steel,0,0.115-k*0.004,0.005+k*0.018,feederG,6); }
+// Front pick-up block
+box(0.038,0.032,0.032,std(0x0984e3,{roughness:.35}),0,0.086,0.075,feederG);
+// Upright screw ready at pick-up mouth
+const feederScrewReady=new THREE.Group();
+feederScrewReady.position.set(0,0.104,0.082);
+cyl(0.0045,0.0035,M.screw,0,0.004,0,feederScrewReady,10);
+cyl(0.0025,0.009,M.steel,0,-0.002,0,feederScrewReady,8);
+feederG.add(feederScrewReady);
+// Pick sensor LED indicator (green = ready, amber = picking)
+const feederLed=new THREE.Mesh(new THREE.SphereGeometry(0.0045,10,8),new THREE.MeshBasicMaterial({color:0x2ed573,toneMapped:false}));
+feederLed.position.set(0.026,0.104,0.075);
+feederG.add(feederLed);
+// Front label
+const fLabel=new THREE.Mesh(new THREE.PlaneGeometry(0.075,0.022),new THREE.MeshBasicMaterial({map:(()=>{
+  const C=mkCanvas(200,64),c=C.ctx;
+  c.fillStyle='#0f172a';c.fillRect(0,0,200,64);
+  c.fillStyle='#22c55e';c.font=`700 28px ${FD}`;c.fillText('FEEDER · M3',12,42);
+  C.tex.needsUpdate=true;return C.tex;
+})(),toneMapped:false}));
+fLabel.position.set(0,0.038,0.086);
+feederG.add(fLabel);
+// Power rocker switch
+box(0.014,0.018,0.008,M.red,-0.042,0.038,0.087,feederG);
+const FEEDER_PICK=new V3(feederG.position.x,TOPY+0.11,feederG.position.z+0.082);
+
 function makeDriver(){
   const g=new THREE.Group();
   cyl(0.0025,0.04,M.steel,0,0.02,0,g,8); cyl(0.012,0.03,M.driverTop,0,0.055,0,g); cyl(0.021,0.17,M.driver,0,0.155,0,g); cyl(0.023,0.05,M.driverTop,0,0.265,0,g);
   box(0.03,0.012,0.012,M.dark,0,0.24,0.024,g);
+  const bitScrew=cyl(0.004,0.007,M.screw,0,-0.002,0,g,8);
+  bitScrew.visible=false;
+  g.userData.bitScrew=bitScrew;
   scene.add(g); return g;
 }
 const drivers=[]; const DRV_X=[0.72,0.82];
@@ -878,17 +936,36 @@ const stepDur=i=>(i===2&&sim.err)?STEPS[2].durErr:STEPS[i].dur;
 const scanGrab=scanRest.clone().add(new V3(0,0.03,0.0));
 const overQR=new V3(QR.x+0.02,TOPY+0.19,QR.z+0.01);
 const above=p=>p.clone().add(new V3(0,0.06,0));
-const SCREW_WIN=[0.08,0.27,0.46,0.65];
+const SCREW_WIN=[0.06,0.28,0.50,0.72];
 
-function screwPhase(t){ // returns {done, active}
-  let done=0,active=-1;
-  SCREW_WIN.forEach((a,k)=>{ if(t>=a+0.15) done=k+1; else if(t>=a && active<0) active=k; });
-  return {done,active};
+function screwPhase(t){ // returns {done, active, picking}
+  let done=0,active=-1,picking=false;
+  SCREW_WIN.forEach((a,k)=>{
+    if(t>=a+0.18) done=k+1;
+    else if(t>=a && active<0){
+      active=k;
+      if(t<a+0.07) picking=true;
+    }
+  });
+  return {done,active,picking};
 }
 function driverTip(t){
-  const D0=drivers[0].rest; const keys=[[0,D0],[0.08,D0]];
-  SCREW_WIN.forEach((a,k)=>{const s=SCREWS[k];keys.push([a+0.06,above(s)],[a+0.08,s],[a+0.15,s],[a+0.18,above(s)]);});
-  keys.push([0.92,D0],[1,D0]); return path(keys,t);
+  const D0=drivers[0].rest; const keys=[[0,D0],[0.04,above(FEEDER_PICK)]];
+  SCREW_WIN.forEach((a,k)=>{
+    const s=SCREWS[k];
+    keys.push(
+      [a+0.01,above(FEEDER_PICK)],
+      [a+0.035,FEEDER_PICK],
+      [a+0.06,above(FEEDER_PICK)],
+      [a+0.09,above(s)],
+      [a+0.12,s],
+      [a+0.16,s],
+      [a+0.18,above(s)]
+    );
+    if(k<3){ const nextA=SCREW_WIN[k+1]; keys.push([nextA-0.02,above(FEEDER_PICK)]); }
+  });
+  keys.push([0.92,above(FEEDER_PICK)],[0.96,D0],[1,D0]);
+  return path(keys,t);
 }
 function serial(){return 'HX26102601'+String(53+sim.cycles).padStart(2,'0');}
 
@@ -920,11 +997,11 @@ function computeState(){
     st.L=path([[0,HOLD],[0.35,new V3(JIG.x-0.02,PY+0.09,JIG.z+0.02)],[0.48,new V3(JIG.x,PY+0.045,JIG.z)],[0.62,new V3(JIG.x,PY+0.045,JIG.z)],[0.78,new V3(JIG.x-0.04,PY+0.12,JIG.z+0.08)],[1,REST.L]],t);
     st.partHeld=t<0.6;
   } else if(i===4){
-    const ph=screwPhase(t); st.screwsDone=ph.done; st.screwActive=ph.active;
+    const ph=screwPhase(t); st.screwsDone=ph.done; st.screwActive=ph.active; st.screwPicking=ph.picking;
     st.driverTip=driverTip(t);
     const grip=st.driverTip.clone().add(new V3(0.0,0.16,0.04));
     const g0=drivers[0].rest.clone().add(new V3(0,0.16,0.04));
-    st.R=path([[0,REST.R],[0.08,g0]],t); if(t>=0.08&&t<0.92) st.R=grip; if(t>=0.92) st.R=path([[0.92,g0],[1,REST.R]],t);
+    st.R=path([[0,REST.R],[0.05,g0]],t); if(t>=0.05&&t<0.95) st.R=grip; if(t>=0.95) st.R=path([[0.95,g0],[1,REST.R]],t);
   } else if(i===5){
     st.inspect=t<0.62; st.scanY=Math.min(1,Math.max(0,(t-0.08)/0.5));
   } else if(i===6){
@@ -1069,19 +1146,23 @@ function drawLive(st,now){
       c.fillStyle='rgba(10,17,24,.8)';c.fillRect(16,H-58,W-32,44);c.fillStyle='#4be08c';c.font=`700 26px ${FD}`;c.fillText(L10N[LANG].live.match,30,H-28);}
     T.tex.needsUpdate=true; return;
   }
-  // top-down schematic
+  // top-down schematic (5 tiers x 6 columns = 30 bins)
   const mx=x=>60+(x+0.9)/1.8*(W-120);
-  c.fillStyle='#16222e';c.fillRect(40,56,W-80,H-72);
-  const rows=['A','B','C']; rows.forEach((r,ri)=>{for(let k=1;k<=6;k++){const id=r+k,b=bins[id];const x=mx(b.x-BW/2),w=mx(b.x+BW/2)-x,y=70+ri*46;
-    const s=st.zone[id]; c.fillStyle='#232f3b';c.fillRect(x,y,w,38);
-    if(s){c.lineWidth=3;c.setLineDash(s==='idle'?[8,6]:[]);c.strokeStyle=s==='error'?'#ff4b3e':s==='ok'?'#4be08c':'#3a9bff';c.strokeRect(x+2,y+2,w-4,34);c.setLineDash([]);}
-    c.fillStyle='#7d8fa3';c.font=`500 14px ${FM}`;c.fillText(id,x+6,y+24);}});
-  const wy0=220; c.fillStyle='#1d2d24';c.fillRect(48,wy0,W-96,H-wy0-24);
+  c.fillStyle='#16222e';c.fillRect(40,50,W-80,H-64);
+  const rows=['A','B','C','D','E']; rows.forEach((r,ri)=>{for(let k=1;k<=6;k++){const id=r+k,b=bins[id];if(!b)return;const x=mx(b.x-BW/2),w=mx(b.x+BW/2)-x,y=54+ri*28;
+    const s=st.zone[id]; c.fillStyle='#232f3b';c.fillRect(x,y,w,23);
+    if(s){c.lineWidth=2.5;c.setLineDash(s==='idle'?[6,4]:[]);c.strokeStyle=s==='error'?'#ff4b3e':s==='ok'?'#4be08c':'#3a9bff';c.strokeRect(x+1,y+1,w-2,21);c.setLineDash([]);}
+    c.fillStyle='#7d8fa3';c.font=`500 11.5px ${FM}`;c.fillText(id,x+4,y+16);}});
+  const wy0=202; c.fillStyle='#1d2d24';c.fillRect(48,wy0,W-96,H-wy0-24);
   const mz=z=>wy0+(z+0.10)/0.55*(H-wy0-24);
   c.strokeStyle='#3d5a48';c.lineWidth=2;c.strokeRect(mx(JIG.x-0.2),mz(JIG.z-0.15),mx(JIG.x+0.2)-mx(JIG.x-0.2),mz(JIG.z+0.15)-mz(JIG.z-0.15));
   c.fillStyle='#55705f';c.font=`500 14px ${FM}`;c.fillText('JIG',mx(JIG.x-0.19),mz(JIG.z-0.15)+18);
+  // Auto Screw Feeder on live schematic
+  c.fillStyle='#203347';c.fillRect(mx(0.56),wy0+8,mx(0.74)-mx(0.56),34);
+  c.strokeStyle='#3880e0';c.lineWidth=1.5;c.strokeRect(mx(0.56),wy0+8,mx(0.74)-mx(0.56),34);
+  c.fillStyle='#85b6ff';c.font=`600 11px ${FM}`;c.fillText('FEEDER',mx(0.575),wy0+28);
   c.fillStyle='#d9e2ea';c.fillRect(mx(-0.88),mz(0.11),mx(-0.68)-mx(-0.88),mz(0.39)-mz(0.11));
-  const handPt=(p)=>{ if(p.z<-0.12){ let best=null,bd=9; for(const id in bins){const d=binOpen(id).distanceTo(p);if(d<bd){bd=d;best=id;}} const b=bins[best];const ri='ABC'.indexOf(best[0]); return [mx(b.x),70+ri*46+19]; } return [mx(p.x),mz(Math.min(p.z,0.44))]; };
+  const handPt=(p)=>{ if(p.z<-0.12){ let best=null,bd=9; for(const id in bins){const d=binOpen(id).distanceTo(p);if(d<bd){bd=d;best=id;}} const b=bins[best];const ri='ABCDE'.indexOf(best[0]); return [mx(b.x),54+ri*28+12]; } return [mx(p.x),mz(Math.min(p.z,0.44))]; };
   [['L',arms.L.W||st.L],['R',arms.R.W||st.R]].forEach(([k,p])=>{ if(!p) return; const [x,y]=handPt(p);
     const det=st.detect&&k==='L'; const col=det?(st.detect.ok?'#4be08c':(st.detect.id==='B3'?'#ff4b3e':'#3a9bff')):'#3a9bff';
     c.fillStyle='rgba(91,140,210,.85)';c.beginPath();c.ellipse(x,y,22,28,0,0,Math.PI*2);c.fill();
@@ -1114,9 +1195,22 @@ function applyState(now){
   bracketPlaced.visible=st.partPlaced;
   screwHeads.forEach((g,k)=>g.visible=k<st.screwsDone);
   sensorLed.material.color.setHex(st.partPlaced?0x2dff7a:0x3a3f45);
-  // drivers
-  drivers.forEach((d,k)=>{ if(k===0&&st.driverTip){ d.g.position.copy(st.driverTip); const tight=st.screwActive>=0&&sim.t>=SCREW_WIN[st.screwActive]+0.08; d.g.rotation.y=tight?time*25:0; } else { d.g.position.copy(d.rest); d.g.rotation.y=0; }
-    const top=d.g.position.clone().add(new V3(0,0.30,0)); const p=d.line.geometry.attributes.position; p.setXYZ(1,top.x,top.y,top.z); p.needsUpdate=true; d.line.geometry.computeBoundingSphere(); });
+  // drivers & auto screw feeder
+  drivers.forEach((d,k)=>{
+    if(k===0&&st.driverTip){
+      d.g.position.copy(st.driverTip);
+      const tight=st.screwActive>=0&&!st.screwPicking&&sim.t>=SCREW_WIN[st.screwActive]+0.10;
+      d.g.rotation.y=tight?time*25:0;
+      const carrying=st.screwActive>=0&&sim.t>=SCREW_WIN[st.screwActive]+0.035&&sim.t<SCREW_WIN[st.screwActive]+0.12;
+      if(d.g.userData.bitScrew) d.g.userData.bitScrew.visible=carrying;
+    } else {
+      d.g.position.copy(d.rest); d.g.rotation.y=0;
+      if(d.g.userData.bitScrew) d.g.userData.bitScrew.visible=false;
+    }
+    const top=d.g.position.clone().add(new V3(0,0.30,0)); const p=d.line.geometry.attributes.position; p.setXYZ(1,top.x,top.y,top.z); p.needsUpdate=true; d.line.geometry.computeBoundingSphere();
+  });
+  if(typeof feederScrewReady!=='undefined') feederScrewReady.visible=!st.screwPicking;
+  if(typeof feederLed!=='undefined') feederLed.material.color.setHex(st.screwPicking?0xf59e0b:0x2ed573);
   // tower
   const blink=Math.floor(time*2.5)%2===0;
   const on={r:st.tower==='r'&&blink,a:st.tower==='a'&&blink,g:st.tower==='g'};
@@ -1165,6 +1259,7 @@ const ANCHORS={
   peri:{k:'H5',p:new V3(0.77,1.56,0.205),view:[[1.6,1.7,1.4],[0.45,1.2,0.1]]},
   plc:{k:'H6',p:new V3(0.97,1.86,-0.43),view:[[1.9,1.4,1.5],[0.6,1.0,-0.1]]},
   jig:{k:'H7',p:new V3(0.18,PY+0.03,0.30),view:[[0.75,1.45,0.95],[0.15,0.92,0.12]]},
+  feeder:{k:'H8',p:new V3(0.65,TOPY+0.16,-0.25),view:[[1.15,1.45,0.2],[0.55,0.92,-0.15]]},
   mes:{k:'MES',p:new V3(-1.72,1.20,-0.10),view:[[-0.3,1.5,2.3],[-1.15,0.75,-0.15]],server:true}
 };
 const labelsEl=$('labels'); const labels=[];

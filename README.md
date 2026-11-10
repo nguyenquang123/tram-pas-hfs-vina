@@ -46,5 +46,6 @@ PAS_Simulation/
 Toàn bộ logic vận hành được cấu hình trong phần `/* ---------------- data ---------------- */` và `L10N` bên trong file `index.html`:
 * **Quy trình các bước (STEPS):** Tùy chỉnh danh sách các bước thao tác, thời gian tiêu chuẩn và vai trò của từng thiết bị trong mảng `steps`.
 * **Thông số lực siết (TORQUE):** Chỉnh sửa mảng `const TORQUE = [0.52, 0.51, 0.53, 0.52];` theo dải lực thực tế của sản phẩm.
-* **Số lượng khay linh kiện:** Cấu hình 3 tầng khay trong mảng `TIERS` (Tầng A, B, C tương ứng 18 khay `A1` đến `C6`).
+* **Số lượng khay linh kiện:** Cấu hình 5 tầng khay trong mảng `TIERS` (Tầng A, B, C, D, E tương ứng 30 khay `A1` đến `E6` theo ma trận 6×5).
+* **Máy cấp vít tự động (H8):** Tự động cấp và sắp xếp vít M3 tại góc trên cùng bên phải mặt bàn thao tác, súng siết tự động hút/lấy vít từ máy trước khi siết vào chi tiết.
 
