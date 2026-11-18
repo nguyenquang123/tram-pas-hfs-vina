@@ -494,12 +494,513 @@
       .print-sign-block small { display: block; color: #666; font-size: 7.5pt; }
     }
 
-  </style>
+  
+    /* MODAL XÁC NHẬN XUẤT BÁO CÁO (HỎI TRƯỚC KHI TẢI) */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      animation: modalFadeIn 0.2s ease;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .modal-dialog {
+      background: #ffffff;
+      border-radius: 14px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      border: 1px solid #cbd5e1;
+      overflow: hidden;
+      animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalSlideUp {
+      from { transform: translateY(20px) scale(0.97); }
+      to { transform: translateY(0) scale(1); }
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .modal-header-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .modal-icon {
+      font-size: 24px;
+    }
+    .modal-header-title h3 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0a5bb0;
+    }
+    .modal-header-title p {
+      margin: 2px 0 0;
+      font-size: 11.5px;
+      color: #64748b;
+    }
+    .modal-close-btn {
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #94a3b8;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .modal-close-btn:hover {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+    .modal-body {
+      padding: 16px 18px;
+    }
+    .modal-info-card {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12.5px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .modal-info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: baseline;
+    }
+    .modal-info-row .lbl {
+      color: #64748b;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .modal-info-row .val {
+      color: #1e293b;
+      text-align: right;
+      font-size: 12px;
+    }
+    .modal-notice {
+      margin-top: 12px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #1e40af;
+      line-height: 1.45;
+    }
+    .modal-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 14px 18px 18px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+    }
+    .m-btn {
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+    }
+    .m-btn-primary {
+      background: #0a5bb0;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(10, 91, 176, 0.25);
+    }
+    .m-btn-primary:hover {
+      background: #08498c;
+    }
+    .m-btn-secondary {
+      background: #f0fdf4;
+      color: #0f766e;
+      border-color: #99f6e4;
+    }
+    .m-btn-secondary:hover {
+      background: #ccfbf1;
+    }
+    .m-btn-cancel {
+      background: transparent;
+      color: #64748b;
+      border-color: #cbd5e1;
+      font-weight: 600;
+    }
+    .m-btn-cancel:hover {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+
+    /* FULL COMPREHENSIVE REPORT STYLES */
+    #printableReportMaster {
+      display: none;
+    }
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 8mm 10mm;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+      }
+      .container, header, .projects-grid, footer, #exportConfirmModal {
+        display: none !important;
+      }
+      #printableReportMaster {
+        display: block !important;
+      }
+    }
+    .rep-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #0a5bb0;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .rep-brand h2 {
+      font-size: 13pt;
+      color: #0a5bb0;
+      margin: 0;
+      font-weight: 800;
+    }
+    .rep-brand p {
+      font-size: 8pt;
+      color: #555;
+      margin: 2px 0 0;
+    }
+    .rep-meta table {
+      font-size: 8pt;
+      border-collapse: collapse;
+    }
+    .rep-meta th { text-align: left; padding: 1px 6px; color: #444; }
+    .rep-meta td { padding: 1px 6px; font-weight: 600; }
+    .rep-title {
+      font-size: 14pt;
+      font-weight: 800;
+      color: #111;
+      margin: 0 0 2px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .rep-sub {
+      font-size: 8.5pt;
+      color: #444;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .rep-box {
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 10px;
+      background: #f8fafc;
+      page-break-inside: avoid;
+    }
+    .rep-box-title {
+      font-size: 9.5pt;
+      font-weight: 700;
+      color: #0a5bb0;
+      margin: 0 0 6px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .rep-grid-2 {
+      display: grid;
+      grid-template-columns: 38% 62%;
+      gap: 12px;
+      align-items: center;
+    }
+    .rep-img {
+      width: 100%;
+      max-height: 140px;
+      object-fit: contain;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 4px;
+    }
+    .rep-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 7.5pt;
+      margin-top: 4px;
+    }
+    .rep-table th, .rep-table td {
+      border: 1px solid #cbd5e1;
+      padding: 3px 6px;
+      text-align: left;
+    }
+    .rep-table th {
+      background: #e2e8f0;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .rep-desc {
+      font-size: 7.8pt;
+      line-height: 1.38;
+      color: #222;
+      margin: 0 0 4px;
+    }
+    .rep-ul {
+      margin: 0;
+      padding-left: 14px;
+      font-size: 7.8pt;
+      line-height: 1.35;
+    }
+    .rep-ul li { margin-bottom: 2px; }
+    .rep-footer {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 14px;
+      padding-top: 8px;
+      border-top: 1px solid #cbd5e1;
+      page-break-inside: avoid;
+    }
+    .rep-sign {
+      text-align: center;
+      font-size: 8pt;
+    }
+    .rep-sign span { display: block; color: #555; }
+    .rep-sign b { display: block; font-size: 9.5pt; color: #111; margin: 3px 0 1px; }
+    .rep-sign small { display: block; color: #666; font-size: 7pt; }
+
+</style>
   <script src="libs/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
   <div class="container">
+
+  <!-- MODAL XÁC NHẬN XUẤT BÁO CÁO (HỎI TRƯỚC KHI TẢI) -->
+  <div id="exportConfirmModal" class="modal-overlay" style="display:none;" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <span class="modal-icon">📄</span>
+          <div>
+            <h3 id="modalTitle">Xác Nhận Xuất Báo Cáo Kỹ Thuật (A4)</h3>
+            <p id="modalSub">HFS VINA Innovation Team · Tài liệu dự án Automation</p>
+          </div>
+        </div>
+        <button type="button" class="modal-close-btn" onclick="closeExportModal()" aria-label="Đóng">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-info-card">
+          <div class="modal-info-row">
+            <span class="lbl">Tên tài liệu:</span>
+            <b class="val" id="mDocName">Báo Cáo Tổng Hợp Dự Án Tự Động Hóa &amp; Thị Giác Máy Tính AI</b>
+          </div>
+          <div class="modal-info-row">
+            <span class="lbl">Số bản vẽ / Ref:</span>
+            <span class="val font-mono" id="mDocRef">HFS-AUTO-SUM-2026-01</span>
+          </div>
+          <div class="modal-info-row">
+            <span class="lbl">Tác giả Concept:</span>
+            <span class="val"><b>TheQuang</b> · Lead Automation &amp; Vision Solution Architect</span>
+          </div>
+          <div class="modal-info-row">
+            <span class="lbl">Đơn vị quản lý:</span>
+            <span class="val">HFS VINA INNOVATION TEAM</span>
+          </div>
+          <div class="modal-info-row">
+            <span class="lbl">Định dạng xuất:</span>
+            <span class="val">Khổ giấy tiêu chuẩn A4 dọc (Portrait) · Đầy đủ hình ảnh 3D &amp; bảng biểu</span>
+          </div>
+        </div>
+
+        <div class="modal-notice">
+          💡 <b>Chọn phương thức xuất báo cáo bên dưới:</b>
+          <p style="margin:4px 0 0;font-size:12px;color:#1e3a8a;">
+            • <b>Mở Bản In / Lưu PDF qua Trình Duyệt:</b> Định dạng Vector sắc nét nhất, xem trước toàn bộ trang in, không bao giờ bị lỗi trang trắng.<br>
+            • <b>Tải Trực Tiếp File PDF:</b> Tải thẳng tệp <code>.pdf</code> về máy tính hoặc điện thoại.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="m-btn m-btn-primary" onclick="executeNativePrint()">
+          <span>🖨️</span> Mở Bản In / Lưu PDF (Khuyên dùng)
+        </button>
+        <button type="button" class="m-btn m-btn-secondary" id="mBtnDirect" onclick="executeDirectPdfDownload()">
+          <span>📥</span> Tải Trực Tiếp File PDF (.pdf)
+        </button>
+        <button type="button" class="m-btn m-btn-cancel" onclick="closeExportModal()">
+          Hủy bỏ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- KHỐI BÁO CÁO TỔNG QUAN TOÀN BỘ DỰ ÁN CHO XUẤT PDF VÀ IN A4 -->
+  <section id="printableReportMaster" aria-hidden="true">
+    <div class="rep-header">
+      <div class="rep-brand">
+        <h2>HFS VINA · INNOVATION TEAM &amp; AUTOMATION R&amp;D</h2>
+        <p>BÁO CÁO ĐỀ XUẤT GIẢI PHÁP TỔNG HỢP: TỰ ĐỘNG HÓA &amp; THỊ GIÁC MÁY TÍNH AI (OPENCV)</p>
+      </div>
+      <div class="rep-meta">
+        <table>
+          <tr><th>Số tài liệu:</th><td>HFS-AUTO-SUM-2026-01</td></tr>
+          <tr><th>Phiên bản:</th><td>Rev01 Concept · Tác giả: <b>TheQuang</b></td></tr>
+          <tr><th>Ngày lập:</th><td>18/11/2026</td></tr>
+          <tr><th>Đơn vị:</th><td>Phòng Phát Triển Công Nghệ Sản Xuất HFS VINA</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <h1 class="rep-title">BÁO CÁO TỔNG QUAN CHIẾN LƯỢC: HỆ THỐNG TỰ ĐỘNG HÓA VÀ THỊ GIÁC MÁY TÍNH AI</h1>
+    <p class="rep-sub">Hệ sinh thái Tự động hóa khép kín: Trạm Lắp Ráp Chiếu Sáng PAS và Dây Chuyền Kitting Thông Minh kiểm soát chất lượng 100%</p>
+
+    <!-- DỰ ÁN 1: TRẠM PAS -->
+    <div class="rep-box">
+      <div class="rep-box-title">
+        <span>1. DỰ ÁN TRẠM LẮP RÁP CHIẾU SÁNG THÔNG MINH PAS (PROJECTION ASSEMBLY SYSTEM)</span>
+        <span style="font-size:7.5pt;color:#16a34a;background:#dcfce7;padding:1px 6px;border-radius:4px;">POKA-YOKE AI · MES CONNECTED</span>
+      </div>
+      <div class="rep-grid-2">
+        <div>
+          <img src="img_pas_workstation.png" alt="Mô hình 3D Trạm PAS" class="rep-img">
+          <table class="rep-table">
+            <tr><th>Kích thước</th><td>1800 × 900 × 2200 mm (Khung ESD)</td></tr>
+            <tr><th>Máy chiếu H1</th><td>4000 ANSI Lumens, chiếu viền &amp; SOP</td></tr>
+            <tr><th>Camera AI</th><td>CAM-1 (5MP tay) · CAM-2 (12MP Poka-Yoke)</td></tr>
+            <tr><th>Súng siết lực</th><td>0.50 N·m ±10%, tự động ngắt &amp; đếm vít</td></tr>
+          </table>
+        </div>
+        <div>
+          <p class="rep-desc"><b>Mục đích dự án:</b> Chuẩn hóa 100% quy trình lắp ráp sản phẩm phức tạp nhiều chi tiết, loại bỏ hoàn toàn rủi ro sai sót thao tác (Human Error) bằng máy chiếu chỉ dẫn quang học và camera AI giám sát tay người; tích hợp súng vặn vít kiểm soát mô-men xoắn toàn diện trước khi cho phép chuyển công đoạn.</p>
+          <p class="rep-desc"><b>Hiệu quả thực tế &amp; ROI:</b></p>
+          <ul class="rep-ul">
+            <li><b>Triệt tiêu lỗi lấy nhầm:</b> Giảm 99.8% lỗi nhờ AI Hand-Tracking quét liên tục 30 FPS, khóa bước tức thì nếu tay vào sai ô.</li>
+            <li><b>Rút ngắn 35% thời gian đào tạo:</b> Công nhân mới thao tác thành thạo ngay trong ca đầu theo chỉ dẫn chiếu sáng.</li>
+            <li><b>Kiểm soát lực siết 100%:</b> Đo mô-men xoắn tự động, đếm đủ số vít mới xác nhận hoàn tất chu trình.</li>
+            <li><b>Truy xuất nguồn gốc MES/SPC:</b> Lưu trữ Serial Number, biểu đồ lực và ảnh chụp kiểm tra lên máy chủ on-premise.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- DỰ ÁN 2: DÂY CHUYỀN KITTING -->
+    <div class="rep-box">
+      <div class="rep-box-title">
+        <span>2. DỰ ÁN DÂY CHUYỀN TỰ ĐỘNG HÓA KITTING &amp; TRẠM KIỂM TRA VISION 20MP</span>
+        <span style="font-size:7.5pt;color:#0a5bb0;background:#e0f2fe;padding:1px 6px;border-radius:4px;">OPENCV 20MP · AGV TRANSFER</span>
+      </div>
+      <div class="rep-grid-2">
+        <div>
+          <img src="img_kitting_line.png" alt="Mô hình 3D Dây Chuyền Kitting" class="rep-img">
+          <table class="rep-table">
+            <tr><th>Khay Tray</th><td>665 × 460 × 85 mm (16 ngăn ESD)</td></tr>
+            <tr><th>Camera Vision</th><td>Basler 20MP USB 3.0 công nghiệp</td></tr>
+            <tr><th>Hệ thống đèn</th><td>Neewer NL660S / P600 (CRI ≥95)</td></tr>
+            <tr><th>Băng chuyền &amp; AGV</th><td>Băng tải 12m phân luồng NG/OK &amp; AGV</td></tr>
+          </table>
+        </div>
+        <div>
+          <p class="rep-desc"><b>Mục đích dự án:</b> Tự động hóa 100% khâu kiểm tra khay sau khi kitting bằng thị giác máy tính OpenCV AI; xác định chính xác khay CÓ ĐỦ HAY KHÔNG (kiểm tra toàn bộ 16/16 ô: phát hiện Đủ, Thiếu, Thừa hoặc Sai loại linh kiện); tự động đẩy khay lỗi sang nhánh re-work và chuyển khay đạt sang robot AGV, triệt tiêu 100% nguy cơ thiếu linh kiện gây dừng chuyền lắp ráp (Zero Line-Stop).</p>
+          <p class="rep-desc"><b>Hiệu quả thực tế &amp; ROI:</b></p>
+          <ul class="rep-ul">
+            <li><b>Tiết kiệm nhân công:</b> Cắt giảm 2–3 nhân viên kiểm tra thủ công tại mỗi ca sản xuất.</li>
+            <li><b>Tốc độ kiểm tra siêu nhanh:</b> Dưới 1.5 giây/khay (nhanh hơn gấp 6 lần thao tác thủ công bằng mắt).</li>
+            <li><b>Độ chính xác vượt trội &gt;99.9%:</b> Thuật toán OpenCV quét đồng thời 16 ô linh kiện dưới đèn vòm chuẩn.</li>
+            <li><b>Phân loại tự động &amp; Cấp phát AGV:</b> Khay NG tự động gạt sang sửa lỗi, khay OK tự động kết nối robot AGV.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- MA TRẬN SO SÁNH GIÁ TRỊ DOANH NGHIỆP -->
+    <div class="rep-box" style="margin-bottom:6px;">
+      <div class="rep-box-title">3. MA TRẬN SO SÁNH HIỆU QUẢ: PHƯƠNG PHÁP THỦ CÔNG VS HỆ THỐNG AUTOMATION MỚI</div>
+      <table class="rep-table" style="font-size:7.5pt;">
+        <thead>
+          <tr>
+            <th>Hạng mục đánh giá</th>
+            <th>Quy trình thủ công hiện tại</th>
+            <th>Hệ thống Automation &amp; AI mới (Đề xuất)</th>
+            <th>Lợi ích vượt trội</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Lắp ráp linh kiện (PAS)</b></td>
+            <td>Nhìn tài liệu giấy, dễ lấy nhầm ô linh kiện khi mệt mỏi</td>
+            <td>Máy chiếu rọi ô chuẩn, Camera AI khóa bước nếu sai</td>
+            <td><b>Giảm 99.8% lỗi lấy sai chi tiết</b></td>
+          </tr>
+          <tr>
+            <td><b>Kiểm soát lực siết vít</b></td>
+            <td>Vặn tay hoặc tô vít thường, không đo được mô-men xoắn</td>
+            <td>Súng vặn lực tự ngắt 0.50 N·m ±10%, đếm đủ số vít</td>
+            <td><b>100% mối siết đạt chuẩn chất lượng</b></td>
+          </tr>
+          <tr>
+            <td><b>Kiểm tra khay Kitting</b></td>
+            <td>Công nhân đếm mắt 16 ô (tốn 8–10 giây/khay, dễ sót)</td>
+            <td>Camera Basler 20MP &amp; OpenCV AI quét tức thì &lt;1.5s</td>
+            <td><b>Nhanh gấp 6 lần, chính xác &gt;99.9%</b></td>
+          </tr>
+          <tr>
+            <td><b>Xử lý khay lỗi (NG/OK)</b></td>
+            <td>Bê tay thủ công, nguy cơ khay thiếu lọt vào line lắp ráp</td>
+            <td>Xi lanh khí nén gạt tự động khay NG sang nhánh re-work</td>
+            <td><b>Triệt tiêu rủi ro dừng chuyền (Zero Line-Stop)</b></td>
+          </tr>
+          <tr>
+            <td><b>Dữ liệu &amp; Truy xuất</b></td>
+            <td>Ghi chép sổ sách thủ công, khó tra cứu khi có sự cố</td>
+            <td>Tự động đồng bộ ảnh 20MP, Serial, BOM lên MES/SPC</td>
+            <td><b>Minh bạch 100% dữ liệu sản xuất thời gian thực</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rep-footer">
+      <div class="rep-sign">
+        <span>Người Lập Đề Xuất Concept:</span>
+        <b>TheQuang</b>
+        <small>Lead Automation &amp; Vision Solution Architect</small>
+      </div>
+      <div class="rep-sign">
+        <span>Đơn Vị Quản Lý &amp; Triển Khai:</span>
+        <b>HFS VINA INNOVATION TEAM</b>
+        <small>Phòng Phát Triển Công Nghệ Sản Xuất</small>
+      </div>
+    </div>
+  </section>
+
     <header>
       <div class="brand-tag" id="tBrand">HFS VINA · INNOVATION TEAM · SIMULATION PORTAL</div>
       <h1 id="tH1">DỰ ÁN <span>AUTOMATION</span></h1>
@@ -508,7 +1009,7 @@
       </p>
 
       <div class="header-action-row">
-        <button type="button" class="pdf-btn" onclick="exportMasterReportPDF()" id="tBtnPdf" title="Xuất toàn bộ báo cáo 2 dự án ra PDF A4">
+        <button type="button" class="pdf-btn" onclick="openExportModal()" id="tBtnPdf" title="Xuất toàn bộ báo cáo 2 dự án ra PDF A4">
           <span>📄</span> <span id="tBtnPdfText">Xuất Báo Cáo Tổng Hợp (A4)</span>
         </button>
         <div class="lang-switcher" role="group" aria-label="Ngôn ngữ">
@@ -734,6 +1235,97 @@
       try { return localStorage.getItem('hfs_hub_lang') || 'vi'; } catch (e) { return 'vi'; }
     })();
     setLang(savedLang);
+
+    /* ================= MODAL XÁC NHẬN & XUẤT BÁO CÁO A4 ================= */
+    function openExportModal() {
+      const modal = document.getElementById('exportConfirmModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+      }
+    }
+
+    function closeExportModal() {
+      const modal = document.getElementById('exportConfirmModal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function executeNativePrint() {
+      closeExportModal();
+      window.print();
+    }
+
+    function executeDirectPdfDownload() {
+      const btn = document.getElementById('mBtnDirect');
+      const originalHtml = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.innerHTML = '<span>⏳</span> ' + (currentLang === 'ko' ? 'PDF 생성 중...' : 'Đang tạo file PDF...');
+        btn.style.pointerEvents = 'none';
+      }
+
+      const el = document.getElementById('printableReportMaster');
+      if (!el) {
+        closeExportModal();
+        window.print();
+        return;
+      }
+
+      // Make element visible in DOM so html2canvas renders perfectly with 0 blank issue
+      el.style.position = 'fixed';
+      el.style.left = '0';
+      el.style.top = '0';
+      el.style.width = '800px';
+      el.style.zIndex = '999999';
+      el.style.background = '#ffffff';
+      el.style.display = 'block';
+      el.style.visibility = 'visible';
+      el.style.padding = '10mm 12mm';
+      el.style.boxSizing = 'border-box';
+
+      const opt = {
+        margin: [6, 8, 6, 8],
+        filename: (currentLang === 'ko') ? 'HFS_VINA_Automation_Jonghap_Bogo.pdf' : 'HFS_VINA_Bao_Cao_Automation_Tong_Hop.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          scrollY: 0,
+          scrollX: 0,
+          windowWidth: 1200,
+          logging: false
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      if (window.html2pdf) {
+        window.html2pdf().set(opt).from(el).save().then(() => {
+          el.style.display = 'none';
+          el.style.position = '';
+          el.style.left = '';
+          el.style.top = '';
+          el.style.width = '';
+          el.style.zIndex = '';
+          el.style.padding = '';
+          if (btn) { btn.innerHTML = originalHtml; btn.style.pointerEvents = ''; }
+          closeExportModal();
+        }).catch(err => {
+          console.warn('html2pdf fallback to print:', err);
+          el.style.display = 'none';
+          if (btn) { btn.innerHTML = originalHtml; btn.style.pointerEvents = ''; }
+          closeExportModal();
+          window.print();
+        });
+      } else {
+        el.style.display = 'none';
+        if (btn) { btn.innerHTML = originalHtml; btn.style.pointerEvents = ''; }
+        closeExportModal();
+        window.print();
+      }
+    }
+
   </script>
 
     <div class="print-master-footer" style="display:none;">
