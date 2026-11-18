@@ -167,8 +167,8 @@
     /* Image Showcase Frame */
     .image-showcase {
       width: 100%;
-      height: 250px;
-      background: #eef3f8;
+      height: 280px;
+      background: #e8ebf0;
       position: relative;
       overflow: hidden;
       border-bottom: 1px solid var(--border);
@@ -180,13 +180,14 @@
     .image-showcase img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
-      transition: transform 0.4s ease;
+      transition: transform 0.3s ease;
+      image-rendering: -webkit-optimize-contrast;
     }
 
     .project-card:hover .image-showcase img {
-      transform: scale(1.03);
+      transform: scale(1.02);
     }
 
     .canvas-badge {
