@@ -387,6 +387,113 @@
       .projects-grid { grid-template-columns: 1fr; }
       .footer-content { justify-content: center; text-align: center; }
     }
+  
+    .header-action-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 14px;
+    }
+    .pdf-btn {
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f766e;
+      background: #f0fdf4;
+      border: 1px solid #99f6e4;
+      padding: 7px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .pdf-btn:hover {
+      background: #ccfbf1;
+      color: #115e59;
+      transform: translateY(-1px);
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 8mm 10mm;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+      }
+      .brand-tag, .lang-switcher, .pdf-btn, .card-btn, .action-btn, footer {
+        display: none !important;
+      }
+      header {
+        margin-bottom: 12px !important;
+        padding-bottom: 8px !important;
+        border-bottom: 2px solid #0a5bb0;
+      }
+      h1 { font-size: 18pt !important; margin: 0 0 4px !important; color: #0a5bb0 !important; }
+      .subtitle { font-size: 9pt !important; margin: 0 !important; color: #333 !important; }
+      .projects-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px !important;
+        margin-top: 8px !important;
+      }
+      .project-card {
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+        break-inside: avoid;
+        padding: 12px !important;
+      }
+      .preview-box {
+        height: 140px !important;
+        margin-bottom: 8px !important;
+        background: #f8fafc !important;
+      }
+      .preview-box img {
+        max-height: 130px !important;
+      }
+      .card-body h2 {
+        font-size: 11pt !important;
+        margin: 4px 0 6px !important;
+      }
+      .info-block {
+        margin-bottom: 6px !important;
+      }
+      .info-label {
+        font-size: 8pt !important;
+        margin-bottom: 2px !important;
+      }
+      .info-content {
+        font-size: 7.8pt !important;
+        line-height: 1.35 !important;
+      }
+      .info-content li {
+        margin-bottom: 2px !important;
+      }
+      .tech-tags {
+        display: none !important;
+      }
+      .print-master-footer {
+        display: flex !important;
+        justify-content: space-around;
+        margin-top: 14px;
+        padding-top: 8px;
+        border-top: 1px solid #cbd5e1;
+      }
+      .print-sign-block {
+        text-align: center;
+        font-size: 8.5pt;
+      }
+      .print-sign-block span { display: block; color: #555; }
+      .print-sign-block b { display: block; font-size: 10pt; color: #111; margin: 4px 0 2px; }
+      .print-sign-block small { display: block; color: #666; font-size: 7.5pt; }
+    }
+
   </style>
 </head>
 <body>
@@ -399,9 +506,14 @@
         Mô phỏng 3D các giải pháp Tự động hóa, Thị giác máy tính AI (OpenCV Machine Vision) và Trạm lắp ráp thông minh thế hệ mới tại HFS VINA.
       </p>
 
-      <div class="lang-switcher" role="group" aria-label="Ngôn ngữ">
-        <button type="button" class="lang-btn active" data-lang="vi">🇻🇳 Tiếng Việt</button>
-        <button type="button" class="lang-btn" data-lang="ko">🇰🇷 한국어</button>
+      <div class="header-action-row">
+        <button type="button" class="pdf-btn" onclick="window.print()" id="tBtnPdf" title="Xuất toàn bộ báo cáo 2 dự án ra PDF A4">
+          <span>📄</span> <span id="tBtnPdfText">Xuất Báo Cáo Tổng Hợp (A4)</span>
+        </button>
+        <div class="lang-switcher" role="group" aria-label="Ngôn ngữ">
+          <button type="button" class="lang-btn active" data-lang="vi">🇻🇳 Tiếng Việt</button>
+          <button type="button" class="lang-btn" data-lang="ko">🇰🇷 한국어</button>
+        </div>
       </div>
     </header>
 
@@ -516,6 +628,7 @@
     /* ================= SONG NGỮ VIỆT - HÀN ================= */
     const I18N = {
       vi: {
+        btnPdfText: 'Xuất Báo Cáo Tổng Hợp (A4)',
         brand: 'HFS VINA · INNOVATION TEAM · SIMULATION PORTAL',
         h1: 'DỰ ÁN <span>AUTOMATION</span>',
         sub: 'Mô phỏng 3D các giải pháp Tự động hóa, Thị giác máy tính AI (OpenCV Machine Vision) và Trạm lắp ráp thông minh thế hệ mới tại HFS VINA.',
@@ -544,6 +657,7 @@
         kitBtn: '🚀 Mở Mô Phỏng Dây Chuyền Kitting'
       },
       ko: {
+        btnPdfText: '종합 보고서 출력 (A4)',
         brand: 'HFS VINA · 이노베이션 팀 · 시뮬레이션 포털',
         h1: '<span>오토메이션 프로젝트</span>',
         sub: 'HFS VINA의 차세대 스마트 조립 워크스테이션, 자동화 공정 및 AI 머신 비전(OpenCV) 3D 시뮬레이션입니다.',
@@ -578,6 +692,7 @@
       document.getElementById('tBrand').textContent = t.brand;
       document.getElementById('tH1').innerHTML = t.h1;
       document.getElementById('tSub').textContent = t.sub;
+      if (document.getElementById('tBtnPdfText')) document.getElementById('tBtnPdfText').textContent = t.btnPdfText;
 
       document.getElementById('tPasBadge').textContent = t.pasBadge;
       document.getElementById('tPasTitle').innerHTML = t.pasTitle;
@@ -619,5 +734,19 @@
     })();
     setLang(savedLang);
   </script>
+
+    <div class="print-master-footer" style="display:none;">
+      <div class="print-sign-block">
+        <span>Người Lập Concept:</span>
+        <b>TheQuang</b>
+        <small>Lead Automation &amp; Vision Solution Architect</small>
+      </div>
+      <div class="print-sign-block">
+        <span>Đơn Vị Quản Lý:</span>
+        <b>HFS VINA INNOVATION TEAM</b>
+        <small>Phòng Phát Triển Công Nghệ Sản Xuất</small>
+      </div>
+    </div>
+
 </body>
 </html>

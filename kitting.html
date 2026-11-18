@@ -1601,22 +1601,246 @@ footer {
     height: clamp(230px, 75vh, 350px);
   }
 }
+
+/* DEDICATED MASTER TOP BAR (TÁCH RIÊNG LÊN ĐẦU) */
+.master-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+.top-bar-left, .top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.top-btn {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.top-btn.hub-btn {
+  color: var(--accent);
+  background: rgba(10, 91, 176, 0.1);
+  border-color: rgba(10, 91, 176, 0.2);
+}
+.top-btn.hub-btn:hover {
+  background: rgba(10, 91, 176, 0.18);
+}
+.top-btn.switch-btn {
+  color: #ffffff;
+  background: var(--accent);
+  box-shadow: 0 2px 6px rgba(10, 91, 176, 0.25);
+}
+.top-btn.switch-btn:hover {
+  background: #08498c;
+}
+.top-btn.pdf-btn {
+  color: #0f766e;
+  background: #f0fdf4;
+  border-color: #99f6e4;
+}
+.top-btn.pdf-btn:hover {
+  background: #ccfbf1;
+  color: #115e59;
+}
+.station-status-pill {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ok);
+  background: rgba(19, 133, 74, 0.08);
+  border: 1px solid rgba(19, 133, 74, 0.2);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+/* KHỐI BÁO CÁO IN XUẤT PDF CHUẨN A4 KITTING LINE */
+#printableReport {
+  display: none;
+}
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm 10mm;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10pt !important;
+  }
+  .master-top-bar, .header-bar, .workspace, .control-deck, .kpi-strip, .model-viewport, .log-console {
+    display: none !important;
+  }
+  #printableReport {
+    display: block !important;
+  }
+  .print-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #0a5bb0;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  .print-brand h2 {
+    font-size: 14pt;
+    color: #0a5bb0;
+    margin: 0;
+  }
+  .print-brand p {
+    font-size: 8pt;
+    color: #555;
+    margin: 2px 0 0;
+  }
+  .print-meta table {
+    font-size: 8.5pt;
+    border-collapse: collapse;
+  }
+  .print-meta th { text-align: left; padding: 1px 6px; color: #444; }
+  .print-meta td { padding: 1px 6px; font-weight: 600; }
+  .print-title {
+    font-size: 15pt;
+    font-weight: bold;
+    color: #111;
+    margin: 4px 0 2px;
+    text-transform: uppercase;
+  }
+  .print-subtitle {
+    font-size: 9pt;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  .print-body-grid {
+    display: grid;
+    grid-template-columns: 42% 58%;
+    gap: 14px;
+  }
+  .print-img-box {
+    background: #f8fafc;
+    border: 1px solid #d2d9e1;
+    border-radius: 6px;
+    padding: 8px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .print-img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+  }
+  .print-specs-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+  .print-specs-box h4 {
+    font-size: 9pt;
+    color: #0a5bb0;
+    margin: 0 0 5px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+  }
+  .print-specs-box ul {
+    margin: 0;
+    padding-left: 14px;
+    font-size: 7.8pt;
+    line-height: 1.4;
+  }
+  .print-section {
+    margin-bottom: 8px;
+  }
+  .print-section h3 {
+    font-size: 9.5pt;
+    color: #0a5bb0;
+    margin: 0 0 3px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 2px;
+  }
+  .print-section p {
+    font-size: 8.2pt;
+    line-height: 1.42;
+    color: #222;
+    margin: 0;
+  }
+  .print-section ul, .print-steps-list {
+    margin: 3px 0 0;
+    padding-left: 14px;
+    font-size: 8.2pt;
+    line-height: 1.38;
+  }
+  .print-steps-list li { margin-bottom: 2px; }
+  .print-footer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px solid #ccc;
+    page-break-inside: avoid;
+  }
+  .sign-block {
+    text-align: center;
+    font-size: 8.5pt;
+  }
+  .sign-block span { display: block; color: #555; }
+  .sign-block b { display: block; font-size: 10pt; color: #111; margin: 4px 0 2px; }
+  .sign-block small { display: block; color: #666; font-size: 7.5pt; }
+}
+
 </style>
 </head>
 <body>
 
 <div class="app-container">
+
+  <!-- DEDICATED MASTER TOP BAR (TÁCH RIÊNG LÊN ĐẦU) -->
+  <nav class="master-top-bar" aria-label="Điều hướng chính">
+    <div class="top-bar-left">
+      <a href="index.html" class="top-btn hub-btn">
+        <span>🏛️</span>
+        <span data-i18n="nav_hub">Cổng Tổng (Hub)</span>
+      </a>
+      <a href="pas.html" class="top-btn switch-btn">
+        <span>🏭</span>
+        <span data-i18n="nav_switch">Sang Trạm PAS ➔</span>
+      </a>
+      <button type="button" class="top-btn pdf-btn" onclick="exportKittingReportPDF()" title="Xuất báo cáo PDF khổ A4">
+        <span>📄</span>
+        <span data-i18n="nav_pdf">Xuất Báo Cáo PDF (A4)</span>
+      </button>
+    </div>
+    <div class="top-bar-right">
+      <div class="station-status-pill">● 24/7 WebGL Ready · OpenCV Vision 20MP</div>
+      <div class="lang-selector" role="group" aria-label="Ngôn ngữ / 언어">
+        <button type="button" class="lang-btn active" data-lang="vi" lang="vi" aria-pressed="true">🇻🇳 Tiếng Việt</button>
+        <button type="button" class="lang-btn" data-lang="ko" lang="ko" aria-pressed="false">🇰🇷 한국어</button>
+      </div>
+    </div>
+  </nav>
+
   <!-- Top Title Bar -->
   <header class="header-bar">
     <div class="header-info">
       <div class="header-top-row">
         <div class="tag-line" data-i18n="eyebrow">HFS VINA INNOVATION TEAM · Full Automation Pipeline</div>
-        <div class="lang-selector" role="group" aria-label="Ngôn ngữ / 언어">
-          <a href="index.html" style="text-decoration:none;font-size:11.5px;font-weight:700;color:#0a5bb0;background:rgba(10,91,176,0.1);padding:4px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:4px;margin-right:4px;border:1px solid rgba(10,91,176,0.2)">🏛️ Cổng Tổng (Hub)</a>
-          <a href="pas.html" style="text-decoration:none;font-size:11.5px;font-weight:700;color:#ffffff;background:#0a5bb0;padding:4px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:4px;margin-right:6px;box-shadow:0 1px 3px rgba(0,0,0,0.15)">🏭 Sang Trạm PAS ➔</a>
-          <button type="button" class="lang-btn active" data-lang="vi" lang="vi" aria-pressed="true">🇻🇳 Tiếng Việt</button>
-          <button type="button" class="lang-btn" data-lang="ko" lang="ko" aria-pressed="false">🇰🇷 한국어</button>
-        </div>
       </div>
       <h1 data-i18n="h1_html"><span>HFS VINA</span> · Dây Chuyền Tự Động Hóa Kitting & Kiểm Tra Vision 3D</h1>
       <p class="desc" data-i18n="desc">Hệ thống OpenCV Machine Vision &amp; Vision AI: Trạm kiểm tra khay vật liệu sau khi Kitting nhằm xác định chính xác khay <b>CÓ ĐỦ HAY KHÔNG</b> (phát hiện Đủ / Thiếu / Thừa / Sai loại 16/16 ô linh kiện) bằng camera Basler 20MP độ phân giải cao.</p>
@@ -1640,6 +1864,89 @@ footer {
       </div>
     </dl>
   </header>
+
+<!-- KHỐI BÁO CÁO IN XUẤT PDF CHUẨN A4 KITTING LINE -->
+<section id="printableReport" aria-hidden="true">
+  <div class="print-header">
+    <div class="print-brand">
+      <h2>HFS VINA · CÔNG NGHỆ TỰ ĐỘNG HÓA &amp; THỊ GIÁC MÁY TÍNH</h2>
+      <p>BÁO CÁO CONCEPT DÂY CHUYỀN KITTING TỰ ĐỘNG HÓA VÀ TRẠM KIỂM TRA VISION 3D</p>
+    </div>
+    <div class="print-meta">
+      <table>
+        <tr><th>Số bản vẽ:</th><td>HFS-KIT-2026-01</td></tr>
+        <tr><th>Phiên bản:</th><td>Rev01 Concept · Tác giả: <b>TheQuang</b></td></tr>
+        <tr><th>Ngày lập:</th><td>18/11/2026</td></tr>
+        <tr><th>Tham chiếu:</th><td>Tiêu chuẩn Dây Chuyền Kitting Thông Minh HFS VINA</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h1 class="print-title">DÂY CHUYỀN TỰ ĐỘNG HÓA KITTING &amp; TRẠM KIỂM TRA VISION 20MP</h1>
+  <p class="print-subtitle">Trạm kiểm tra khay 16 ô linh kiện bằng OpenCV Machine Vision 20MP kết hợp Băng chuyền phân loại NG/OK &amp; Robot AGV Transfer</p>
+
+  <div class="print-body-grid">
+    <div class="print-col-image">
+      <div class="print-img-box">
+        <img src="img_kitting_line.png" alt="Mô hình 3D Dây Chuyền Kitting" class="print-img">
+      </div>
+      <div class="print-specs-box">
+        <h4>THÔNG SỐ KỸ THUẬT TIÊU CHUẨN</h4>
+        <ul>
+          <li><b>Khay vật liệu Tray:</b> 665 × 460 × 85 mm (16 ngăn định vị chuẩn chống tĩnh điện ESD)</li>
+          <li><b>Camera thị giác 20MP:</b> Basler 20MP USB 3.0 công nghiệp, phân giải cao quét toàn diện khay</li>
+          <li><b>Chiếu sáng công nghiệp:</b> Neewer NL660S / Bi-color P600 chống lóa, chỉ số hoàn màu CRI ≥95</li>
+          <li><b>Tốc độ kiểm tra:</b> &lt;1.5s / khay (độ chính xác nhận diện &gt;99.9%)</li>
+          <li><b>Băng chuyền &amp; Phân loại:</b> Băng tải 12m, cơ cấu đẩy gạt tự động khay NG và chuyển tiếp AGV</li>
+          <li><b>Hệ thống điều khiển:</b> IPC on-premise, liên động PLC Omron/Siemens &amp; cổng kết nối MES</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="print-col-info">
+      <div class="print-section">
+        <h3>1. MỤC ĐÍCH DỰ ÁN (PROJECT OBJECTIVES)</h3>
+        <p>Tự động hóa 100% khâu kiểm tra khay sau khi kitting bằng thị giác máy tính OpenCV AI; xác định chính xác khay CÓ ĐỦ HAY KHÔNG (kiểm tra toàn bộ 16/16 ô: phát hiện Đủ, Thiếu, Thừa hoặc Sai loại linh kiện); tự động phân loại khay lỗi sang nhánh re-work và chuyển khay đạt sang robot AGV, triệt tiêu 100% nguy cơ thiếu linh kiện gây dừng chuyền lắp ráp (Zero Line-Stop).</p>
+      </div>
+
+      <div class="print-section">
+        <h3>2. HIỆU QUẢ THỰC TẾ &amp; ROI ĐẠT ĐƯỢC</h3>
+        <ul>
+          <li><b>Tiết kiệm nhân công:</b> Giảm 2–3 nhân viên kiểm tra thủ công tại mỗi ca làm việc.</li>
+          <li><b>Tốc độ kiểm tra vượt trội:</b> &lt;1.5 giây/khay (nhanh hơn gấp 6 lần thao tác thủ công bằng mắt).</li>
+          <li><b>Độ chính xác &gt;99.9%:</b> Loại bỏ hoàn toàn lỗi chủ quan do mắt người khi làm việc ca dài.</li>
+          <li><b>Tự động phân loại khay NG/OK:</b> Cơ cấu đẩy khí nén gạt tức thì khay lỗi sang line sửa chữa.</li>
+          <li><b>Truy xuất dữ liệu 100%:</b> Lưu trữ ảnh chụp 20MP, mã vạch khay và kết quả kiểm tra lên MES/SPC.</li>
+        </ul>
+      </div>
+
+      <div class="print-section">
+        <h3>3. QUY TRÌNH VẬN HÀNH DÂY CHUYỀN (SOP)</h3>
+        <ol class="print-steps-list">
+          <li><b>Bước 1:</b> Nhân viên kitting xếp linh kiện vào khay 16 ô theo danh mục BOM hiển thị trên màn hình.</li>
+          <li><b>Bước 2:</b> Đẩy khay lên băng chuyền tự động, cảm biến quang phát hiện khay di chuyển vào buồng kiểm tra.</li>
+          <li><b>Bước 3:</b> Đèn chuyên dụng kích hoạt, Camera Basler 20MP chụp độ nét cao, OpenCV AI phân tích 16/16 ô.</li>
+          <li><b>Bước 4:</b> Nếu ĐẠT (OK): Băng chuyền đưa khay đến cuối line, Robot AGV Transfer tiếp nhận cấp cho xưởng.</li>
+          <li><b>Bước 5:</b> Nếu LỖI (NG): Bộ gạt khí nén đẩy khay sang băng tải Re-work, còi báo động hú và hiển thị ô lỗi trên HMI.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-footer">
+    <div class="sign-block">
+      <span>Người Lập Concept:</span>
+      <b>TheQuang</b>
+      <small>Lead Automation &amp; Vision Solution Architect</small>
+    </div>
+    <div class="sign-block">
+      <span>Đơn Vị Quản Lý:</span>
+      <b>HFS VINA INNOVATION TEAM</b>
+      <small>Phòng Phát Triển Công Nghệ Sản Xuất</small>
+    </div>
+  </div>
+</section>
+
 
   <!-- 4 Giai đoạn hoạt động -->
   <nav class="workflow-stepper">
@@ -2155,6 +2462,9 @@ footer {
 
   const I18N = {
     vi: {
+      nav_hub: "Cổng Tổng (Hub)",
+      nav_switch: "Sang Trạm PAS ➔",
+      nav_pdf: "Xuất Báo Cáo PDF (A4)",
       eyebrow: "HFS VINA INNOVATION TEAM · Full Automation Pipeline",
       h1_html: "<span>HFS VINA</span> · Dây Chuyền Tự Động Hóa Kitting & Kiểm Tra Vision 3D",
       desc: "Hệ thống OpenCV Machine Vision & Vision AI: Trạm kiểm tra khay vật liệu sau khi Kitting nhằm xác định chính xác khay <b>CÓ ĐỦ HAY KHÔNG</b> (phát hiện Đủ / Thiếu / Thừa / Sai loại 16/16 ô linh kiện) bằng camera Basler 20MP độ phân giải cao.",
@@ -2287,6 +2597,9 @@ footer {
       foot_std: "HFS VINA Innovation Team · Automation Standard · 2026"
     },
     ko: {
+      nav_hub: "메인 허브 (Hub)",
+      nav_switch: "PAS 조립 작업대 이동 ➔",
+      nav_pdf: "PDF 보고서 출력 (A4)",
       eyebrow: "HFS VINA INNOVATION TEAM · 전공정 자동화 라인",
       h1_html: "<span>HFS VINA</span> · 키팅 및 3D 머신비전 자동화 라인",
       desc: "OpenCV 머신비전 & Vision AI 시스템: 키팅(Kitting) 작업 후 20MP 비전 AI로 16/16개 구획을 전수 분석하여 khay vật liệu(트레이 자재) 완비 여부(충족 / 누락 / 과다 / 오삽)를 정밀 검사하는 핵심 검사 스테이션.",
@@ -5530,6 +5843,9 @@ footer {
     try { return localStorage.getItem('kitting_line_lang') || 'vi'; } catch (e) { return 'vi'; }
   })();
   applyLanguage(initLang);
+
+window.exportKittingReportPDF = function() { window.print(); };
+
 
   requestAnimationFrame(render);
 
