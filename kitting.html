@@ -1602,6 +1602,104 @@ footer {
   }
 }
 
+
+/* MOBILE FIT (<680px) */
+@media (max-width: 680px) {
+  body {
+    overflow-x: hidden;
+  }
+  .app-container {
+    padding: calc(6px + env(safe-area-inset-top, 0px)) 6px calc(20px + env(safe-area-inset-bottom, 0px)) 6px;
+    gap: 8px;
+  }
+  .master-top-bar {
+    padding: 8px 10px;
+    gap: 8px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+  }
+  .top-bar-left, .top-bar-right {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .top-btn {
+    font-size: 11px;
+    padding: 6px 8px;
+    flex: 1 1 0;
+    justify-content: center;
+    white-space: nowrap;
+    text-align: center;
+    border-radius: 6px;
+  }
+  .station-status-pill {
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    padding: 4px;
+    order: 2;
+  }
+  .lang-selector {
+    width: 100%;
+    display: flex;
+    order: 1;
+  }
+  .lang-btn {
+    flex: 1;
+    text-align: center;
+    padding: 6px;
+    font-size: 11.5px;
+  }
+  .model-viewport {
+    height: clamp(260px, 45vh, 380px);
+    border-radius: 8px;
+  }
+  .header-bar {
+    grid-template-columns: 1fr;
+  }
+  .header-info {
+    padding: 10px 12px;
+  }
+  h1 {
+    font-size: 18px;
+  }
+  .desc {
+    font-size: 11.5px;
+  }
+  .station-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .control-deck {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .deck-section {
+    padding: 8px;
+  }
+  .tray-grid-16 {
+    gap: 4px;
+  }
+  .tray-cell {
+    padding: 4px;
+    font-size: 10px;
+  }
+}
+
+#printableReport.rendering-pdf {
+  display: block !important;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 210mm;
+  background: #ffffff;
+  color: #000000;
+  z-index: 99999;
+  padding: 8mm 10mm;
+  box-sizing: border-box;
+}
+
 /* DEDICATED MASTER TOP BAR (TÁCH RIÊNG LÊN ĐẦU) */
 .master-top-bar {
   display: flex;
@@ -1806,6 +1904,7 @@ footer {
 }
 
 </style>
+  <script src="libs/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
@@ -1865,12 +1964,12 @@ footer {
     </dl>
   </header>
 
-<!-- KHỐI BÁO CÁO IN XUẤT PDF CHUẨN A4 KITTING LINE -->
+<!-- KHỐI BÁO CÁO IN XUẤT PDF CHUẨN A4 KITTING LINE ĐẦY ĐỦ THÔNG TIN -->
 <section id="printableReport" aria-hidden="true">
   <div class="print-header">
     <div class="print-brand">
-      <h2>HFS VINA · CÔNG NGHỆ TỰ ĐỘNG HÓA &amp; THỊ GIÁC MÁY TÍNH</h2>
-      <p>BÁO CÁO CONCEPT DÂY CHUYỀN KITTING TỰ ĐỘNG HÓA VÀ TRẠM KIỂM TRA VISION 3D</p>
+      <h2>HFS VINA · INNOVATION TEAM &amp; SMART FACTORY R&amp;D</h2>
+      <p>BÁO CÁO KỸ THUẬT DÂY CHUYỀN TỰ ĐỘNG HÓA KITTING &amp; TRẠM KIỂM TRA THỊ GIÁC MÁY TÍNH AI 20MP</p>
     </div>
     <div class="print-meta">
       <table>
@@ -1894,9 +1993,9 @@ footer {
         <h4>THÔNG SỐ KỸ THUẬT TIÊU CHUẨN</h4>
         <ul>
           <li><b>Khay vật liệu Tray:</b> 665 × 460 × 85 mm (16 ngăn định vị chuẩn chống tĩnh điện ESD)</li>
-          <li><b>Camera thị giác 20MP:</b> Basler 20MP USB 3.0 công nghiệp, phân giải cao quét toàn diện khay</li>
+          <li><b>Camera thị giác 20MP:</b> Basler 20MP USB 3.0 công nghiệp, phân giải cao 5472×3648 px</li>
           <li><b>Chiếu sáng công nghiệp:</b> Neewer NL660S / Bi-color P600 chống lóa, chỉ số hoàn màu CRI ≥95</li>
-          <li><b>Tốc độ kiểm tra:</b> &lt;1.5s / khay (độ chính xác nhận diện &gt;99.9%)</li>
+          <li><b>Tốc độ kiểm tra:</b> &lt;1.5s / khay (độ chính xác nhận diện &gt;99.9%, quét 16 ô song song)</li>
           <li><b>Băng chuyền &amp; Phân loại:</b> Băng tải 12m, cơ cấu đẩy gạt tự động khay NG và chuyển tiếp AGV</li>
           <li><b>Hệ thống điều khiển:</b> IPC on-premise, liên động PLC Omron/Siemens &amp; cổng kết nối MES</li>
         </ul>
@@ -1921,16 +2020,104 @@ footer {
       </div>
 
       <div class="print-section">
-        <h3>3. QUY TRÌNH VẬN HÀNH DÂY CHUYỀN (SOP)</h3>
-        <ol class="print-steps-list">
-          <li><b>Bước 1:</b> Nhân viên kitting xếp linh kiện vào khay 16 ô theo danh mục BOM hiển thị trên màn hình.</li>
-          <li><b>Bước 2:</b> Đẩy khay lên băng chuyền tự động, cảm biến quang phát hiện khay di chuyển vào buồng kiểm tra.</li>
-          <li><b>Bước 3:</b> Đèn chuyên dụng kích hoạt, Camera Basler 20MP chụp độ nét cao, OpenCV AI phân tích 16/16 ô.</li>
-          <li><b>Bước 4:</b> Nếu ĐẠT (OK): Băng chuyền đưa khay đến cuối line, Robot AGV Transfer tiếp nhận cấp cho xưởng.</li>
-          <li><b>Bước 5:</b> Nếu LỖI (NG): Bộ gạt khí nén đẩy khay sang băng tải Re-work, còi báo động hú và hiển thị ô lỗi trên HMI.</li>
-        </ol>
+        <h3>3. CÔNG NGHỆ THỊ GIÁC OPENCV &amp; THUẬT TOÁN AI PHÂN TÍCH 16 NGĂN</h3>
+        <p>Hệ thống chia vùng kiểm tra thành 16 ROI độc lập tương ứng 16 ô khay. Thuật toán xử lý ảnh OpenCV kết hợp Deep Learning Inference chạy song song trên GPU công nghiệp: xác định chính xác sự hiện diện (Presence/Absence), đếm số lượng (Quantity Check), nhận diện hình học (Pattern Matching) và phát hiện dị vật trong từng ngăn chỉ trong 250ms.</p>
       </div>
     </div>
+  </div>
+
+  <!-- BẢNG ĐẶC TẢ 16 NGĂN KHAY VẬT LIỆU & TIÊU CHUẨN KIỂM TRA -->
+  <div class="print-section" style="margin-top:8px;">
+    <h3>4. MA TRẬN 16 Ô KHAY VẬT LIỆU &amp; CÁC LỖI THIẾU/THỪA ĐƯỢC PHÁT HIỆN</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:7.5pt;margin-top:3px;">
+      <thead>
+        <tr style="background:#e2e8f0;color:#1e293b;">
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;text-align:center;width:12%;">Phân vùng ô</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:26%;">Linh kiện quy định (BOM)</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:32%;">Quy chuẩn kiểm tra Vision AI</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:30%;">Phân loại lỗi phát hiện (NG)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">Hàng A (Ô 1 - 4)</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Mainboard, Sub-PCB, Module nguồn</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Kiểm tra đủ số lượng bo mạch, đúng chiều cắm connector</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;color:#b91c1c;">Thiếu bo mạch, cắm ngược chiều, trầy xước PCB</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">Hàng B (Ô 5 - 8)</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Khung nhôm giá đỡ, Bracket, Tấm tản nhiệt</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Nhận dạng biên dạng hình học khung đỡ, khớp lỗ định vị</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;color:#b91c1c;">Sai loại mã hàng (Wrong Model), cong vênh cơ khí</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">Hàng C (Ô 9 - 12)</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Cáp FFC/FPC, Wire Harness, Dây nối đất</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Kiểm tra màu sắc vỏ cáp, độ uốn và đầu bấm pin đầu cos</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;color:#b91c1c;">Thiếu dây nối đất, tuột đầu giắc, gập gãy cáp FPC</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">Hàng D (Ô 13 - 16)</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Túi phụ kiện, Tem nhãn Serial, Đệm cao su</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Đọc mã QR tem nhãn, đếm đủ túi phụ kiện và gioăng cao su</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;color:#b91c1c;">Thiếu tem barcode, sai mã số lô, thừa vật lạ rơi rớt</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BẢNG QUY TRÌNH 5 BƯỚC VẬN HÀNH DÂY CHUYỀN -->
+  <div class="print-section" style="margin-top:8px;">
+    <h3>5. BẢNG QUY TRÌNH 5 BƯỚC VẬN HÀNH DÂY CHUYỀN KITTING (SOP MATRIX)</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:7.5pt;margin-top:3px;">
+      <thead>
+        <tr style="background:#e2e8f0;color:#1e293b;">
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;text-align:center;width:6%;">Bước</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:18%;">Tên công đoạn</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:30%;">Thao tác vận hành</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:24%;">Hệ thống tự động hóa</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:22%;">Xử lý phân loại</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">1</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Kitting linh kiện</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Công nhân xếp linh kiện vào 16 ô khay theo BOM trên màn hình</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Kệ kho thông minh chỉ dẫn đèn pick-to-light</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Khay đầy đủ sẵn sàng chuyển băng tải</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">2</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Nạp băng tải tự động</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Đẩy khay lên băng chuyền tự động dài 12m</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Cảm biến quang S1 phát hiện khay vào trạm Vision</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Tự động hãm tốc độ, định vị khay trung tâm</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">3</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Chụp ảnh &amp; AI Vision</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Khay dừng 1.2s dưới buồng kiểm tra quang học</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Đèn Neewer CRI ≥95 bật, Camera Basler 20MP chụp toàn cảnh</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">OpenCV phân tích 16 ô trong 250ms</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">4</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Phân loại tự động NG/OK</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Hệ thống tự động kích hoạt bộ gạt cơ khí phân luồng</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">PLC điều khiển xi lanh khí nén gạt tức thì khay lỗi</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;color:#b91c1c;font-weight:600;">NG: Đẩy sang nhánh sửa lỗi (Re-work)<br><span style="color:#16a34a;">OK: Chuyển thẳng tới line cấp phát</span></td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">5</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Chuyển giao Robot AGV</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Khay đạt chuẩn chuyển sang trạm bàn giao AGV cuối line</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Robot AGV Transfer tự động nhận khay cấp cho line PAS</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Đồng bộ 100% dữ liệu ảnh và kết quả lên MES</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="print-footer">
@@ -1946,6 +2133,7 @@ footer {
     </div>
   </div>
 </section>
+
 
 
   <!-- 4 Giai đoạn hoạt động -->
@@ -5844,7 +6032,50 @@ footer {
   })();
   applyLanguage(initLang);
 
-window.exportKittingReportPDF = function() { window.print(); };
+
+window.exportKittingReportPDF = function() {
+  const btn = document.querySelector('.top-btn.pdf-btn');
+  const originalHtml = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.innerHTML = '<span>⏳</span> <span>' + (currentLang==='ko'?'PDF 생성 중...':'Đang tạo file PDF...') + '</span>';
+    btn.style.pointerEvents = 'none';
+  }
+
+  const el = document.getElementById('printableReport');
+  if (!el) {
+    window.print();
+    if (btn) { btn.innerHTML = originalHtml; btn.style.pointerEvents = ''; }
+    return;
+  }
+
+  el.classList.add('rendering-pdf');
+
+  const opt = {
+    margin: [6, 8, 6, 8],
+    filename: (currentLang==='ko') ? 'HFS_VINA_Kitting_Line_Bogo.pdf' : 'HFS_VINA_Kitting_Line_Bao_Cao.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, logging: false },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  };
+
+  if (window.html2pdf) {
+    window.html2pdf().set(opt).from(el).save().then(() => {
+      el.classList.remove('rendering-pdf');
+      if (btn) { btn.innerHTML = originalHtml; btn.style.pointerEvents = ''; }
+    }).catch(err => {
+      console.warn('html2pdf fallback to print:', err);
+      el.classList.remove('rendering-pdf');
+      if (btn) { btn.innerHTML = originalHtml; btn.style.pointerEvents = ''; }
+      window.print();
+    });
+  } else {
+    el.classList.remove('rendering-pdf');
+    if (btn) { btn.innerHTML = originalHtml; btn.style.pointerEvents = ''; }
+    window.print();
+  }
+};
+
 
 
   requestAnimationFrame(render);

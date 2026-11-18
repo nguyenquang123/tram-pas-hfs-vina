@@ -1,4 +1,5 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>  <script src="libs/html2pdf.bundle.min.js"></script>
+</head><body>
 <title>Trạm PAS HFS VINA</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -171,6 +172,103 @@ h1 .pas{color:var(--accent)}
 .note{font-size:12px;color:var(--muted);border-left:2px solid var(--line);padding-left:10px;margin:0}
 footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
 @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important}}
+
+
+/* MOBILE FIT (<680px) */
+@media (max-width: 680px) {
+  body {
+    overflow-x: hidden;
+  }
+  .page {
+    padding: 8px 6px;
+  }
+  .master-top-bar {
+    padding: 8px 10px;
+    gap: 8px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  .top-bar-left, .top-bar-right {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .top-btn {
+    font-size: 11px;
+    padding: 6px 8px;
+    flex: 1 1 0;
+    justify-content: center;
+    white-space: nowrap;
+    text-align: center;
+    border-radius: 6px;
+  }
+  .station-status-pill {
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    padding: 4px;
+    order: 2;
+  }
+  .lang {
+    width: 100%;
+    display: flex;
+    order: 1;
+  }
+  .lang button {
+    flex: 1;
+    text-align: center;
+    padding: 6px;
+    font-size: 11.5px;
+  }
+  .vp {
+    height: clamp(280px, 46vh, 400px);
+    border-radius: 8px;
+  }
+  .hud.tl {
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    gap: 4px;
+  }
+  .chip {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  .controls {
+    padding: 8px;
+    gap: 6px 8px;
+  }
+  .btn {
+    padding: 6px 10px;
+    font-size: 11.5px;
+  }
+  .tb-main {
+    padding: 10px 12px;
+  }
+  h1 {
+    font-size: 18px;
+  }
+  .eyebrow {
+    font-size: 10px;
+  }
+  .sub {
+    font-size: 11px;
+  }
+}
+
+#printableReport.rendering-pdf {
+  display: block !important;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 210mm;
+  background: #ffffff;
+  color: #000000;
+  z-index: 99999;
+  padding: 8mm 10mm;
+  box-sizing: border-box;
+}
 
 /* DEDICATED MASTER TOP BAR (TÁCH RIÊNG LÊN ĐẦU) */
 .master-top-bar {
@@ -534,12 +632,12 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
   <footer class="foot"><span data-t="foot1">Concept minh họa (tham khảo từ dự án nhà máy OKI ở Hải Phòng của Nhật Bản) · kích thước, số ô linh kiện, số vít và giá trị lực là ví dụ, sẽ chốt theo sản phẩm thực tế sau khảo sát.</span><span>HFS VINA · Innovation Team · 2026</span></footer>
 </div>
 
-<!-- KHỐI BÁO CÁO EXECUTIVE A4 PRINT DÀNH RIÊNG CHO XUẤT FILE PDF -->
-<section id="printableReport" class="print-report">
+<!-- KHỐI BÁO CÁO IN XUẤT PDF CHUẨN A4 ĐẦY ĐỦ THÔNG TIN -->
+<section id="printableReport" aria-hidden="true">
   <div class="print-header">
     <div class="print-brand">
-      <h2>HFS VINA INNOVATION TEAM</h2>
-      <p>PHÒNG PHÁT TRIỂN CÔNG NGHỆ &amp; TỰ ĐỘNG HÓA · THUYẾT MINH THIẾT KẾ CONCEPT</p>
+      <h2>HFS VINA · INNOVATION TEAM &amp; SMART FACTORY R&amp;D</h2>
+      <p>BÁO CÁO KỸ THUẬT &amp; QUY TRÌNH TIÊU CHUẨN TRẠM LẮP RÁP CHIẾU SÁNG THÔNG MINH PAS</p>
     </div>
     <div class="print-meta">
       <table>
@@ -589,18 +687,136 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
       </div>
 
       <div class="print-section">
-        <h3>3. QUY TRÌNH 7 BƯỚC TIÊU CHUẨN (SOP)</h3>
-        <ol class="print-steps-list">
-          <li><b>Bước 1:</b> Quét mã 2D trên phiếu công đoạn, IPC tải BOM và SOP v3.2 từ MES.</li>
-          <li><b>Bước 2:</b> Máy chiếu rọi khung sáng vào khay B2, chiếu mũi tên hướng dẫn thao tác.</li>
-          <li><b>Bước 3:</b> Camera AI xác nhận tay vào đúng ô B2 (khóa bước cảnh báo còi nếu tay vào sai ô B3).</li>
-          <li><b>Bước 4:</b> Đặt khung đỡ vào đồ gá theo viền sáng chiếu, cảm biến đồ gá S1 xác nhận ON.</li>
-          <li><b>Bước 5:</b> Lấy vít M3 từ máy cấp tự động, siết 4 vít theo thứ tự 1→2→3→4 đạt chuẩn lực 0.50 N·m.</li>
-          <li><b>Bước 6:</b> Camera AI 12MP chụp dưới đèn dome, so sánh mẫu chuẩn Poka-Yoke (đạt tỷ lệ ≥95%).</li>
-          <li><b>Bước 7:</b> Lưu hồ sơ chu trình, truyền dữ liệu lực và ảnh về MES/SPC, đèn tháp xanh sẵn sàng.</li>
-        </ol>
+        <h3>3. KIẾN TRÚC PHẦN MỀM &amp; LUỒNG DỮ LIỆU ON-PREMISE</h3>
+        <p>Hệ thống chạy 100% On-Premise tại máy tính công nghiệp IPC của trạm, độc lập hoàn toàn với Internet bên ngoài. Dữ liệu lệnh sản xuất, BOM, SOP được đồng bộ từ MES nội bộ. Khi xảy ra sự cố mạng, trạm lưu trữ offline và tự động đẩy dữ liệu (Sync) khi mạng phục hồi.</p>
       </div>
     </div>
+  </div>
+
+  <!-- BẢNG 7 CỤM PHẦN CỨNG CHI TIẾT -->
+  <div class="print-section" style="margin-top:8px;">
+    <h3>4. DANH MỤC 7 CỤM PHẦN CỨNG CHỦ ĐẠO TRẠM PAS</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:7.5pt;margin-top:3px;">
+      <thead>
+        <tr style="background:#e2e8f0;color:#1e293b;">
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;text-align:center;width:8%;">Mã</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:24%;">Tên thiết bị</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:48%;">Thông số kỹ thuật &amp; Chức năng</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:20%;">Vị trí / Kết nối</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;text-align:center;font-weight:700;">H1</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;font-weight:600;">Máy chiếu quang học Workguide</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">4000 ANSI Lumens, Full HD, chiếu viền khay linh kiện, vẽ mũi tên hướng dẫn thao tác và hiển thị SOP trực tiếp trên mặt bàn.</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">Treo trên xà trần (HDMI)</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;text-align:center;font-weight:700;">H2</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;font-weight:600;">Hệ thống Camera AI kép</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">CAM-1 (5MP 30 FPS) theo dõi bám vết tay người; CAM-2 (12MP) chụp ảnh macro kiểm tra ngoại quan Poka-Yoke dưới đèn vòm dome.</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">Gắn ray trên đỉnh (USB 3.0)</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;text-align:center;font-weight:700;">H3</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;font-weight:600;">Đồ gá xoay &amp; Cảm biến vị trí</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">Đồ gá nhôm gia công CNC chính xác, tích hợp cảm biến quang S1 xác nhận phôi đã đặt đúng chiều và công tắc kẹp khí nén.</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">Mặt bàn thao tác (I/O PLC)</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;text-align:center;font-weight:700;">H4</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;font-weight:600;">IPC &amp; Màn hình cảm ứng 21.5"</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">IPC Intel i7/RTX công nghiệp, SSD NVMe, chạy Step Engine &amp; AI Vision; màn hình cảm ứng điện dung hiển thị HMI trực quan.</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">Cánh tay xoay công thái học</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;text-align:center;font-weight:700;">H5</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;font-weight:600;">Đầu đọc mã vạch 2D</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">Đầu đọc mã QR / DataMatrix công nghiệp quét phiếu lệnh sản xuất (WO), tự động tải BOM và cấu hình lực siết.</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">Giá đỡ bên cạnh HMI (USB)</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;text-align:center;font-weight:700;">H6</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;font-weight:600;">PLC &amp; Tháp đèn còi 3 màu</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">PLC Omron/Siemens xử lý I/O cảm biến thời gian thực, điều khiển còi hú và tháp đèn cảnh báo (Đỏ: Lỗi / Vàng: Chờ / Xanh: Đạt).</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">Tủ điện trạm (Ethernet IP)</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;text-align:center;font-weight:700;">H7</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;font-weight:600;">Súng siết vít lực &amp; Cấp tự động</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">Súng siết servo thông minh ngắt lực 0.50 N·m ±10%, bộ đếm xung đếm đủ 4 vít, máy rung cấp vít tự động dẫn vít M3 liên tục.</td>
+          <td style="border:1px solid #cbd5e1;padding:3px 6px;">Treo ba-lăng lò xo mặt bàn</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BẢNG 7 BƯỚC SOP TIÊU CHUẨN -->
+  <div class="print-section" style="margin-top:8px;">
+    <h3>5. BẢNG QUY TRÌNH 7 BƯỚC THAO TÁC TIÊU CHUẨN (SOP MATRIX)</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:7.5pt;margin-top:3px;">
+      <thead>
+        <tr style="background:#e2e8f0;color:#1e293b;">
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;text-align:center;width:6%;">Bước</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:18%;">Tên quy trình</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:28%;">Thao tác công nhân</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:22%;">Hệ thống / AI giám sát</th>
+          <th style="border:1px solid #cbd5e1;padding:3px 6px;width:26%;">Xử lý sự cố / Poka-Yoke</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">1</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Quét lệnh &amp; Tải SOP</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Quét mã 2D trên phiếu công đoạn</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">IPC hỏi MES tải BOM v3.2 &amp; lực 0.50 N·m</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Khóa nếu sai model hoặc mã barcode không hợp lệ</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">2</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Chiếu chỉ dẫn lấy đồ</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Quan sát khung sáng tại ô linh kiện</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Máy chiếu rọi ô B2, vẽ mũi tên chỉ dẫn</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Màn hình hiển thị hình ảnh mẫu linh kiện BR-02</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">3</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">AI giám sát thao tác tay</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Đưa tay vào ô B2 lấy chi tiết</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Camera CAM-1 bám vết tay 30 FPS</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;color:#b91c1c;font-weight:600;">Tay vào sai ô (B3): Còi hú, đèn đỏ, khóa bước</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">4</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Đặt vào đồ gá</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Đặt chi tiết vào đồ gá theo viền sáng</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Cảm biến S1 đồ gá nhận diện ON</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Không cho phép siết vít nếu phôi chưa gá chặt</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">5</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Siết vít kiểm soát lực</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Lấy vít M3 từ máy cấp, siết 4 điểm</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Súng đo lực 0.50 N·m ±10%, đếm 4/4</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Báo động nếu tuột ren, thiếu vít hoặc quá lực</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">6</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">AI Poka-Yoke kiểm tra</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Để tay ra ngoài, chờ camera chụp</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">CAM-2 12MP chụp dưới đèn dome, AI so sánh</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Tỷ lệ trùng khớp &lt;95%: Báo NG, yêu cầu kiểm tra</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;text-align:center;font-weight:700;">7</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;font-weight:600;">Ghi hồ sơ MES &amp; Đèn xanh</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Lấy sản phẩm ra chuyển công đoạn</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Đồng bộ biểu đồ lực và ảnh lên MES/SPC</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 4px;">Đèn tháp xanh sáng, reset chu trình cho sản phẩm mới</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="print-footer">
@@ -616,6 +832,7 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
     </div>
   </div>
 </section>
+
 
 <script src="libs/three.min.js"></script>
 <script>window.THREE || document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"><\/script>')</script>
@@ -1847,7 +2064,50 @@ controls.addEventListener('start',()=>{tween=null;setViewBtn(null);});
   let started=false; const go=()=>{if(started)return;started=true;texTable.sig=texProd.sig=texPanel.sig=texHMI.sig='';requestAnimationFrame(loop);}; setTimeout(go,1500);
   if(document.fonts&&document.fonts.load){ Promise.all([document.fonts.load(`700 40px ${FD}`,T.sample),document.fonts.load(`600 40px ${FB}`,T.sample),document.fonts.load(`500 20px ${FM}`)]).then(go,go); setTimeout(()=>{texTable.sig=texProd.sig=texPanel.sig=texHMI.sig='';drawPaper();labels.forEach(L=>{L.w=0;});},2500); } else go();
 })();
-window.exportPasReportPDF = function() { window.print(); };
+
+window.exportPasReportPDF = function() {
+  const btn = document.querySelector('.top-btn.pdf-btn');
+  const originalHtml = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.innerHTML = '<span>⏳</span> <span>' + (LANG==='ko'?'PDF 생성 중...':'Đang tạo file PDF...') + '</span>';
+    btn.style.pointerEvents = 'none';
+  }
+
+  const el = document.getElementById('printableReport');
+  if (!el) {
+    window.print();
+    if (btn) { btn.innerHTML = originalHtml; btn.style.pointerEvents = ''; }
+    return;
+  }
+
+  el.classList.add('rendering-pdf');
+
+  const opt = {
+    margin: [6, 8, 6, 8],
+    filename: (LANG==='ko') ? 'HFS_VINA_PAS_Station_Bogo.pdf' : 'HFS_VINA_PAS_Station_Bao_Cao.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, logging: false },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  };
+
+  if (window.html2pdf) {
+    window.html2pdf().set(opt).from(el).save().then(() => {
+      el.classList.remove('rendering-pdf');
+      if (btn) { btn.innerHTML = originalHtml; btn.style.pointerEvents = ''; }
+    }).catch(err => {
+      console.warn('html2pdf fallback to print:', err);
+      el.classList.remove('rendering-pdf');
+      if (btn) { btn.innerHTML = originalHtml; btn.style.pointerEvents = ''; }
+      window.print();
+    });
+  } else {
+    el.classList.remove('rendering-pdf');
+    if (btn) { btn.innerHTML = originalHtml; btn.style.pointerEvents = ''; }
+    window.print();
+  }
+};
+
 window.__pas={sim,jump,camera,controls,flyTo,VIEWS,setLang,getLang:()=>LANG};
 })();
 </script>

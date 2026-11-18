@@ -495,6 +495,7 @@
     }
 
   </style>
+  <script src="libs/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
@@ -507,7 +508,7 @@
       </p>
 
       <div class="header-action-row">
-        <button type="button" class="pdf-btn" onclick="window.print()" id="tBtnPdf" title="Xuất toàn bộ báo cáo 2 dự án ra PDF A4">
+        <button type="button" class="pdf-btn" onclick="exportMasterReportPDF()" id="tBtnPdf" title="Xuất toàn bộ báo cáo 2 dự án ra PDF A4">
           <span>📄</span> <span id="tBtnPdfText">Xuất Báo Cáo Tổng Hợp (A4)</span>
         </button>
         <div class="lang-switcher" role="group" aria-label="Ngôn ngữ">
