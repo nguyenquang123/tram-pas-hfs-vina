@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>HFS VINA — Cổng Mô Phỏng 3D Công Nghiệp (Simulation Portal)</title>
+  <title>HFS VINA — Cổng Mô Phỏng 3D Công Nghiệp (TheQuang Concept)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+KR:wght@500;700&display=swap">
   <style>
     :root {
-      --bg: #0f172a;
-      --bg-card: #1e293b;
-      --bg-card-hover: #24344d;
-      --border: #334155;
+      --bg: #0b1120;
+      --bg-card: #151f32;
+      --bg-card-hover: #1c2b44;
+      --border: #24344d;
       --border-accent: #38bdf8;
       --primary: #0284c7;
-      --primary-hover: #0369a1;
       --accent: #38bdf8;
       --success: #10b981;
+      --warn: #f59e0b;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --text-sub: #cbd5e1;
@@ -29,7 +29,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 70%);
+      background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0b1120 75%);
       color: var(--text-main);
       font-family: var(--font-body);
       min-height: 100vh;
@@ -41,16 +41,16 @@
 
     /* Container */
     .container {
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 32px 24px;
+      padding: 36px 24px;
       width: 100%;
     }
 
     /* Header */
     header {
       text-align: center;
-      margin-bottom: 48px;
+      margin-bottom: 40px;
     }
 
     .brand-tag {
@@ -59,7 +59,7 @@
       gap: 8px;
       padding: 6px 16px;
       border-radius: 999px;
-      background: rgba(56, 189, 248, 0.1);
+      background: rgba(56, 189, 248, 0.08);
       border: 1px solid rgba(56, 189, 248, 0.25);
       color: var(--accent);
       font-family: var(--font-mono);
@@ -67,7 +67,7 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .brand-tag::before {
@@ -81,7 +81,7 @@
 
     h1 {
       font-family: var(--font-display);
-      font-size: clamp(32px, 5vw, 48px);
+      font-size: clamp(32px, 4.5vw, 46px);
       font-weight: 700;
       letter-spacing: 0.03em;
       text-transform: uppercase;
@@ -98,16 +98,15 @@
     .subtitle {
       color: var(--text-muted);
       font-size: 15px;
-      max-width: 680px;
-      margin: 0 auto 24px;
+      max-width: 720px;
+      margin: 0 auto 20px;
       line-height: 1.6;
     }
 
-    /* Lang switcher */
     .lang-switcher {
       display: inline-flex;
       gap: 4px;
-      background: rgba(30, 41, 59, 0.8);
+      background: rgba(21, 31, 50, 0.8);
       border: 1px solid var(--border);
       padding: 4px;
       border-radius: 999px;
@@ -135,7 +134,7 @@
     /* Grid cards */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 32px;
       margin-bottom: 40px;
     }
@@ -143,49 +142,61 @@
     .project-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
+      border-radius: 18px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       transition: all 0.25s ease;
       position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .project-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, var(--card-glow, var(--primary)), transparent);
-      opacity: 0;
-      transition: opacity 0.25s ease;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
     }
 
     .project-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-5px);
       border-color: var(--card-glow, var(--primary));
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45);
       background: var(--bg-card-hover);
-    }
-
-    .project-card:hover::before {
-      opacity: 1;
     }
 
     .card-pas { --card-glow: #38bdf8; }
     .card-kitting { --card-glow: #10b981; }
 
-    .card-top {
-      margin-bottom: 24px;
+    /* 3D Canvas Box */
+    .canvas-box {
+      width: 100%;
+      height: 220px;
+      background: #090e17;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      cursor: grab;
+    }
+    .canvas-box:active { cursor: grabbing; }
+
+    .canvas-box canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
-    .card-badge {
-      display: inline-block;
+    .canvas-hint {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: rgba(255, 255, 255, 0.6);
+      background: rgba(0, 0, 0, 0.55);
+      padding: 3px 8px;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .canvas-badge {
+      position: absolute;
+      top: 12px;
+      left: 14px;
       font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 700;
@@ -193,19 +204,29 @@
       letter-spacing: 0.05em;
       padding: 4px 10px;
       border-radius: 6px;
-      margin-bottom: 16px;
+      backdrop-filter: blur(8px);
+      pointer-events: none;
     }
 
-    .card-pas .card-badge {
-      background: rgba(56, 189, 248, 0.12);
+    .card-pas .canvas-badge {
+      background: rgba(56, 189, 248, 0.15);
       color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      border: 1px solid rgba(56, 189, 248, 0.35);
     }
 
-    .card-kitting .card-badge {
-      background: rgba(16, 185, 129, 0.12);
+    .card-kitting .canvas-badge {
+      background: rgba(16, 185, 129, 0.15);
       color: #10b981;
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    /* Card Content */
+    .card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
     }
 
     .card-title {
@@ -213,46 +234,82 @@
       font-size: 26px;
       font-weight: 700;
       letter-spacing: 0.02em;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       line-height: 1.25;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .card-desc {
+    /* Section Boxes inside Card */
+    .info-block {
+      background: rgba(11, 17, 32, 0.65);
+      border: 1px solid rgba(51, 65, 85, 0.5);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+
+    .info-block.purpose {
+      border-left: 3px solid var(--accent);
+    }
+
+    .info-block.impact {
+      border-left: 3px solid var(--success);
+    }
+
+    .block-header {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .purpose .block-header { color: var(--accent); }
+    .impact .block-header { color: var(--success); }
+
+    .block-text {
+      font-size: 13.5px;
       color: var(--text-sub);
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 20px;
+      line-height: 1.55;
     }
 
-    .feature-list {
+    .impact-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-bottom: 28px;
+      gap: 6px;
+      margin-top: 4px;
     }
 
-    .feature-list li {
-      font-size: 13.5px;
+    .impact-list li {
+      font-size: 13px;
       color: var(--text-sub);
       display: flex;
-      align-items: center;
-      gap: 10px;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.45;
     }
 
-    .feature-list li .ico {
-      font-size: 16px;
+    .impact-list li .bullet {
+      color: var(--success);
+      font-weight: bold;
+      flex-shrink: 0;
     }
 
-    .spec-tag {
+    .spec-line {
       font-family: var(--font-mono);
       font-size: 11.5px;
       color: var(--text-muted);
-      background: rgba(15, 23, 42, 0.6);
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid rgba(51, 65, 85, 0.6);
-      margin-bottom: 24px;
+      margin: 10px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     /* CTA Button */
@@ -266,7 +323,7 @@
       border-radius: 10px;
       font-family: var(--font-body);
       font-weight: 700;
-      font-size: 14px;
+      font-size: 14.5px;
       text-decoration: none;
       color: #ffffff;
       transition: all 0.2s ease;
@@ -280,7 +337,8 @@
     }
     .card-pas .btn-launch:hover {
       background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
-      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5);
+      box-shadow: 0 6px 22px rgba(2, 132, 199, 0.55);
+      transform: scale(1.01);
     }
 
     .card-kitting .btn-launch {
@@ -289,34 +347,52 @@
     }
     .card-kitting .btn-launch:hover {
       background: linear-gradient(135deg, #047857 0%, #065f46 100%);
-      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+      box-shadow: 0 6px 22px rgba(16, 185, 129, 0.55);
+      transform: scale(1.01);
     }
 
     /* Footer */
     footer {
       border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 12.5px;
-      background: rgba(15, 23, 42, 0.9);
+      padding: 24px 24px;
+      background: rgba(11, 17, 32, 0.95);
     }
 
     .footer-content {
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
     }
 
-    @media (max-width: 768px) {
+    .author-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 999px;
+      color: #38bdf8;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
       .projects-grid { grid-template-columns: 1fr; }
       .footer-content { justify-content: center; text-align: center; }
     }
   </style>
+  <script src="libs/three.min.js"></script>
+  <script>if (typeof THREE === 'undefined') document.write('<script src="three.min.js"><\/script>');</script>
+  <script src="libs/OrbitControls.js"></script>
+  <script>if (typeof THREE !== 'undefined' && typeof THREE.OrbitControls === 'undefined') document.write('<script src="OrbitControls.js"><\/script>');</script>
 </head>
 <body>
 
@@ -337,112 +413,168 @@
     <main class="projects-grid">
       <!-- DỰ ÁN 1: TRẠM PAS -->
       <article class="project-card card-pas">
-        <div class="card-top">
-          <span class="card-badge" id="tPasBadge">Workstation · AI Poka-Yoke</span>
-          <h2 class="card-title" id="tPasTitle">Trạm Lắp Ráp Chiếu Sáng PAS</h2>
-          <p class="card-desc" id="tPasDesc">
-            Mô hình 3D trạm lắp ráp chỉ dẫn bằng máy chiếu quang học, camera AI giám sát thao tác tay, súng vặn vít kiểm soát lực (Torque Control) và tích hợp truy xuất nguồn gốc MES/SPC.
-          </p>
-
-          <ul class="feature-list">
-            <li><span class="ico">🎯</span> <span id="tPasF1">Máy chiếu Workguide SOP dẫn hướng từng khay linh kiện</span></li>
-            <li><span class="ico">👁️</span> <span id="tPasF2">AI Hand-Tracking (30 FPS) cảnh báo khi lấy sai khay</span></li>
-            <li><span class="ico">🔩</span> <span id="tPasF3">Súng siết vít ngắt lực tự động (0.50 N·m ±10%)</span></li>
-            <li><span class="ico">📊</span> <span id="tPasF4">Gửi dữ liệu chu trình, biểu đồ lực về MES thời gian thực</span></li>
-          </ul>
-
-          <div class="spec-tag" id="tPasSpec">
-            📐 Kích thước: 1800 × 900 × 2200 mm · Chuẩn nhà máy OKI Japan
-          </div>
+        <!-- 3D Mini Viewport -->
+        <div class="canvas-box" id="canvasBoxPas">
+          <canvas id="canvasPas"></canvas>
+          <span class="canvas-badge" id="tPasBadge">Workstation · AI Poka-Yoke</span>
+          <span class="canvas-hint">🖱️ Kéo để xoay 3D</span>
         </div>
 
-        <a href="pas.html" class="btn-launch" id="tPasBtn">
-          <span>🚀 Mở Mô Phỏng Trạm PAS</span>
-          <span>➔</span>
-        </a>
+        <div class="card-body">
+          <h2 class="card-title" id="tPasTitle"><span>🎯</span> Trạm Lắp Ráp Chiếu Sáng PAS</h2>
+
+          <!-- MỤC ĐÍCH DỰ ÁN -->
+          <div class="info-block purpose">
+            <div class="block-header">
+              <span>🎯</span> <span id="tPasPurHeader">MỤC ĐÍCH DỰ ÁN</span>
+            </div>
+            <p class="block-text" id="tPasPurText">
+              Chuẩn hóa quy trình lắp ráp, loại bỏ hoàn toàn lỗi thao tác của công nhân (Human Error) bằng máy chiếu Workguide SOP rọi thẳng vào khay phôi; kết hợp camera AI khóa liên động Poka-Yoke và súng siết vít kiểm soát lực tự động.
+            </p>
+          </div>
+
+          <!-- HIỆU QUẢ ĐẠT ĐƯỢC -->
+          <div class="info-block impact">
+            <div class="block-header">
+              <span>⚡</span> <span id="tPasImpHeader">HIỆU QUẢ ĐẠT ĐƯỢC &amp; ROI</span>
+            </div>
+            <ul class="impact-list">
+              <li><span class="bullet">✔</span> <span id="tPasImp1"><b>Triệt tiêu lỗi lấy nhầm linh kiện:</b> Giảm 99.8% lỗi nhờ AI Hand-Tracking quét liên tục 30 FPS.</span></li>
+              <li><span class="bullet">✔</span> <span id="tPasImp2"><b>Rút ngắn 35% thời gian đào tạo:</b> Công nhân mới thao tác thành thạo ngay trong ca đầu.</span></li>
+              <li><span class="bullet">✔</span> <span id="tPasImp3"><b>Kiểm soát lực siết 100%:</b> Đo mô-men xoắn tự động (0.50 N·m ±10%), đếm đủ số vít mới qua bước.</span></li>
+              <li><span class="bullet">✔</span> <span id="tPasImp4"><b>Truy xuất nguồn gốc MES/SPC:</b> Đồng bộ dữ liệu Serial, lực siết và ảnh kiểm tra theo thời gian thực.</span></li>
+            </ul>
+          </div>
+
+          <div class="spec-line" id="tPasSpec">
+            📐 <span>Kích thước: 1800 × 900 × 2200 mm · Chuẩn nhà máy OKI Nhật Bản</span>
+          </div>
+
+          <a href="pas.html" class="btn-launch" id="tPasBtn">
+            <span>🚀 Mở Mô Phỏng Trạm PAS</span>
+            <span>➔</span>
+          </a>
+        </div>
       </article>
 
       <!-- DỰ ÁN 2: DÂY CHUYỀN KITTING 3D -->
       <article class="project-card card-kitting">
-        <div class="card-top">
-          <span class="card-badge" id="tKitBadge">Full Automation · 20MP Vision</span>
-          <h2 class="card-title" id="tKitTitle">Dây Chuyền Kitting & Vision 3D</h2>
-          <p class="card-desc" id="tKitDesc">
-            Dây chuyền tự động hóa 4 công đoạn: Cấp khay, Robot AGV trung chuyển, Buồng quang học kiểm tra khay 16 ô linh kiện bằng OpenCV & AI Vision và Phân loại OK / NG.
-          </p>
-
-          <ul class="feature-list">
-            <li><span class="ico">📦</span> <span id="tKitF1">Băng chuyền & Cơ cấu nâng hạ khay Tray tự động</span></li>
-            <li><span class="ico">🤖</span> <span id="tKitF2">Robot AGV trung chuyển khay vật liệu liên hoàn</span></li>
-            <li><span class="ico">📸</span> <span id="tKitF3">Camera Basler 20MP quét 16 ô (Đủ / Thiếu / Sai loại)</span></li>
-            <li><span class="ico">⚡</span> <span id="tKitF4">Phản hồi liên động PLC & Gạt loại bỏ khay lỗi tự động</span></li>
-          </ul>
-
-          <div class="spec-tag" id="tKitSpec">
-            📐 Kích thước khay: 665 × 460 × 85 mm · 4 Giai đoạn tự động
-          </div>
+        <!-- 3D Mini Viewport -->
+        <div class="canvas-box" id="canvasBoxKit">
+          <canvas id="canvasKit"></canvas>
+          <span class="canvas-badge" id="tKitBadge">Full Automation · 20MP Vision</span>
+          <span class="canvas-hint">🖱️ Kéo để xoay 3D</span>
         </div>
 
-        <a href="kitting.html" class="btn-launch" id="tKitBtn">
-          <span>🚀 Mở Mô Phỏng Dây Chuyền</span>
-          <span>➔</span>
-        </a>
+        <div class="card-body">
+          <h2 class="card-title" id="tKitTitle"><span>📦</span> Dây Chuyền Kitting &amp; Vision 3D</h2>
+
+          <!-- MỤC ĐÍCH DỰ ÁN -->
+          <div class="info-block purpose">
+            <div class="block-header">
+              <span>🎯</span> <span id="tKitPurHeader">MỤC ĐÍCH DỰ ÁN</span>
+            </div>
+            <p class="block-text" id="tKitPurText">
+              Tự động hóa toàn diện quy trình cấp phát và kiểm soát chất lượng khay Tray 16 ô vật liệu; tự động phát hiện chính xác khay CÓ ĐỦ HAY KHÔNG (Đủ / Thiếu / Thừa / Sai loại 16/16 ô) trước khi trung chuyển vào dây chuyền lắp ráp chính.
+            </p>
+          </div>
+
+          <!-- HIỆU QUẢ ĐẠT ĐƯỢC -->
+          <div class="info-block impact">
+            <div class="block-header">
+              <span>⚡</span> <span id="tKitImpHeader">HIỆU QUẢ ĐẠT ĐƯỢC &amp; ROI</span>
+            </div>
+            <ul class="impact-list">
+              <li><span class="bullet">✔</span> <span id="tKitImp1"><b>Độ chính xác kiểm tra &gt;99.9%:</b> Camera Basler 20MP kết hợp 13 bộ lọc thuật toán OpenCV.</span></li>
+              <li><span class="bullet">✔</span> <span id="tKitImp2"><b>Cắt giảm nhân công kiểm khay:</b> Tiết kiệm 2 - 3 nhân công/ca, triệt tiêu sai sót do mắt thường.</span></li>
+              <li><span class="bullet">✔</span> <span id="tKitImp3"><b>Tốc độ quét siêu tốc &lt;1.5s/khay:</b> Bắt kịp Takt Time chuyền, liên động Robot AGV trung chuyển.</span></li>
+              <li><span class="bullet">✔</span> <span id="tKitImp4"><b>Khóa liên động PLC Auto-Reject:</b> Tự động gạt khay NG vào line sửa chữa, khay OK tiếp tục lưu thông.</span></li>
+            </ul>
+          </div>
+
+          <div class="spec-line" id="tKitSpec">
+            📐 <span>Khay tiêu chuẩn: 665 × 460 × 85 mm · 4 Công đoạn tự động tuần hoàn</span>
+          </div>
+
+          <a href="kitting.html" class="btn-launch" id="tKitBtn">
+            <span>🚀 Mở Mô Phỏng Dây Chuyền Kitting</span>
+            <span>➔</span>
+          </a>
+        </div>
       </article>
     </main>
   </div>
 
   <footer>
     <div class="footer-content">
-      <div>© 2026 <strong>HFS VINA INNOVATION TEAM</strong> — Phòng Phát Triển Công Nghệ & Tự Động Hóa</div>
-      <div>Công nghệ: Three.js 3D Engine · OpenCV Machine Vision · MES / SPC Integration</div>
+      <div>
+        © 2026 <strong>HFS VINA INNOVATION TEAM</strong> — Phòng Phát Triển Công Nghệ &amp; Tự Động Hóa
+      </div>
+      <div>
+        Kiến trúc giải pháp &amp; Thiết kế Concept: <span class="author-badge">👤 TheQuang</span> (Rev01 Concept)
+      </div>
+      <div>
+        Công nghệ: Three.js WebGL Engine · OpenCV Machine Vision · PLC &amp; MES / SPC Industry 4.0
+      </div>
     </div>
   </footer>
 
   <script>
+    /* ================= 1. SONG NGỮ VIỆT - HÀN ================= */
     const I18N = {
       vi: {
         brand: 'HFS VINA · INNOVATION TEAM · SIMULATION PORTAL',
         h1: 'HỆ THỐNG MÔ PHỎNG <span>3D CÔNG NGHIỆP</span>',
         sub: 'Cổng điều hành và truy cập tập trung các giải pháp Tự động hóa, Thị giác máy tính AI (OpenCV Machine Vision) và Trạm lắp ráp thông minh thế hệ mới tại HFS VINA.',
         pasBadge: 'Workstation · AI Poka-Yoke',
-        pasTitle: 'Trạm Lắp Ráp Chiếu Sáng PAS',
-        pasDesc: 'Mô hình 3D trạm lắp ráp chỉ dẫn bằng máy chiếu quang học, camera AI giám sát thao tác tay, súng vặn vít kiểm soát lực (Torque Control) và tích hợp truy xuất nguồn gốc MES/SPC.',
-        pasF1: 'Máy chiếu Workguide SOP dẫn hướng từng khay linh kiện',
-        pasF2: 'AI Hand-Tracking (30 FPS) cảnh báo khi lấy sai khay',
-        pasF3: 'Súng siết vít ngắt lực tự động (0.50 N·m ±10%)',
-        pasF4: 'Gửi dữ liệu chu trình, biểu đồ lực về MES thời gian thực',
-        pasSpec: '📐 Kích thước: 1800 × 900 × 2200 mm · Chuẩn nhà máy OKI Japan',
+        pasTitle: '<span>🎯</span> Trạm Lắp Ráp Chiếu Sáng PAS',
+        pasPurHeader: 'MỤC ĐÍCH DỰ ÁN',
+        pasPurText: 'Chuẩn hóa quy trình lắp ráp, loại bỏ hoàn toàn lỗi thao tác của công nhân (Human Error) bằng máy chiếu Workguide SOP rọi thẳng vào khay phôi; kết hợp camera AI khóa liên động Poka-Yoke và súng siết vít kiểm soát lực tự động.',
+        pasImpHeader: 'HIỆU QUẢ ĐẠT ĐƯỢC & ROI',
+        pasImp1: '<b>Triệt tiêu lỗi lấy nhầm linh kiện:</b> Giảm 99.8% lỗi nhờ AI Hand-Tracking quét liên tục 30 FPS.',
+        pasImp2: '<b>Rút ngắn 35% thời gian đào tạo:</b> Công nhân mới thao tác thành thạo ngay trong ca đầu.',
+        pasImp3: '<b>Kiểm soát lực siết 100%:</b> Đo mô-men xoắn tự động (0.50 N·m ±10%), đếm đủ số vít mới qua bước.',
+        pasImp4: '<b>Truy xuất nguồn gốc MES/SPC:</b> Đồng bộ dữ liệu Serial, lực siết và ảnh kiểm tra theo thời gian thực.',
+        pasSpec: '📐 Kích thước: 1800 × 900 × 2200 mm · Chuẩn nhà máy OKI Nhật Bản',
         pasBtn: '🚀 Mở Mô Phỏng Trạm PAS',
+
         kitBadge: 'Full Automation · 20MP Vision',
-        kitTitle: 'Dây Chuyền Kitting & Vision 3D',
-        kitDesc: 'Dây chuyền tự động hóa 4 công đoạn: Cấp khay, Robot AGV trung chuyển, Buồng quang học kiểm tra khay 16 ô linh kiện bằng OpenCV & AI Vision và Phân loại OK / NG.',
-        kitF1: 'Băng chuyền & Cơ cấu nâng hạ khay Tray tự động',
-        kitF2: 'Robot AGV trung chuyển khay vật liệu liên hoàn',
-        kitF3: 'Camera Basler 20MP quét 16 ô (Đủ / Thiếu / Sai loại)',
-        kitF4: 'Phản hồi liên động PLC & Gạt loại bỏ khay lỗi tự động',
-        kitSpec: '📐 Kích thước khay: 665 × 460 × 85 mm · 4 Giai đoạn tự động',
-        kitBtn: '🚀 Mở Mô Phỏng Dây Chuyền'
+        kitTitle: '<span>📦</span> Dây Chuyền Kitting & Vision 3D',
+        kitPurHeader: 'MỤC ĐÍCH DỰ ÁN',
+        kitPurText: 'Tự động hóa toàn diện quy trình cấp phát và kiểm soát chất lượng khay Tray 16 ô vật liệu; tự động phát hiện chính xác khay CÓ ĐỦ HAY KHÔNG (Đủ / Thiếu / Thừa / Sai loại 16/16 ô) trước khi trung chuyển vào dây chuyền lắp ráp chính.',
+        kitImpHeader: 'HIỆU QUẢ ĐẠT ĐƯỢC & ROI',
+        kitImp1: '<b>Độ chính xác kiểm tra &gt;99.9%:</b> Camera Basler 20MP kết hợp 13 bộ lọc thuật toán OpenCV.',
+        kitImp2: '<b>Cắt giảm nhân công kiểm khay:</b> Tiết kiệm 2 - 3 nhân công/ca, triệt tiêu sai sót do mắt thường.',
+        kitImp3: '<b>Tốc độ quét siêu tốc &lt;1.5s/khay:</b> Bắt kịp Takt Time chuyền, liên động Robot AGV trung chuyển.',
+        kitImp4: '<b>Khóa liên động PLC Auto-Reject:</b> Tự động gạt khay NG vào line sửa chữa, khay OK tiếp tục lưu thông.',
+        kitSpec: '📐 Khay tiêu chuẩn: 665 × 460 × 85 mm · 4 Công đoạn tự động tuần hoàn',
+        kitBtn: '🚀 Mở Mô Phỏng Dây Chuyền Kitting'
       },
       ko: {
         brand: 'HFS VINA · 이노베이션 팀 · 시뮬레이션 포털',
         h1: '산업용 <span>3D 시뮬레이션 시스템</span>',
         sub: 'HFS VINA의 차세대 스마트 조립 워크스테이션, 자동화 공정 및 AI 머신 비전(OpenCV) 통합 3D 시뮬레이션 포털입니다.',
         pasBadge: '작업대 · AI 포카요케',
-        pasTitle: 'PAS 광학 투사 조립 스테이션',
-        pasDesc: '프로젝터 작업 가이드(Workguide), 작업자 손 추적 AI 카메라, 토크 제어 전동 드라이버 및 MES/SPC 데이터 추적성이 완벽히 결합된 3D 스마트 조립 작업대입니다.',
-        pasF1: '부품 빈 및 지그 위치를 지시하는 프로젝션 가이드',
-        pasF2: '오피킹 방지 손 추적 AI 비전 (30 FPS 실시간 감시)',
-        pasF3: '체결 토크 자동 제어 드라이버 (0.50 N·m ±10%)',
-        pasF4: 'MES/SPC 시스템 실시간 체결 이력 및 토크 그래프 전송',
+        pasTitle: '<span>🎯</span> PAS 광학 투사 조립 스테이션',
+        pasPurHeader: '프로젝트 추진 목적',
+        pasPurText: '프로젝터 작업 가이드(Workguide)를 부품 트레이에 직접 투사하여 작업자 오조작(Human Error)을 원천 차단하고, AI 카메라 포카요케 및 토크 제어 전동 드라이버를 결합하여 조립 공정을 표준화합니다.',
+        pasImpHeader: '도입 기대효과 & ROI',
+        pasImp1: '<b>오피킹 제로화:</b> 30 FPS 실시간 손 추적 AI 감시로 부품 오투입 99.8% 제거.',
+        pasImp2: '<b>교육 시간 35% 단축:</b> 숙련되지 않은 신규 작업자도 첫날부터 표준 작업 수행.',
+        pasImp3: '<b>체결 품질 100% 보증:</b> 토크 자동 측정 (0.50 N·m ±10%) 및 정수 체결 확인.',
+        pasImp4: '<b>MES/SPC 실시간 추적:</b> 시리얼별 토크 곡선, 공정 시간, AI 검사 이미지 실시간 전송.',
         pasSpec: '📐 규격: 1800 × 900 × 2200 mm · 일본 OKI 공장 표준 레퍼런스',
         pasBtn: '🚀 PAS 시뮬레이션 열기',
+
         kitBadge: '완전 자동화 · 20MP 비전 검사',
-        kitTitle: '키팅 자동화 & 3D 비전 검사 라인',
-        kitDesc: '4단계 연속 자동화 라인: 빈 트레이 자동 투입, AGV 로봇 이송, 20MP 머신 비전을 통한 16칸 자재 분배판 양품/불량(OK/NG) 판정 및 자동 배출.',
-        kitF1: '트레이 연속 공급 컨베이어 및 수직 리프터 자동화',
-        kitF2: '자재 트레이 스테이션 간 AGV 물류 로봇 연속 이송',
-        kitF3: 'Basler 20MP 비전: 16칸 결품/과투입/오삽입 정밀 검사',
-        kitF4: 'PLC 인터록 실시간 연동 및 NG 트레이 자동 리젝트 게이트',
+        kitTitle: '<span>📦</span> 키팅 자동화 & 3D 비전 검사 라인',
+        kitPurHeader: '프로젝트 추진 목적',
+        kitPurText: '16칸 자재 분배판(Kitting Tray)의 공급 및 품질 검사를 완전 자동화하여 메인 조립 라인 투입 전 결품/과투입/오삽입을 사전 차단하고 결품 없는 완벽한 라인 공급을 실현합니다.',
+        kitImpHeader: '도입 기대효과 & ROI',
+        kitImp1: '<b>검사 정확도 &gt;99.9%:</b> Basler 20MP 초고해상도 카메라 및 13가지 맞춤형 OpenCV 알고리즘.',
+        kitImp2: '<b>검사 인력 절감:</b> 교대당 2~3명의 육안 검사 인력 절감 및 인적 오류 원천 배제.',
+        kitImp3: '<b>초고속 판정 &lt;1.5초/트레이:</b> 라인 택트 타임(Takt Time) 완벽 동기화 및 AGV 자동 이송.',
+        kitImp4: '<b>PLC 연동 자동 리젝트:</b> NG 트레이는 수정 버퍼로 자동 분기 배출, OK 트레이만 정량 공급.',
         kitSpec: '📐 트레이 규격: 665 × 460 × 85 mm · 4단계 자동화 사이클',
         kitBtn: '🚀 키팅 라인 시뮬레이션 열기'
       }
@@ -455,23 +587,27 @@
       document.getElementById('tSub').textContent = t.sub;
 
       document.getElementById('tPasBadge').textContent = t.pasBadge;
-      document.getElementById('tPasTitle').textContent = t.pasTitle;
-      document.getElementById('tPasDesc').textContent = t.pasDesc;
-      document.getElementById('tPasF1').textContent = t.pasF1;
-      document.getElementById('tPasF2').textContent = t.pasF2;
-      document.getElementById('tPasF3').textContent = t.pasF3;
-      document.getElementById('tPasF4').textContent = t.pasF4;
-      document.getElementById('tPasSpec').textContent = t.pasSpec;
+      document.getElementById('tPasTitle').innerHTML = t.pasTitle;
+      document.getElementById('tPasPurHeader').textContent = t.pasPurHeader;
+      document.getElementById('tPasPurText').textContent = t.pasPurText;
+      document.getElementById('tPasImpHeader').textContent = t.pasImpHeader;
+      document.getElementById('tPasImp1').innerHTML = t.pasImp1;
+      document.getElementById('tPasImp2').innerHTML = t.pasImp2;
+      document.getElementById('tPasImp3').innerHTML = t.pasImp3;
+      document.getElementById('tPasImp4').innerHTML = t.pasImp4;
+      document.getElementById('tPasSpec').innerHTML = '📐 <span>' + t.pasSpec + '</span>';
       document.getElementById('tPasBtn').children[0].textContent = t.pasBtn;
 
       document.getElementById('tKitBadge').textContent = t.kitBadge;
-      document.getElementById('tKitTitle').textContent = t.kitTitle;
-      document.getElementById('tKitDesc').textContent = t.kitDesc;
-      document.getElementById('tKitF1').textContent = t.kitF1;
-      document.getElementById('tKitF2').textContent = t.kitF2;
-      document.getElementById('tKitF3').textContent = t.kitF3;
-      document.getElementById('tKitF4').textContent = t.kitF4;
-      document.getElementById('tKitSpec').textContent = t.kitSpec;
+      document.getElementById('tKitTitle').innerHTML = t.kitTitle;
+      document.getElementById('tKitPurHeader').textContent = t.kitPurHeader;
+      document.getElementById('tKitPurText').textContent = t.kitPurText;
+      document.getElementById('tKitImpHeader').textContent = t.kitImpHeader;
+      document.getElementById('tKitImp1').innerHTML = t.kitImp1;
+      document.getElementById('tKitImp2').innerHTML = t.kitImp2;
+      document.getElementById('tKitImp3').innerHTML = t.kitImp3;
+      document.getElementById('tKitImp4').innerHTML = t.kitImp4;
+      document.getElementById('tKitSpec').innerHTML = '📐 <span>' + t.kitSpec + '</span>';
       document.getElementById('tKitBtn').children[0].textContent = t.kitBtn;
 
       document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -489,6 +625,232 @@
       try { return localStorage.getItem('hfs_hub_lang') || 'vi'; } catch (e) { return 'vi'; }
     })();
     setLang(savedLang);
+
+    /* ================= 2. LIVE THREE.JS 3D PREVIEW CANVASES ================= */
+    (function init3DPreviews() {
+      if (typeof THREE === 'undefined') return;
+
+      /* ----- Canvas 1: PAS Workstation ----- */
+      const c1 = document.getElementById('canvasPas');
+      const box1 = document.getElementById('canvasBoxPas');
+      if (c1 && box1) {
+        const ren1 = new THREE.WebGLRenderer({ canvas: c1, antialias: true, alpha: true });
+        ren1.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        ren1.setSize(box1.clientWidth, box1.clientHeight);
+
+        const sc1 = new THREE.Scene();
+        const cam1 = new THREE.PerspectiveCamera(35, box1.clientWidth / box1.clientHeight, 0.1, 50);
+        cam1.position.set(2.8, 2.2, 3.2);
+
+        const ctrl1 = (typeof THREE.OrbitControls !== 'undefined') ? new THREE.OrbitControls(cam1, c1) : null;
+        if (ctrl1) {
+          ctrl1.enableDamping = true;
+          ctrl1.dampingFactor = 0.08;
+          ctrl1.enableZoom = false;
+          ctrl1.target.set(0, 0.9, 0);
+        }
+
+        sc1.add(new THREE.AmbientLight(0xffffff, 0.8));
+        const dir1 = new THREE.DirectionalLight(0x38bdf8, 1.2);
+        dir1.position.set(3, 5, 4);
+        sc1.add(dir1);
+
+        const grp1 = new THREE.Group();
+
+        // Workstation Table Frame
+        const matAlu = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.7, roughness: 0.3 });
+        const matTop = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.5 }); // ESD Blue
+        const matDark = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.6 });
+
+        // Legs
+        const legGeo = new THREE.BoxGeometry(0.06, 0.85, 0.06);
+        [[-0.85, -0.4], [0.85, -0.4], [-0.85, 0.4], [0.85, 0.4]].forEach(p => {
+          const leg = new THREE.Mesh(legGeo, matAlu);
+          leg.position.set(p[0], 0.425, p[1]);
+          grp1.add(leg);
+        });
+
+        // Table Top
+        const topMesh = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.05, 0.9), matTop);
+        topMesh.position.set(0, 0.875, 0);
+        grp1.add(topMesh);
+
+        // Overhead Frame & Projector
+        const postGeo = new THREE.BoxGeometry(0.05, 1.2, 0.05);
+        [-0.85, 0.85].forEach(x => {
+          const post = new THREE.Mesh(postGeo, matAlu);
+          post.position.set(x, 1.5, -0.4);
+          grp1.add(post);
+        });
+        const topBar = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.05, 0.05), matAlu);
+        topBar.position.set(0, 2.1, -0.4);
+        grp1.add(topBar);
+
+        const projBoom = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.45), matAlu);
+        projBoom.position.set(0, 2.1, -0.175);
+        grp1.add(projBoom);
+
+        const proj = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.1, 0.25), matDark);
+        proj.position.set(0, 2.05, 0.05);
+        grp1.add(proj);
+
+        // Projector Light Cone (Cyan)
+        const coneGeo = new THREE.ConeGeometry(0.45, 1.1, 16, 1, true);
+        const coneMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.22, side: THREE.DoubleSide });
+        const cone = new THREE.Mesh(coneGeo, coneMat);
+        cone.position.set(0, 1.45, 0.05);
+        cone.rotation.x = Math.PI;
+        grp1.add(cone);
+
+        // Part Bins (3 rows)
+        const binGeo = new THREE.BoxGeometry(0.12, 0.08, 0.15);
+        const binMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.7 });
+        for (let r = 0; r < 2; r++) {
+          for (let c = -4; c <= 4; c++) {
+            const b = new THREE.Mesh(binGeo, binMat);
+            b.position.set(c * 0.15, 0.95 + r * 0.12, -0.25 - r * 0.08);
+            b.rotation.x = 0.25;
+            grp1.add(b);
+          }
+        }
+
+        // Tower Light
+        const towerGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.3, 12);
+        const towerMat = new THREE.MeshStandardMaterial({ color: 0x10b981, emissive: 0x10b981, emissiveIntensity: 0.6 });
+        const tower = new THREE.Mesh(towerGeo, towerMat);
+        tower.position.set(0.85, 2.25, -0.4);
+        grp1.add(tower);
+
+        sc1.add(grp1);
+
+        function anim1() {
+          requestAnimationFrame(anim1);
+          if (!ctrl1 || !ctrl1.state) grp1.rotation.y += 0.005;
+          if (ctrl1) ctrl1.update();
+          ren1.render(sc1, cam1);
+        }
+        anim1();
+
+        window.addEventListener('resize', () => {
+          ren1.setSize(box1.clientWidth, box1.clientHeight);
+          cam1.aspect = box1.clientWidth / box1.clientHeight;
+          cam1.updateProjectionMatrix();
+        });
+      }
+
+      /* ----- Canvas 2: Kitting Automation Line ----- */
+      const c2 = document.getElementById('canvasKit');
+      const box2 = document.getElementById('canvasBoxKit');
+      if (c2 && box2) {
+        const ren2 = new THREE.WebGLRenderer({ canvas: c2, antialias: true, alpha: true });
+        ren2.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        ren2.setSize(box2.clientWidth, box2.clientHeight);
+
+        const sc2 = new THREE.Scene();
+        const cam2 = new THREE.PerspectiveCamera(35, box2.clientWidth / box2.clientHeight, 0.1, 50);
+        cam2.position.set(2.6, 2.0, 3.2);
+
+        const ctrl2 = (typeof THREE.OrbitControls !== 'undefined') ? new THREE.OrbitControls(cam2, c2) : null;
+        if (ctrl2) {
+          ctrl2.enableDamping = true;
+          ctrl2.dampingFactor = 0.08;
+          ctrl2.enableZoom = false;
+          ctrl2.target.set(0, 0.7, 0);
+        }
+
+        sc2.add(new THREE.AmbientLight(0xffffff, 0.8));
+        const dir2 = new THREE.DirectionalLight(0x10b981, 1.2);
+        dir2.position.set(-3, 5, 4);
+        sc2.add(dir2);
+
+        const grp2 = new THREE.Group();
+
+        // Conveyor Bed
+        const convMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.4, roughness: 0.6 });
+        const rollerMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.8, roughness: 0.2 });
+        const convMesh = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.08, 0.8), convMat);
+        convMesh.position.set(0, 0.6, 0);
+        grp2.add(convMesh);
+
+        // Legs
+        const legGeo2 = new THREE.BoxGeometry(0.06, 0.6, 0.06);
+        [[-1.0, -0.35], [1.0, -0.35], [-1.0, 0.35], [1.0, 0.35], [0, -0.35], [0, 0.35]].forEach(p => {
+          const l = new THREE.Mesh(legGeo2, rollerMat);
+          l.position.set(p[0], 0.3, p[1]);
+          grp2.add(l);
+        });
+
+        // Vision Chamber (Inspection Tunnel)
+        const chamMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.4 });
+        const chamber = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.65, 0.85), chamMat);
+        chamber.position.set(0, 0.95, 0);
+        grp2.add(chamber);
+
+        // Chamber Roof Camera Tower
+        const camTower = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.2, 16), rollerMat);
+        camTower.position.set(0, 1.35, 0);
+        grp2.add(camTower);
+
+        // Green Vision Ring Light inside Chamber
+        const ringGeo = new THREE.TorusGeometry(0.18, 0.015, 8, 24);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.position.set(0, 1.15, 0);
+        ring.rotation.x = Math.PI / 2;
+        grp2.add(ring);
+
+        // Kitting Trays (Blue Industrial Trays with 16 cells)
+        const trayMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.3 }); // Navy Blue
+        const cellMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.5 });
+        const compMatGold = new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.8, roughness: 0.3 });
+        const compMatSilver = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.9, roughness: 0.2 });
+
+        function makeTray(x) {
+          const tGrp = new THREE.Group();
+          const trayBody = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.06, 0.42), trayMat);
+          trayBody.position.y = 0.03;
+          tGrp.add(trayBody);
+
+          // 16 cells compartments (4x4)
+          for (let r = 0; r < 4; r++) {
+            for (let c = 0; c < 4; c++) {
+              const compMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.03, 8), ((r + c) % 2 === 0) ? compMatGold : compMatSilver);
+              compMesh.position.set(-0.21 + c * 0.14, 0.07, -0.14 + r * 0.095);
+              tGrp.add(compMesh);
+            }
+          }
+          tGrp.position.set(x, 0.65, 0);
+          return tGrp;
+        }
+
+        const tray1 = makeTray(-0.65);
+        const tray2 = makeTray(0.65);
+        grp2.add(tray1);
+        grp2.add(tray2);
+
+        // AGV Robot under line
+        const agvMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.4 });
+        const agv = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.15, 0.4), agvMat);
+        agv.position.set(-0.65, 0.1, 0.65);
+        grp2.add(agv);
+
+        sc2.add(grp2);
+
+        function anim2() {
+          requestAnimationFrame(anim2);
+          if (!ctrl2 || !ctrl2.state) grp2.rotation.y -= 0.005;
+          if (ctrl2) ctrl2.update();
+          ren2.render(sc2, cam2);
+        }
+        anim2();
+
+        window.addEventListener('resize', () => {
+          ren2.setSize(box2.clientWidth, box2.clientHeight);
+          cam2.aspect = box2.clientWidth / box2.clientHeight;
+          cam2.updateProjectionMatrix();
+        });
+      }
+    })();
   </script>
 </body>
 </html>
