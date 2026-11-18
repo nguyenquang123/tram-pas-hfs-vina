@@ -9,18 +9,20 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+KR:wght@500;700&display=swap">
   <style>
     :root {
-      --bg: #0b1120;
-      --bg-card: #151f32;
-      --bg-card-hover: #1c2b44;
-      --border: #24344d;
-      --border-accent: #38bdf8;
-      --primary: #0284c7;
-      --accent: #38bdf8;
-      --success: #10b981;
-      --warn: #f59e0b;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-sub: #cbd5e1;
+      --bg: #f4f7fb;
+      --bg-card: #ffffff;
+      --bg-subtle: #f8fafc;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --primary: #0a5bb0;
+      --primary-hover: #08498c;
+      --primary-soft: #eef6ff;
+      --success: #0d9488;
+      --success-hover: #0f766e;
+      --success-soft: #f0fdf4;
+      --text-main: #0f172a;
+      --text-sub: #334155;
+      --text-muted: #64748b;
       --font-display: "Barlow Condensed", "Noto Sans KR", system-ui, sans-serif;
       --font-body: "Be Vietnam Pro", "Noto Sans KR", system-ui, sans-serif;
       --font-mono: "JetBrains Mono", monospace;
@@ -29,7 +31,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0b1120 75%);
+      background: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
       color: var(--text-main);
       font-family: var(--font-body);
       min-height: 100vh;
@@ -41,7 +43,7 @@
 
     /* Container */
     .container {
-      max-width: 1280px;
+      max-width: 1260px;
       margin: 0 auto;
       padding: 36px 24px;
       width: 100%;
@@ -50,24 +52,25 @@
     /* Header */
     header {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 36px;
     }
 
     .brand-tag {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 16px;
+      padding: 6px 18px;
       border-radius: 999px;
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      color: var(--accent);
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
+      color: var(--primary);
       font-family: var(--font-mono);
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-bottom: 14px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
     }
 
     .brand-tag::before {
@@ -76,29 +79,28 @@
       height: 8px;
       border-radius: 50%;
       background: var(--success);
-      box-shadow: 0 0 10px var(--success);
+      box-shadow: 0 0 8px var(--success);
     }
 
     h1 {
       font-family: var(--font-display);
-      font-size: clamp(32px, 4.5vw, 46px);
+      font-size: clamp(32px, 4.2vw, 46px);
       font-weight: 700;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      color: var(--text-main);
+      margin-bottom: 10px;
       line-height: 1.15;
     }
 
     h1 span {
-      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--primary);
     }
 
     .subtitle {
       color: var(--text-muted);
       font-size: 15px;
-      max-width: 720px;
+      max-width: 760px;
       margin: 0 auto 20px;
       line-height: 1.6;
     }
@@ -106,10 +108,11 @@
     .lang-switcher {
       display: inline-flex;
       gap: 4px;
-      background: rgba(21, 31, 50, 0.8);
+      background: #ffffff;
       border: 1px solid var(--border);
       padding: 4px;
       border-radius: 999px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     }
 
     .lang-btn {
@@ -128,96 +131,89 @@
     .lang-btn.active {
       background: var(--primary);
       color: #ffffff;
-      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+      box-shadow: 0 2px 8px rgba(10, 91, 176, 0.25);
     }
 
     /* Grid cards */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 32px;
-      margin-bottom: 40px;
+      gap: 28px;
+      margin-bottom: 36px;
     }
 
     .project-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 16px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       transition: all 0.25s ease;
       position: relative;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
     .project-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--card-glow, var(--primary));
-      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45);
-      background: var(--bg-card-hover);
+      transform: translateY(-4px);
+      border-color: var(--card-accent, var(--primary));
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
     }
 
-    .card-pas { --card-glow: #38bdf8; }
-    .card-kitting { --card-glow: #10b981; }
+    .card-pas { --card-accent: #0a5bb0; }
+    .card-kitting { --card-accent: #0d9488; }
 
-    /* 3D Canvas Box */
-    .canvas-box {
+    /* Image Showcase Frame */
+    .image-showcase {
       width: 100%;
-      height: 220px;
-      background: #090e17;
+      height: 250px;
+      background: #eef3f8;
       position: relative;
       overflow: hidden;
       border-bottom: 1px solid var(--border);
-      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .canvas-box:active { cursor: grabbing; }
 
-    .canvas-box canvas {
+    .image-showcase img {
       width: 100%;
       height: 100%;
-      display: block;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.4s ease;
     }
 
-    .canvas-hint {
-      position: absolute;
-      bottom: 10px;
-      right: 12px;
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      color: rgba(255, 255, 255, 0.6);
-      background: rgba(0, 0, 0, 0.55);
-      padding: 3px 8px;
-      border-radius: 4px;
-      pointer-events: none;
+    .project-card:hover .image-showcase img {
+      transform: scale(1.03);
     }
 
     .canvas-badge {
       position: absolute;
-      top: 12px;
+      top: 14px;
       left: 14px;
       font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      padding: 4px 10px;
+      padding: 5px 11px;
       border-radius: 6px;
       backdrop-filter: blur(8px);
-      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
     .card-pas .canvas-badge {
-      background: rgba(56, 189, 248, 0.15);
-      color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.35);
+      background: rgba(255, 255, 255, 0.92);
+      color: #0a5bb0;
+      border: 1px solid #bfdbfe;
     }
 
     .card-kitting .canvas-badge {
-      background: rgba(16, 185, 129, 0.15);
-      color: #10b981;
-      border: 1px solid rgba(16, 185, 129, 0.35);
+      background: rgba(255, 255, 255, 0.92);
+      color: #0f766e;
+      border: 1px solid #99f6e4;
     }
 
     /* Card Content */
@@ -231,8 +227,9 @@
 
     .card-title {
       font-family: var(--font-display);
-      font-size: 26px;
+      font-size: 25px;
       font-weight: 700;
+      color: var(--text-main);
       letter-spacing: 0.02em;
       margin-bottom: 16px;
       line-height: 1.25;
@@ -243,19 +240,20 @@
 
     /* Section Boxes inside Card */
     .info-block {
-      background: rgba(11, 17, 32, 0.65);
-      border: 1px solid rgba(51, 65, 85, 0.5);
       border-radius: 10px;
       padding: 14px 16px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
     }
 
     .info-block.purpose {
-      border-left: 3px solid var(--accent);
+      background: #f8fafc;
+      border-left: 3.5px solid var(--primary);
     }
 
     .info-block.impact {
-      border-left: 3px solid var(--success);
+      background: #f9fbf9;
+      border-left: 3.5px solid var(--success);
     }
 
     .block-header {
@@ -270,7 +268,7 @@
       gap: 6px;
     }
 
-    .purpose .block-header { color: var(--accent); }
+    .purpose .block-header { color: var(--primary); }
     .impact .block-header { color: var(--success); }
 
     .block-text {
@@ -304,7 +302,7 @@
 
     .spec-line {
       font-family: var(--font-mono);
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--text-muted);
       margin: 10px 0 20px;
       display: flex;
@@ -319,11 +317,11 @@
       justify-content: center;
       gap: 10px;
       width: 100%;
-      padding: 14px 20px;
+      padding: 13px 20px;
       border-radius: 10px;
       font-family: var(--font-body);
       font-weight: 700;
-      font-size: 14.5px;
+      font-size: 14px;
       text-decoration: none;
       color: #ffffff;
       transition: all 0.2s ease;
@@ -332,34 +330,33 @@
     }
 
     .card-pas .btn-launch {
-      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-      box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);
+      background: var(--primary);
+      box-shadow: 0 4px 14px rgba(10, 91, 176, 0.25);
     }
     .card-pas .btn-launch:hover {
-      background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
-      box-shadow: 0 6px 22px rgba(2, 132, 199, 0.55);
-      transform: scale(1.01);
+      background: var(--primary-hover);
+      box-shadow: 0 6px 18px rgba(10, 91, 176, 0.35);
     }
 
     .card-kitting .btn-launch {
-      background: linear-gradient(135deg, #059669 0%, #047857 100%);
-      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+      background: var(--success);
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.25);
     }
     .card-kitting .btn-launch:hover {
-      background: linear-gradient(135deg, #047857 0%, #065f46 100%);
-      box-shadow: 0 6px 22px rgba(16, 185, 129, 0.55);
-      transform: scale(1.01);
+      background: var(--success-hover);
+      box-shadow: 0 6px 18px rgba(13, 148, 136, 0.35);
     }
 
     /* Footer */
     footer {
       border-top: 1px solid var(--border);
       padding: 24px 24px;
-      background: rgba(11, 17, 32, 0.95);
+      background: #ffffff;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.02);
     }
 
     .footer-content {
-      max-width: 1280px;
+      max-width: 1260px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -374,11 +371,11 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      background: var(--primary-soft);
+      border: 1px solid #bfdbfe;
       padding: 4px 12px;
       border-radius: 999px;
-      color: #38bdf8;
+      color: var(--primary);
       font-weight: 700;
       font-family: var(--font-mono);
       font-size: 12px;
@@ -389,10 +386,6 @@
       .footer-content { justify-content: center; text-align: center; }
     }
   </style>
-  <script src="libs/three.min.js"></script>
-  <script>if (typeof THREE === 'undefined') document.write('<script src="three.min.js"><\/script>');</script>
-  <script src="libs/OrbitControls.js"></script>
-  <script>if (typeof THREE !== 'undefined' && typeof THREE.OrbitControls === 'undefined') document.write('<script src="OrbitControls.js"><\/script>');</script>
 </head>
 <body>
 
@@ -413,11 +406,10 @@
     <main class="projects-grid">
       <!-- DỰ ÁN 1: TRẠM PAS -->
       <article class="project-card card-pas">
-        <!-- 3D Mini Viewport -->
-        <div class="canvas-box" id="canvasBoxPas">
-          <canvas id="canvasPas"></canvas>
+        <!-- 3D Image Showcase -->
+        <div class="image-showcase">
+          <img src="img_pas_workstation.jpg" alt="Mô hình 3D Trạm PAS HFS VINA" loading="lazy">
           <span class="canvas-badge" id="tPasBadge">Workstation · AI Poka-Yoke</span>
-          <span class="canvas-hint">🖱️ Kéo để xoay 3D</span>
         </div>
 
         <div class="card-body">
@@ -459,11 +451,10 @@
 
       <!-- DỰ ÁN 2: DÂY CHUYỀN KITTING 3D -->
       <article class="project-card card-kitting">
-        <!-- 3D Mini Viewport -->
-        <div class="canvas-box" id="canvasBoxKit">
-          <canvas id="canvasKit"></canvas>
+        <!-- 3D Image Showcase -->
+        <div class="image-showcase">
+          <img src="img_kitting_line.jpg" alt="Mô hình 3D Dây chuyền Kitting HFS VINA" loading="lazy">
           <span class="canvas-badge" id="tKitBadge">Full Automation · 20MP Vision</span>
-          <span class="canvas-hint">🖱️ Kéo để xoay 3D</span>
         </div>
 
         <div class="card-body">
@@ -520,7 +511,7 @@
   </footer>
 
   <script>
-    /* ================= 1. SONG NGỮ VIỆT - HÀN ================= */
+    /* ================= SONG NGỮ VIỆT - HÀN ================= */
     const I18N = {
       vi: {
         brand: 'HFS VINA · INNOVATION TEAM · SIMULATION PORTAL',
@@ -625,232 +616,6 @@
       try { return localStorage.getItem('hfs_hub_lang') || 'vi'; } catch (e) { return 'vi'; }
     })();
     setLang(savedLang);
-
-    /* ================= 2. LIVE THREE.JS 3D PREVIEW CANVASES ================= */
-    (function init3DPreviews() {
-      if (typeof THREE === 'undefined') return;
-
-      /* ----- Canvas 1: PAS Workstation ----- */
-      const c1 = document.getElementById('canvasPas');
-      const box1 = document.getElementById('canvasBoxPas');
-      if (c1 && box1) {
-        const ren1 = new THREE.WebGLRenderer({ canvas: c1, antialias: true, alpha: true });
-        ren1.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-        ren1.setSize(box1.clientWidth, box1.clientHeight);
-
-        const sc1 = new THREE.Scene();
-        const cam1 = new THREE.PerspectiveCamera(35, box1.clientWidth / box1.clientHeight, 0.1, 50);
-        cam1.position.set(2.8, 2.2, 3.2);
-
-        const ctrl1 = (typeof THREE.OrbitControls !== 'undefined') ? new THREE.OrbitControls(cam1, c1) : null;
-        if (ctrl1) {
-          ctrl1.enableDamping = true;
-          ctrl1.dampingFactor = 0.08;
-          ctrl1.enableZoom = false;
-          ctrl1.target.set(0, 0.9, 0);
-        }
-
-        sc1.add(new THREE.AmbientLight(0xffffff, 0.8));
-        const dir1 = new THREE.DirectionalLight(0x38bdf8, 1.2);
-        dir1.position.set(3, 5, 4);
-        sc1.add(dir1);
-
-        const grp1 = new THREE.Group();
-
-        // Workstation Table Frame
-        const matAlu = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.7, roughness: 0.3 });
-        const matTop = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.5 }); // ESD Blue
-        const matDark = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.6 });
-
-        // Legs
-        const legGeo = new THREE.BoxGeometry(0.06, 0.85, 0.06);
-        [[-0.85, -0.4], [0.85, -0.4], [-0.85, 0.4], [0.85, 0.4]].forEach(p => {
-          const leg = new THREE.Mesh(legGeo, matAlu);
-          leg.position.set(p[0], 0.425, p[1]);
-          grp1.add(leg);
-        });
-
-        // Table Top
-        const topMesh = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.05, 0.9), matTop);
-        topMesh.position.set(0, 0.875, 0);
-        grp1.add(topMesh);
-
-        // Overhead Frame & Projector
-        const postGeo = new THREE.BoxGeometry(0.05, 1.2, 0.05);
-        [-0.85, 0.85].forEach(x => {
-          const post = new THREE.Mesh(postGeo, matAlu);
-          post.position.set(x, 1.5, -0.4);
-          grp1.add(post);
-        });
-        const topBar = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.05, 0.05), matAlu);
-        topBar.position.set(0, 2.1, -0.4);
-        grp1.add(topBar);
-
-        const projBoom = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.45), matAlu);
-        projBoom.position.set(0, 2.1, -0.175);
-        grp1.add(projBoom);
-
-        const proj = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.1, 0.25), matDark);
-        proj.position.set(0, 2.05, 0.05);
-        grp1.add(proj);
-
-        // Projector Light Cone (Cyan)
-        const coneGeo = new THREE.ConeGeometry(0.45, 1.1, 16, 1, true);
-        const coneMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.22, side: THREE.DoubleSide });
-        const cone = new THREE.Mesh(coneGeo, coneMat);
-        cone.position.set(0, 1.45, 0.05);
-        cone.rotation.x = Math.PI;
-        grp1.add(cone);
-
-        // Part Bins (3 rows)
-        const binGeo = new THREE.BoxGeometry(0.12, 0.08, 0.15);
-        const binMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.7 });
-        for (let r = 0; r < 2; r++) {
-          for (let c = -4; c <= 4; c++) {
-            const b = new THREE.Mesh(binGeo, binMat);
-            b.position.set(c * 0.15, 0.95 + r * 0.12, -0.25 - r * 0.08);
-            b.rotation.x = 0.25;
-            grp1.add(b);
-          }
-        }
-
-        // Tower Light
-        const towerGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.3, 12);
-        const towerMat = new THREE.MeshStandardMaterial({ color: 0x10b981, emissive: 0x10b981, emissiveIntensity: 0.6 });
-        const tower = new THREE.Mesh(towerGeo, towerMat);
-        tower.position.set(0.85, 2.25, -0.4);
-        grp1.add(tower);
-
-        sc1.add(grp1);
-
-        function anim1() {
-          requestAnimationFrame(anim1);
-          if (!ctrl1 || !ctrl1.state) grp1.rotation.y += 0.005;
-          if (ctrl1) ctrl1.update();
-          ren1.render(sc1, cam1);
-        }
-        anim1();
-
-        window.addEventListener('resize', () => {
-          ren1.setSize(box1.clientWidth, box1.clientHeight);
-          cam1.aspect = box1.clientWidth / box1.clientHeight;
-          cam1.updateProjectionMatrix();
-        });
-      }
-
-      /* ----- Canvas 2: Kitting Automation Line ----- */
-      const c2 = document.getElementById('canvasKit');
-      const box2 = document.getElementById('canvasBoxKit');
-      if (c2 && box2) {
-        const ren2 = new THREE.WebGLRenderer({ canvas: c2, antialias: true, alpha: true });
-        ren2.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-        ren2.setSize(box2.clientWidth, box2.clientHeight);
-
-        const sc2 = new THREE.Scene();
-        const cam2 = new THREE.PerspectiveCamera(35, box2.clientWidth / box2.clientHeight, 0.1, 50);
-        cam2.position.set(2.6, 2.0, 3.2);
-
-        const ctrl2 = (typeof THREE.OrbitControls !== 'undefined') ? new THREE.OrbitControls(cam2, c2) : null;
-        if (ctrl2) {
-          ctrl2.enableDamping = true;
-          ctrl2.dampingFactor = 0.08;
-          ctrl2.enableZoom = false;
-          ctrl2.target.set(0, 0.7, 0);
-        }
-
-        sc2.add(new THREE.AmbientLight(0xffffff, 0.8));
-        const dir2 = new THREE.DirectionalLight(0x10b981, 1.2);
-        dir2.position.set(-3, 5, 4);
-        sc2.add(dir2);
-
-        const grp2 = new THREE.Group();
-
-        // Conveyor Bed
-        const convMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.4, roughness: 0.6 });
-        const rollerMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.8, roughness: 0.2 });
-        const convMesh = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.08, 0.8), convMat);
-        convMesh.position.set(0, 0.6, 0);
-        grp2.add(convMesh);
-
-        // Legs
-        const legGeo2 = new THREE.BoxGeometry(0.06, 0.6, 0.06);
-        [[-1.0, -0.35], [1.0, -0.35], [-1.0, 0.35], [1.0, 0.35], [0, -0.35], [0, 0.35]].forEach(p => {
-          const l = new THREE.Mesh(legGeo2, rollerMat);
-          l.position.set(p[0], 0.3, p[1]);
-          grp2.add(l);
-        });
-
-        // Vision Chamber (Inspection Tunnel)
-        const chamMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.4 });
-        const chamber = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.65, 0.85), chamMat);
-        chamber.position.set(0, 0.95, 0);
-        grp2.add(chamber);
-
-        // Chamber Roof Camera Tower
-        const camTower = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.2, 16), rollerMat);
-        camTower.position.set(0, 1.35, 0);
-        grp2.add(camTower);
-
-        // Green Vision Ring Light inside Chamber
-        const ringGeo = new THREE.TorusGeometry(0.18, 0.015, 8, 24);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
-        const ring = new THREE.Mesh(ringGeo, ringMat);
-        ring.position.set(0, 1.15, 0);
-        ring.rotation.x = Math.PI / 2;
-        grp2.add(ring);
-
-        // Kitting Trays (Blue Industrial Trays with 16 cells)
-        const trayMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.3 }); // Navy Blue
-        const cellMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.5 });
-        const compMatGold = new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.8, roughness: 0.3 });
-        const compMatSilver = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.9, roughness: 0.2 });
-
-        function makeTray(x) {
-          const tGrp = new THREE.Group();
-          const trayBody = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.06, 0.42), trayMat);
-          trayBody.position.y = 0.03;
-          tGrp.add(trayBody);
-
-          // 16 cells compartments (4x4)
-          for (let r = 0; r < 4; r++) {
-            for (let c = 0; c < 4; c++) {
-              const compMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.03, 8), ((r + c) % 2 === 0) ? compMatGold : compMatSilver);
-              compMesh.position.set(-0.21 + c * 0.14, 0.07, -0.14 + r * 0.095);
-              tGrp.add(compMesh);
-            }
-          }
-          tGrp.position.set(x, 0.65, 0);
-          return tGrp;
-        }
-
-        const tray1 = makeTray(-0.65);
-        const tray2 = makeTray(0.65);
-        grp2.add(tray1);
-        grp2.add(tray2);
-
-        // AGV Robot under line
-        const agvMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.4 });
-        const agv = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.15, 0.4), agvMat);
-        agv.position.set(-0.65, 0.1, 0.65);
-        grp2.add(agv);
-
-        sc2.add(grp2);
-
-        function anim2() {
-          requestAnimationFrame(anim2);
-          if (!ctrl2 || !ctrl2.state) grp2.rotation.y -= 0.005;
-          if (ctrl2) ctrl2.update();
-          ren2.render(sc2, cam2);
-        }
-        anim2();
-
-        window.addEventListener('resize', () => {
-          ren2.setSize(box2.clientWidth, box2.clientHeight);
-          cam2.aspect = box2.clientWidth / box2.clientHeight;
-          cam2.updateProjectionMatrix();
-        });
-      }
-    })();
   </script>
 </body>
 </html>
