@@ -412,7 +412,7 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
         <button type="button" onclick="closeExportModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#64748b;">✕</button>
       </div>
       <div style="padding:16px 18px;font-size:13px;color:#334155;line-height:1.5;">
-        <p style="margin:0 0 10px;font-weight:600;color:#0f172a;font-size:14px;" data-t="modalPrompt">Bạn muốn In trực tiếp hay Tải file PDF báo cáo kỹ thuật A4?</p>
+        <p style="margin:0 0 10px;font-weight:600;color:#0f172a;font-size:14px;" data-t="modalPrompt">Bạn muốn In Báo cáo kỹ thuật A4?</p>
         <div style="background:#f1f5f9;border-radius:8px;padding:11px 13px;font-size:12px;border:1px solid #e2e8f0;line-height:1.5;">
           • <b>Bản vẽ:</b> HFS-PAS-2026-01 · Rev01 Concept (TheQuang)<br>
           • <b>Nội dung:</b> Đầy đủ mô hình 3D trạm PAS, thông số kỹ thuật, 7 bước SOP và chữ ký duyệt.<br>
@@ -422,7 +422,6 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
       <div style="padding:12px 18px 16px;background:#f8fafc;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end;align-items:center;gap:10px;flex-wrap:nowrap;">
         <button type="button" onclick="closeExportModal()" style="padding:8px 14px;border-radius:6px;border:1px solid #cbd5e1;background:#fff;color:#475569;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;flex-shrink:0;" data-t="modalBtnCancel">Hủy Bỏ</button>
         <button type="button" onclick="openPrintPdfReport()" style="padding:8px 16px;border-radius:6px;border:1px solid #0284c7;background:#0284c7;color:#fff;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;"><span>🖨️</span> <span data-t="modalBtnPrint">In Báo Cáo</span></button>
-        <button type="button" onclick="downloadPdfReport()" style="padding:8px 18px;border-radius:6px;border:none;background:#0a5bb0;color:#fff;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;box-shadow:0 2px 4px rgba(10,91,176,0.25);white-space:nowrap;flex-shrink:0;"><span>📥</span> <span data-t="modalBtnPdf">Tải File PDF</span></button>
       </div>
     </div>
   </div>
@@ -682,11 +681,10 @@ const L10N={
   ui:{
    navHub:'Cổng Tổng (Hub)', navSwitch:'Sang Dây Chuyền Kitting 3D ➔', navPdf:'Xuất Báo Cáo PDF (A4)',
    modalTitle:'Tùy Chọn In Ấn Hoặc Tải Báo Cáo PDF',
-   modalPrompt:'Bạn muốn In ra giấy hay Xuất / Tải file PDF báo cáo kỹ thuật A4?',
+   modalPrompt:'Bạn muốn In Báo cáo kỹ thuật A4?',
    modalTip:'💡 Gợi ý: Nếu chọn "Xuất File PDF", tại hộp thoại in của trình duyệt, hãy chọn "Lưu dưới dạng PDF" (Save as PDF) tại ô Máy in đích để tải file về máy.',
    modalBtnCancel:'Hủy Bỏ', modalBtnView:'Xem Bản A4',
    modalBtnPrint:'In Báo Cáo',
-   modalBtnPdf:'Tải File PDF',
    eyebrow:'HFS VINA · Innovation Team – Project Assembly System', h1:' · Trạm lắp ráp chiếu sáng có AI kiểm soát',
    sub:'Mô hình 3D trạm lắp ráp chỉ dẫn bằng máy chiếu, camera AI theo dõi thao tác tay, súng vặn vít kiểm soát lực và truy xuất dữ liệu về MES/SPC. Kéo để xoay, cuộn hoặc chụm hai ngón để phóng to.',
    dwg:'Số bản vẽ', rev:'Phiên bản', date:'Ngày', dateVal:'11/10/2026', size:'Kích thước trạm',
@@ -782,11 +780,10 @@ const L10N={
   ui:{
    navHub:'메인 허브 (Hub)', navSwitch:'키팅 3D 라인 이동 ➔', navPdf:'PDF 보고서 출력 (A4)',
    modalTitle:'인쇄 또는 PDF 보고서 다운로드 선택',
-   modalPrompt:'A4 기술 보고서를 종이로 인쇄하시겠습니까, 아니면 PDF 파일로 저장하시겠습니까?',
+   modalPrompt:'A4 기술 보고서를 인쇄하시겠습니까?',
    modalTip:'💡 안내: "PDF 파일 저장" 선택 시 브라우저 인쇄 창의 "대상"(대상 프린터)에서 "PDF로 저장" (Save as PDF)을 선택한 후 저장하세요.',
    modalBtnCancel:'취소', modalBtnView:'A4 보고서 열기',
    modalBtnPrint:'보고서 인쇄',
-   modalBtnPdf:'PDF 파일 다운로드',
    eyebrow:'HFS VINA · Innovation Team – Project Assembly System', h1:' · AI 감시형 프로젝션 조립 스테이션',
    sub:'프로젝터로 작업을 안내하고, AI 카메라가 손동작을 추적하며, 토크 제어 전동 드라이버와 MES/SPC 데이터 추적을 갖춘 조립 스테이션의 3D 모델입니다. 드래그로 회전, 스크롤 또는 두 손가락 핀치로 확대할 수 있습니다.',
    dwg:'도면 번호', rev:'리비전', date:'날짜', dateVal:'11/10/2026', size:'스테이션 크기',
@@ -1929,22 +1926,10 @@ controls.addEventListener('start',()=>{tween=null;setViewBtn(null);});
 window.exportPasReportPDF = function() {
   const m = document.getElementById('exportConfirmModal');
   if (m) m.style.display = 'flex';
-  else window.downloadPdfReport();
 };
 window.closeExportModal = function() {
   const m = document.getElementById('exportConfirmModal');
   if (m) m.style.display = 'none';
-};
-window.downloadPdfReport = function() {
-  window.closeExportModal();
-  const isKo = (typeof LANG !== 'undefined' && LANG === 'ko');
-  const file = isKo ? 'Bao_Cao_Ky_Thuat_Tram_PAS_A4_KO.pdf' : 'Bao_Cao_Ky_Thuat_Tram_PAS_A4.pdf';
-  const a = document.createElement('a');
-  a.href = file;
-  a.download = file;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
 };
 window.openPrintPdfReport = function() {
   window.closeExportModal();

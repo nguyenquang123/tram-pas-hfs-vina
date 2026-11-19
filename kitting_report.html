@@ -72,13 +72,6 @@ body {
   color: #fff;
 }
 .btn-print:hover { background: #0369a1; }
-.btn-pdf {
-  background: #0a5bb0;
-  color: #fff;
-  font-weight: 700;
-  box-shadow: 0 2px 6px rgba(10,91,176,0.35);
-}
-.btn-pdf:hover { background: #074382; }
 .lang-btn {
   background: rgba(255,255,255,0.12);
   color: #e2e8f0;
@@ -105,6 +98,9 @@ body {
   box-shadow: 0 4px 20px rgba(0,0,0,0.12);
   border-radius: 2px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 /* BỐ CỤC NỘI DUNG BÁO CÁO A4 */
@@ -164,6 +160,7 @@ body {
 }
 
 .report-grid {
+  flex: 1 1 auto;
   display: grid;
   grid-template-columns: 44% 56%;
   gap: 12px;
@@ -300,7 +297,7 @@ body {
   }
   .paper-sheet {
     width: 100% !important;
-    min-height: auto !important;
+    height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
     box-shadow: none !important;
@@ -391,11 +388,7 @@ body {
     <span style="font-size:12px;color:#94a3b8;">|</span>
     <button type="button" class="action-btn btn-print" onclick="window.print()">
       <span>🖨️</span>
-      <span id="btnPrintText">In Báo Cáo (Print)</span>
-    </button>
-    <button type="button" class="action-btn btn-pdf" onclick="window.print()">
-      <span>📥</span>
-      <span id="btnPdfText">Lưu Dưới Dạng PDF (Save PDF)</span>
+      <span id="btnPrintText">In Báo Cáo</span>
     </button>
   </div>
   <div class="action-right">
@@ -413,7 +406,7 @@ body {
   <header class="report-header">
     <div>
       <div class="brand-title" id="tBrandTitle">HFS VINA INNOVATION TEAM</div>
-      <div class="brand-sub" id="tBrandSub">PHÒNG PHÁT TRIỂN CÔNG NGHỆ &amp; TỰ ĐỘNG HÓA · THUYẾT MINH THIẾT KẾ CONCEPT</div>
+      <div class="brand-sub" id="tBrandSub">PHÒNG PHÁT TRIỂN CÔNG NGHỆ &amp; TỰ ĐỘNG HÓA<br>THUYẾT MINH THIẾT KẾ CONCEPT</div>
     </div>
     <div>
       <table class="meta-table">
@@ -534,11 +527,10 @@ body {
 const DICT = {
   vi: {
     btnBack: "Quay Lại Mô Phỏng 3D",
-    btnPrint: "In Báo Cáo (Print)",
-    btnPdf: "Lưu Dưới Dạng PDF (Save PDF)",
+    btnPrint: "In Báo Cáo",
     tip: "💡 Mẹo: Chọn Máy in đích là <b>\"Lưu dưới dạng PDF\"</b> để tải file về máy",
     brandTitle: "HFS VINA INNOVATION TEAM",
-    brandSub: "PHÒNG PHÁT TRIỂN CÔNG NGHỆ & TỰ ĐỘNG HÓA · THUYẾT MINH THIẾT KẾ CONCEPT",
+    brandSub: "PHÒNG PHÁT TRIỂN CÔNG NGHỆ & TỰ ĐỘNG HÓA<br>THUYẾT MINH THIẾT KẾ CONCEPT",
     lblDwg: "Số bản vẽ:",
     lblRev: "Phiên bản:",
     lblDate: "Ngày lập:",
@@ -582,7 +574,6 @@ const DICT = {
   ko: {
     btnBack: "3D 시뮬레이션으로 돌아가기",
     btnPrint: "보고서 인쇄 (Print)",
-    btnPdf: "PDF 파일로 저장 (Save PDF)",
     tip: "💡 안내: 브라우저 인쇄 창의 대상을 <b>\"PDF로 저장\"</b>으로 선택하시면 파일로 다운로드됩니다.",
     brandTitle: "HFS VINA INNOVATION TEAM",
     brandSub: "기술개발 및 생산자동화본부 · 설비 컨셉 기술 보고서",
