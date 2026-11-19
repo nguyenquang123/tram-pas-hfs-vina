@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HFS VINA — Báo Cáo Kỹ Thuật Trạm Lắp Ráp PAS (TheQuang Concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+KR:wght@500;700&display=swap">
+<style>
+:root {
+  --accent: #0a5bb0;
+  --accent-dark: #074382;
+  --bg-page: #f1f5f9;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --border-line: #cbd5e1;
+  --f-body: "Be Vietnam Pro", system-ui, sans-serif;
+  --f-display: "Barlow Condensed", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg-page);
+  color: var(--text-main);
+  font-family: var(--f-body);
+  font-size: 13px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* TOP TOOLBAR (KHÔNG IN) */
+.action-bar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: #0f172a;
+  color: #fff;
+  padding: 10px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+}
+.action-left, .action-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  border: none;
+}
+.btn-back {
+  background: #334155;
+  color: #f8fafc;
+}
+.btn-back:hover { background: #475569; }
+.btn-print {
+  background: #0284c7;
+  color: #fff;
+}
+.btn-print:hover { background: #0369a1; }
+.btn-pdf {
+  background: #0a5bb0;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(10,91,176,0.35);
+}
+.btn-pdf:hover { background: #074382; }
+.lang-btn {
+  background: rgba(255,255,255,0.12);
+  color: #e2e8f0;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.lang-btn.active {
+  background: #0a5bb0;
+  color: #fff;
+  border-color: #38bdf8;
+  font-weight: 700;
+}
+
+/* KHỔ GIẤY A4 TRÊN MÀN HÌNH */
+.paper-sheet {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 16px auto 30px;
+  background: #ffffff;
+  padding: 12mm 14mm 10mm;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  border-radius: 2px;
+  position: relative;
+}
+
+/* BỐ CỤC NỘI DUNG BÁO CÁO A4 */
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2.5px solid var(--accent);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+.brand-title {
+  font-family: var(--f-display);
+  font-size: 16pt;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+.brand-sub {
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: #475569;
+  margin-top: 2px;
+}
+.meta-table {
+  font-size: 8.5pt;
+  border-collapse: collapse;
+}
+.meta-table th {
+  text-align: left;
+  padding: 1px 6px;
+  color: #64748b;
+  font-weight: 600;
+}
+.meta-table td {
+  padding: 1px 6px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.report-title-block {
+  margin-bottom: 8px;
+}
+.report-title {
+  font-family: var(--f-display);
+  font-size: 14pt;
+  font-weight: 700;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin-bottom: 2px;
+}
+.report-desc {
+  font-size: 8.8pt;
+  color: #334155;
+  line-height: 1.35;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: 44% 56%;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.img-card {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 6px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.img-card img {
+  max-width: 100%;
+  max-height: 190px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+.specs-card {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+.specs-card h4 {
+  font-size: 9pt;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 5px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 3px;
+}
+.specs-card ul {
+  margin: 0;
+  padding-left: 14px;
+  font-size: 8pt;
+  line-height: 1.38;
+}
+.specs-card li { margin-bottom: 2px; }
+
+.section-block {
+  margin-bottom: 7px;
+}
+.section-block h3 {
+  font-size: 9.5pt;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 3px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 2px;
+}
+.section-block p {
+  font-size: 8.2pt;
+  line-height: 1.4;
+  color: #1e293b;
+}
+.section-block ul, .section-block ol {
+  margin: 2px 0 0;
+  padding-left: 14px;
+  font-size: 8.2pt;
+  line-height: 1.38;
+}
+.section-block li { margin-bottom: 2px; }
+
+.report-footer {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 14px;
+  padding-top: 8px;
+  border-top: 1px solid #cbd5e1;
+}
+.sign-box {
+  text-align: center;
+  font-size: 8.5pt;
+}
+.sign-box span { display: block; color: #64748b; font-size: 8pt; }
+.sign-box b { display: block; font-size: 10pt; color: #0f172a; margin: 4px 0 2px; }
+.sign-box small { display: block; color: #64748b; font-size: 7.5pt; }
+
+/* ĐỊNH DẠNG IN / XUẤT PDF CHUẨN A4 */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm 10mm;
+  }
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 10pt;
+    width: 100% !important;
+  }
+  .action-bar {
+    display: none !important;
+  }
+  .paper-sheet {
+    width: 100% !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .img-card img {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .report-footer {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- THANH CÔNG CỤ ĐIỀU KHIỂN BÁO CÁO (CHỈ HIỆN TRÊN WEB, KHÔNG IN) -->
+<nav class="action-bar" aria-label="Thao tác báo cáo">
+  <div class="action-left">
+    <a href="pas.html" class="action-btn btn-back">
+      <span>←</span>
+      <span id="btnBackText">Quay Lại Mô Phỏng 3D</span>
+    </a>
+    <span style="font-size:12px;color:#94a3b8;">|</span>
+    <button type="button" class="action-btn btn-print" onclick="window.print()">
+      <span>🖨️</span>
+      <span id="btnPrintText">In Báo Cáo (Print)</span>
+    </button>
+    <button type="button" class="action-btn btn-pdf" onclick="window.print()">
+      <span>📥</span>
+      <span id="btnPdfText">Lưu Dưới Dạng PDF (Save PDF)</span>
+    </button>
+  </div>
+  <div class="action-right">
+    <span style="font-size:12px;color:#94a3b8;" id="tipText">💡 Mẹo: Chọn Máy in đích là <b>"Lưu dưới dạng PDF"</b> để tải file về máy</span>
+    <div style="display:flex;gap:4px;">
+      <button type="button" class="lang-btn active" data-lang="vi" onclick="setReportLang('vi')">🇻🇳 Tiếng Việt</button>
+      <button type="button" class="lang-btn" data-lang="ko" onclick="setReportLang('ko')">🇰🇷 한국어</button>
+    </div>
+  </div>
+</nav>
+
+<!-- TỜ GIẤY BÁO CÁO EXECUTIVE A4 CHUẨN IN & XUẤT PDF -->
+<main class="paper-sheet" id="reportContent">
+
+  <header class="report-header">
+    <div>
+      <div class="brand-title" id="tBrandTitle">HFS VINA INNOVATION TEAM</div>
+      <div class="brand-sub" id="tBrandSub">PHÒNG PHÁT TRIỂN CÔNG NGHỆ &amp; TỰ ĐỘNG HÓA · THUYẾT MINH THIẾT KẾ CONCEPT</div>
+    </div>
+    <div>
+      <table class="meta-table">
+        <tr><th id="tLblDwg">Số bản vẽ:</th><td>HFS-PAS-2026-01</td></tr>
+        <tr><th id="tLblRev">Phiên bản:</th><td>Rev01 Concept · Tác giả: <b>TheQuang</b></td></tr>
+        <tr><th id="tLblDate">Ngày lập:</th><td>18/11/2026</td></tr>
+        <tr><th id="tLblRef">Tham chiếu:</th><td id="tValRef">Tiêu chuẩn Nhà máy OKI Japan (Hải Phòng)</td></tr>
+      </table>
+    </div>
+  </header>
+
+  <div class="report-title-block">
+    <h1 class="report-title" id="tReportTitle">TRẠM LẮP RÁP CHIẾU SÁNG THÔNG MINH PAS (PROJECTION ASSEMBLY SYSTEM)</h1>
+    <p class="report-desc" id="tReportDesc">Hệ thống dẫn hướng quang học Workguide SOP kết hợp Camera AI Poka-Yoke &amp; Súng siết vít kiểm soát lực tích hợp MES/SPC</p>
+  </div>
+
+  <div class="report-grid">
+    <!-- CỘT TRÁI: HÌNH ẢNH 3D & THÔNG SỐ KỸ THUẬT -->
+    <div>
+      <div class="img-card">
+        <img src="img_pas_workstation.png" alt="Mô hình 3D Trạm Lắp Ráp PAS" id="pasImg">
+      </div>
+      <div class="specs-card">
+        <h4 id="tSpecsHeader">THÔNG SỐ KỸ THUẬT TIÊU CHUẨN</h4>
+        <ul id="tSpecsList">
+          <li><b>Kích thước trạm:</b> 1800 × 900 × 2200 mm (Khung nhôm chuẩn phòng sạch ESD)</li>
+          <li><b>Máy chiếu quang học H1:</b> 4000 ANSI Lumens, chiếu khung sáng, SOP và viền đồ gá</li>
+          <li><b>Camera AI kép:</b> CAM-1 (5MP 30 FPS theo dõi tay) · CAM-2 (12MP kiểm tra Poka-Yoke)</li>
+          <li><b>Súng vặn vít lực:</b> Tự động ngắt lực chuẩn 0.50 N·m ±10%, đếm đủ số vít chu trình</li>
+          <li><b>Bộ cấp vít tự động:</b> Cấp vít M3 liên tục, cảm biến quang báo phôi sẵn sàng</li>
+          <li><b>Máy tính điều khiển:</b> IPC công nghiệp on-premise, liên động PLC đèn tháp &amp; MES/SPC</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CỘT PHẢI: MỤC ĐÍCH, HIỆU QUẢ ROI & SOP -->
+    <div>
+      <div class="section-block">
+        <h3 id="tSec1Header">1. MỤC ĐÍCH DỰ ÁN (PROJECT OBJECTIVES)</h3>
+        <p id="tSec1Desc">Chuẩn hóa 100% quy trình lắp ráp sản phẩm phức tạp nhiều chi tiết, loại bỏ hoàn toàn rủi ro sai sót do con người (Human Error) bằng công nghệ chiếu sáng trực quan Workguide và camera AI Poka-Yoke; tích hợp súng siết lực tự động kiểm soát chất lượng siết vít toàn diện trước khi chuyển công đoạn.</p>
+      </div>
+
+      <div class="section-block">
+        <h3 id="tSec2Header">2. HIỆU QUẢ THỰC TẾ &amp; ROI ĐẠT ĐƯỢC</h3>
+        <ul id="tSec2List">
+          <li><b>Triệt tiêu lỗi lấy nhầm linh kiện:</b> Giảm 99.8% lỗi nhờ AI Hand-Tracking quét liên tục 30 FPS.</li>
+          <li><b>Rút ngắn 35% thời gian đào tạo:</b> Công nhân mới thao tác thành thạo ngay trong ca đầu mà không cần tài liệu giấy.</li>
+          <li><b>Kiểm soát lực siết 100%:</b> Đo mô-men xoắn tự động (0.50 N·m ±10%), đếm đủ số vít mới xác nhận hoàn tất.</li>
+          <li><b>Truy xuất nguồn gốc thời gian thực:</b> Lưu trữ Serial Number, biểu đồ lực và ảnh AI kiểm tra lên máy chủ MES/SPC.</li>
+        </ul>
+      </div>
+
+      <div class="section-block">
+        <h3 id="tSec3Header">3. QUY TRÌNH 7 BƯỚC TIÊU CHUẨN (SOP)</h3>
+        <ol id="tSec3List">
+          <li><b>Bước 1:</b> Quét mã 2D trên phiếu công đoạn, IPC tải BOM và SOP v3.2 từ MES.</li>
+          <li><b>Bước 2:</b> Máy chiếu rọi khung sáng vào khay B2, chiếu mũi tên hướng dẫn thao tác.</li>
+          <li><b>Bước 3:</b> Camera AI xác nhận tay vào đúng ô B2 (khóa bước cảnh báo còi nếu tay vào sai ô B3).</li>
+          <li><b>Bước 4:</b> Đặt khung đỡ vào đồ gá theo viền sáng chiếu, cảm biến đồ gá S1 xác nhận ON.</li>
+          <li><b>Bước 5:</b> Súng siết lực dẫn hướng 4 vị trí vít, kiểm soát lực đạt chuẩn 0.50 N·m.</li>
+          <li><b>Bước 6:</b> Camera AI CAM-2 chụp ảnh ngoại quan kiểm tra đủ 4 vít và bề mặt sản phẩm.</li>
+          <li><b>Bước 7:</b> Ghi hồ sơ hoàn thành lên MES/SPC, đèn tháp xanh, in tem Serial chuyển trạm.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <footer class="report-footer">
+    <div class="sign-box">
+      <span id="tLblSignAuthor">Người Lập Concept:</span>
+      <b>TheQuang</b>
+      <small id="tValSignRole">Lead Automation &amp; Vision Solution Architect</small>
+    </div>
+    <div class="sign-box">
+      <span id="tLblSignDept">Đơn Vị Quản Lý:</span>
+      <b>HFS VINA INNOVATION TEAM</b>
+      <small id="tValSignDept">Phòng Phát Triển Công Nghệ Sản Xuất</small>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+const DICT = {
+  vi: {
+    btnBack: "Quay Lại Mô Phỏng 3D",
+    btnPrint: "In Báo Cáo (Print)",
+    btnPdf: "Lưu Dưới Dạng PDF (Save PDF)",
+    tip: "💡 Mẹo: Chọn Máy in đích là <b>\"Lưu dưới dạng PDF\"</b> để tải file về máy",
+    brandTitle: "HFS VINA INNOVATION TEAM",
+    brandSub: "PHÒNG PHÁT TRIỂN CÔNG NGHỆ & TỰ ĐỘNG HÓA · THUYẾT MINH THIẾT KẾ CONCEPT",
+    lblDwg: "Số bản vẽ:",
+    lblRev: "Phiên bản:",
+    lblDate: "Ngày lập:",
+    lblRef: "Tham chiếu:",
+    valRef: "Tiêu chuẩn Nhà máy OKI Japan (Hải Phòng)",
+    reportTitle: "TRẠM LẮP RÁP CHIẾU SÁNG THÔNG MINH PAS (PROJECTION ASSEMBLY SYSTEM)",
+    reportDesc: "Hệ thống dẫn hướng quang học Workguide SOP kết hợp Camera AI Poka-Yoke & Súng siết vít kiểm soát lực tích hợp MES/SPC",
+    specsHeader: "THÔNG SỐ KỸ THUẬT TIÊU CHUẨN",
+    specsList: [
+      "<b>Kích thước trạm:</b> 1800 × 900 × 2200 mm (Khung nhôm chuẩn phòng sạch ESD)",
+      "<b>Máy chiếu quang học H1:</b> 4000 ANSI Lumens, chiếu khung sáng, SOP và viền đồ gá",
+      "<b>Camera AI kép:</b> CAM-1 (5MP 30 FPS theo dõi tay) · CAM-2 (12MP kiểm tra Poka-Yoke)",
+      "<b>Súng vặn vít lực:</b> Tự động ngắt lực chuẩn 0.50 N·m ±10%, đếm đủ số vít chu trình",
+      "<b>Bộ cấp vít tự động:</b> Cấp vít M3 liên tục, cảm biến quang báo phôi sẵn sàng",
+      "<b>Máy tính điều khiển:</b> IPC công nghiệp on-premise, liên động PLC đèn tháp & MES/SPC"
+    ],
+    sec1Header: "1. MỤC ĐÍCH DỰ ÁN (PROJECT OBJECTIVES)",
+    sec1Desc: "Chuẩn hóa 100% quy trình lắp ráp sản phẩm phức tạp nhiều chi tiết, loại bỏ hoàn toàn rủi ro sai sót do con người (Human Error) bằng công nghệ chiếu sáng trực quan Workguide và camera AI Poka-Yoke; tích hợp súng siết lực tự động kiểm soát chất lượng siết vít toàn diện trước khi chuyển công đoạn.",
+    sec2Header: "2. HIỆU QUẢ THỰC TẾ & ROI ĐẠT ĐƯỢC",
+    sec2List: [
+      "<b>Triệt tiêu lỗi lấy nhầm linh kiện:</b> Giảm 99.8% lỗi nhờ AI Hand-Tracking quét liên tục 30 FPS.",
+      "<b>Rút ngắn 35% thời gian đào tạo:</b> Công nhân mới thao tác thành thạo ngay trong ca đầu mà không cần tài liệu giấy.",
+      "<b>Kiểm soát lực siết 100%:</b> Đo mô-men xoắn tự động (0.50 N·m ±10%), đếm đủ số vít mới xác nhận hoàn tất.",
+      "<b>Truy xuất nguồn gốc thời gian thực:</b> Lưu trữ Serial Number, biểu đồ lực và ảnh AI kiểm tra lên máy chủ MES/SPC."
+    ],
+    sec3Header: "3. QUY TRÌNH 7 BƯỚC TIÊU CHUẨN (SOP)",
+    sec3List: [
+      "<b>Bước 1:</b> Quét mã 2D trên phiếu công đoạn, IPC tải BOM và SOP v3.2 từ MES.",
+      "<b>Bước 2:</b> Máy chiếu rọi khung sáng vào khay B2, chiếu mũi tên hướng dẫn thao tác.",
+      "<b>Bước 3:</b> Camera AI xác nhận tay vào đúng ô B2 (khóa bước cảnh báo còi nếu tay vào sai ô B3).",
+      "<b>Bước 4:</b> Đặt khung đỡ vào đồ gá theo viền sáng chiếu, cảm biến đồ gá S1 xác nhận ON.",
+      "<b>Bước 5:</b> Súng siết lực dẫn hướng 4 vị trí vít, kiểm soát lực đạt chuẩn 0.50 N·m.",
+      "<b>Bước 6:</b> Camera AI CAM-2 chụp ảnh ngoại quan kiểm tra đủ 4 vít và bề mặt sản phẩm.",
+      "<b>Bước 7:</b> Ghi hồ sơ hoàn thành lên MES/SPC, đèn tháp xanh, in tem Serial chuyển trạm."
+    ],
+    lblSignAuthor: "Người Lập Concept:",
+    valSignRole: "Lead Automation & Vision Solution Architect",
+    lblSignDept: "Đơn Vị Quản Lý:",
+    valSignDept: "Phòng Phát Triển Công Nghệ Sản Xuất"
+  },
+  ko: {
+    btnBack: "3D 시뮬레이션으로 돌아가기",
+    btnPrint: "보고서 인쇄 (Print)",
+    btnPdf: "PDF 파일로 저장 (Save PDF)",
+    tip: "💡 안내: 브라우저 인쇄 창의 대상을 <b>\"PDF로 저장\"</b>으로 선택하시면 파일로 다운로드됩니다.",
+    brandTitle: "HFS VINA INNOVATION TEAM",
+    brandSub: "기술개발 및 생산자동화본부 · 설비 컨셉 기술 보고서",
+    lblDwg: "도면 번호:",
+    lblRev: "리비전:",
+    lblDate: "작성일자:",
+    lblRef: "참조 표준:",
+    valRef: "일본 OKI 하이퐁 공장 프로젝션 조립 표준",
+    reportTitle: "HFS VINA · AI 감시형 프로젝션 조립 스테이션 (PAS)",
+    reportDesc: "광학 프로젝션 Workguide SOP 지시 및 듀얼 AI 카메라 포카요케 · 토크 제어 전동 드라이버 MES/SPC 데이터 연동 조립 시스템",
+    specsHeader: "표준 엔지니어링 사양 (SPECIFICATIONS)",
+    specsList: [
+      "<b>스테이션 규격:</b> 1800 × 900 × 2200 mm (클린룸 ESD 제전 알루미늄 프레임)",
+      "<b>H1 광학 프로젝터:</b> 4000 ANSI Lumens, 작업 지시 SOP 및 지그 윤곽 투사",
+      "<b>듀얼 AI 카메라:</b> CAM-1 (5MP 30FPS 손동작 추적) · CAM-2 (12MP 포카요케 전수 검사)",
+      "<b>토크 제어 드라이버:</b> 정밀 토크 0.50 N·m ±10% 자동 차단, 사이클별 체결 수 카운트",
+      "<b>자동 스크류 공급기:</b> M3 정밀 나사 연속 공급, 광센서 소재 감지",
+      "<b>제어 시스템:</b> On-Premise 산업용 IPC, 타워램프 PLC 및 MES/SPC 데이터 인터페이스"
+    ],
+    sec1Header: "1. 프로젝트 목표 (PROJECT OBJECTIVES)",
+    sec1Desc: "다품종 복잡 부품 조립 공정을 100% 표준화하고, 프로젝션 Workguide 시각 지시와 AI 카메라 포카요케(Poka-Yoke) 감시를 통해 작업자의 오조립 및 자재 오피킹 휴먼 에러를 원천 배제하며, 전동 토크 드라이버를 연동하여 나사 체결 품질을 전수 보증함.",
+    sec2Header: "2. 기대 효과 및 도입 ROI",
+    sec2List: [
+      "<b>자재 오피킹 원천 차단:</b> 30 FPS AI 손동작 실시간 추적으로 오피킹 불량 99.8% 배제.",
+      "<b>교육 훈련 기간 35% 단축:</b> 신규 작업자도 도면 없이 첫 근무조부터 능숙하게 작업.",
+      "<b>나사 체결력 100% 보증:</b> 토크 자동 측정 (0.50 N·m ±10%) 및 전수 카운트 완료 시 승인.",
+      "<b>실시간 생산 이력 추적:</b> 제품 시리얼 번호, 체결 토크 곡선, AI 검사 사진 MES 전송."
+    ],
+    sec3Header: "3. 표준 7단계 조립 가이드 (SOP)",
+    sec3List: [
+      "<b>1단계:</b> 작업 전표 2D 바코드 스캔, MES 서버로부터 BOM 및 최신 SOP v3.2 다운로드.",
+      "<b>2단계:</b> 프로젝터가 B2 자재 박스에 녹색 유도 사각형 및 작업 화살표 투사.",
+      "<b>3단계:</b> AI 카메라가 올바른 B2 박스 진입 감지 (B3 등 오진입 시 경보음 발생 및 공정 잠금).",
+      "<b>4단계:</b> 투사된 가이드 라인에 맞춰 메인 프레임을 조립 지그에 안착 (S1 센서 감지).",
+      "<b>5단계:</b> 토크 전동 드라이버로 4개 포인트 나사 정밀 체결 (0.50 N·m 자동 관리).",
+      "<b>6단계:</b> 12MP CAM-2 카메라가 조립 완품의 나사 4개 체결 상태 및 외관 검사.",
+      "<b>7단계:</b> MES 서버에 작업 완료 승인 전송, 녹색 타워램프 점등, 시리얼 라벨 발행."
+    ],
+    lblSignAuthor: "설계 책임자 (Lead Architect):",
+    valSignRole: "수석 자동화 및 머신비전 솔루션 아키텍트",
+    lblSignDept: "주관 부서:",
+    valSignDept: "HFS VINA 생산기술개발팀"
+  }
+};
+
+function setReportLang(lang) {
+  const d = DICT[lang] || DICT.vi;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  document.getElementById('btnBackText').textContent = d.btnBack;
+  document.getElementById('btnPrintText').textContent = d.btnPrint;
+  document.getElementById('btnPdfText').textContent = d.btnPdf;
+  document.getElementById('tipText').innerHTML = d.tip;
+  document.getElementById('tBrandTitle').textContent = d.brandTitle;
+  document.getElementById('tBrandSub').textContent = d.brandSub;
+  document.getElementById('tLblDwg').textContent = d.lblDwg;
+  document.getElementById('tLblRev').textContent = d.lblRev;
+  document.getElementById('tLblDate').textContent = d.lblDate;
+  document.getElementById('tLblRef').textContent = d.lblRef;
+  document.getElementById('tValRef').textContent = d.valRef;
+  document.getElementById('tReportTitle').textContent = d.reportTitle;
+  document.getElementById('tReportDesc').textContent = d.reportDesc;
+  document.getElementById('tSpecsHeader').textContent = d.specsHeader;
+  document.getElementById('tSpecsList').innerHTML = d.specsList.map(li => `<li>${li}</li>`).join('');
+  document.getElementById('tSec1Header').textContent = d.sec1Header;
+  document.getElementById('tSec1Desc').innerHTML = d.sec1Desc;
+  document.getElementById('tSec2Header').textContent = d.sec2Header;
+  document.getElementById('tSec2List').innerHTML = d.sec2List.map(li => `<li>${li}</li>`).join('');
+  document.getElementById('tSec3Header').textContent = d.sec3Header;
+  document.getElementById('tSec3List').innerHTML = d.sec3List.map(li => `<li>${li}</li>`).join('');
+  document.getElementById('tLblSignAuthor').textContent = d.lblSignAuthor;
+  document.getElementById('tValSignRole').textContent = d.valSignRole;
+  document.getElementById('tLblSignDept').textContent = d.lblSignDept;
+  document.getElementById('tValSignDept').textContent = d.valSignDept;
+}
+
+// Kiểm tra tham số URL (?lang=ko, ?action=print)
+(function init() {
+  const params = new URLSearchParams(window.location.search);
+  const lang = params.get('lang') || 'vi';
+  if (lang === 'ko') setReportLang('ko');
+
+  const action = params.get('action');
+  if (action === 'print' || action === 'pdf') {
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        window.print();
+      }, 400);
+    });
+  }
+})();
+</script>
+</body>
+</html>

@@ -422,9 +422,10 @@ footer.foot{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6p
         </div>
       </div>
       <div style="padding:12px 18px 16px;background:#f8fafc;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end;align-items:center;gap:8px;flex-wrap:wrap;">
-        <button type="button" onclick="closeExportModal()" style="padding:8px 14px;border-radius:6px;border:1px solid #cbd5e1;background:#fff;color:#475569;font-weight:600;font-size:13px;cursor:pointer;" data-t="modalBtnCancel">Hủy Bỏ</button>
-        <button type="button" onclick="doActionPrint('print')" style="padding:8px 16px;border-radius:6px;border:1px solid #0284c7;background:#0284c7;color:#fff;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;"><span>🖨️</span> <span data-t="modalBtnPrint">In Báo Cáo</span></button>
-        <button type="button" onclick="doActionPrint('pdf')" style="padding:8px 18px;border-radius:6px;border:none;background:#0a5bb0;color:#fff;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;box-shadow:0 2px 4px rgba(10,91,176,0.25);"><span>📥</span> <span data-t="modalBtnPdf">Xuất File PDF</span></button>
+        <button type="button" onclick="closeExportModal()" style="padding:8px 12px;border-radius:6px;border:1px solid #cbd5e1;background:#fff;color:#475569;font-weight:600;font-size:13px;cursor:pointer;" data-t="modalBtnCancel">Hủy Bỏ</button>
+        <button type="button" onclick="doActionPrint('view')" style="padding:8px 12px;border-radius:6px;border:1px solid #94a3b8;background:#f8fafc;color:#1e293b;font-weight:600;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;"><span>📄</span> <span data-t="modalBtnView">Xem Bản A4</span></button>
+        <button type="button" onclick="doActionPrint('print')" style="padding:8px 14px;border-radius:6px;border:1px solid #0284c7;background:#0284c7;color:#fff;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;"><span>🖨️</span> <span data-t="modalBtnPrint">In Báo Cáo</span></button>
+        <button type="button" onclick="doActionPrint('pdf')" style="padding:8px 16px;border-radius:6px;border:none;background:#0a5bb0;color:#fff;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;box-shadow:0 2px 4px rgba(10,91,176,0.25);"><span>📥</span> <span data-t="modalBtnPdf">Xuất File PDF</span></button>
       </div>
     </div>
   </div>
@@ -686,7 +687,7 @@ const L10N={
    modalTitle:'Tùy Chọn In Ấn Hoặc Xuất Báo Cáo PDF',
    modalPrompt:'Bạn muốn In ra giấy hay Xuất / Tải file PDF báo cáo kỹ thuật A4?',
    modalTip:'💡 Gợi ý: Nếu chọn "Xuất File PDF", tại hộp thoại in của trình duyệt, hãy chọn "Lưu dưới dạng PDF" (Save as PDF) tại ô Máy in đích để tải file về máy.',
-   modalBtnCancel:'Hủy Bỏ',
+   modalBtnCancel:'Hủy Bỏ', modalBtnView:'Xem Bản A4',
    modalBtnPrint:'In Báo Cáo',
    modalBtnPdf:'Xuất File PDF',
    eyebrow:'HFS VINA · Innovation Team – Project Assembly System', h1:' · Trạm lắp ráp chiếu sáng có AI kiểm soát',
@@ -786,7 +787,7 @@ const L10N={
    modalTitle:'인쇄 또는 PDF 보고서 출력 선택',
    modalPrompt:'A4 기술 보고서를 종이로 인쇄하시겠습니까, 아니면 PDF 파일로 저장하시겠습니까?',
    modalTip:'💡 안내: "PDF 파일 저장" 선택 시 브라우저 인쇄 창의 "대상"(대상 프린터)에서 "PDF로 저장" (Save as PDF)을 선택한 후 저장하세요.',
-   modalBtnCancel:'취소',
+   modalBtnCancel:'취소', modalBtnView:'A4 보고서 열기',
    modalBtnPrint:'보고서 인쇄',
    modalBtnPdf:'PDF 파일 저장',
    eyebrow:'HFS VINA · Innovation Team – Project Assembly System', h1:' · AI 감시형 프로젝션 조립 스테이션',
@@ -1939,7 +1940,9 @@ window.closeExportModal = function() {
 };
 window.doActionPrint = function(actionType) {
   window.closeExportModal();
-  setTimeout(() => window.print(), 120);
+  const lang = (typeof LANG !== 'undefined' ? LANG : 'vi');
+  const targetUrl = 'pas_report.html?action=' + actionType + '&lang=' + lang;
+  window.open(targetUrl, '_blank');
 };
 window.__pas={sim,jump,camera,controls,flyTo,VIEWS,setLang,getLang:()=>LANG};
 })();
