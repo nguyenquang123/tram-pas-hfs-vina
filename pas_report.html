@@ -88,18 +88,20 @@ body {
   font-weight: 700;
 }
 
+
 /* KHỔ GIẤY A4 TRÊN MÀN HÌNH */
 .paper-sheet {
   width: 210mm;
   min-height: 297mm;
   margin: 16px auto 30px;
   background: #ffffff;
-  padding: 12mm 14mm 10mm;
+  padding: 11mm 13mm 10mm;
   box-shadow: 0 4px 20px rgba(0,0,0,0.12);
   border-radius: 2px;
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   box-sizing: border-box;
 }
 
@@ -110,7 +112,7 @@ body {
   align-items: flex-start;
   border-bottom: 2.5px solid var(--accent);
   padding-bottom: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .brand-title {
   font-family: var(--f-display);
@@ -123,7 +125,9 @@ body {
   font-size: 8.5pt;
   font-weight: 600;
   color: #475569;
-  margin-top: 2px;
+  margin-top: 3px;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
 }
 .meta-table {
   font-size: 8.5pt;
@@ -146,24 +150,23 @@ body {
 }
 .report-title {
   font-family: var(--f-display);
-  font-size: 14pt;
+  font-size: 13.5pt;
   font-weight: 700;
   color: #0f172a;
   text-transform: uppercase;
   letter-spacing: 0.01em;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 .report-desc {
-  font-size: 8.8pt;
+  font-size: 8.6pt;
   color: #334155;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 .report-grid {
-  flex: 1 1 auto;
   display: grid;
-  grid-template-columns: 44% 56%;
-  gap: 12px;
+  grid-template-columns: 1fr 1.32fr;
+  gap: 16px;
   margin-bottom: 10px;
 }
 .img-card {
@@ -176,7 +179,7 @@ body {
 }
 .img-card img {
   max-width: 100%;
-  max-height: 190px;
+  max-height: 230px;
   object-fit: contain;
   display: block;
   margin: 0 auto;
@@ -198,13 +201,13 @@ body {
 .specs-card ul {
   margin: 0;
   padding-left: 14px;
-  font-size: 8pt;
-  line-height: 1.38;
+  font-size: 8.5pt;
+  line-height: 1.5;
 }
-.specs-card li { margin-bottom: 2px; }
+.specs-card li { margin-bottom: 4px; }
 
 .section-block {
-  margin-bottom: 7px;
+  margin-bottom: 12px;
 }
 .section-block h3 {
   font-size: 9.5pt;
@@ -215,66 +218,104 @@ body {
   padding-bottom: 2px;
 }
 .section-block p {
-  font-size: 8.2pt;
-  line-height: 1.4;
+  font-size: 8.6pt;
+  line-height: 1.5;
   color: #1e293b;
 }
 .section-block ul, .section-block ol {
-  margin: 2px 0 0;
+  margin: 3px 0 0;
   padding-left: 14px;
-  font-size: 8.2pt;
-  line-height: 1.38;
+  font-size: 8.6pt;
+  line-height: 1.5;
 }
-.section-block li { margin-bottom: 2px; }
+.section-block li { margin-bottom: 4px; }
 
 .report-footer {
   display: flex;
   justify-content: space-around;
-  margin-top: 14px;
-  padding-top: 8px;
-  border-top: 1px solid #cbd5e1;
+  margin-top: 28px;
+  padding-top: 10px;
+  border-top: 1.5px solid #cbd5e1;
 }
 .sign-box {
   text-align: center;
   font-size: 8.5pt;
 }
 .sign-box span { display: block; color: #64748b; font-size: 8pt; }
-.sign-box b { display: block; font-size: 10pt; color: #0f172a; margin: 4px 0 2px; }
+.sign-box b { display: block; font-size: 10pt; color: #0f172a; margin: 3px 0 1px; }
 .sign-box small { display: block; color: #64748b; font-size: 7.5pt; }
 
-/* ĐỊNH DẠNG IN / XUẤT PDF CHUẨN A4 */
+/* ĐỊNH DẠNG IN / XUẤT PDF CHUẨN A4 - ĐẢM BẢO CHÍNH XÁC 1 TRANG */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 8mm 10mm;
+    margin: 8mm 11mm;
   }
   html, body {
     background: #ffffff !important;
     color: #000000 !important;
     margin: 0 !important;
     padding: 0 !important;
-    font-size: 10pt;
     width: 100% !important;
+    height: auto !important;
   }
   .action-bar {
     display: none !important;
   }
   .paper-sheet {
+    display: block !important;
     width: 100% !important;
+    min-height: 0 !important;
     height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
     box-shadow: none !important;
     border: none !important;
   }
+  .report-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1.32fr !important;
+    gap: 14px !important;
+  }
   .img-card img {
+    max-height: 220px !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-  .report-footer {
-    page-break-inside: avoid;
-    break-inside: avoid;
+  .specs-card ul {
+    font-size: 8.2pt !important;
+    line-height: 1.45 !important;
   }
+  .specs-card li { margin-bottom: 3px !important; }
+  .section-block {
+    margin-bottom: 10px !important;
+  }
+  .section-block p, .section-block ul, .section-block ol {
+    font-size: 8.3pt !important;
+    line-height: 1.45 !important;
+  }
+  .section-block li { margin-bottom: 3px !important; }
+  .report-footer {
+    margin-top: 24px !important;
+    padding-top: 8px !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}
+  .img-card img {
+  max-width: 100%;
+  max-height: 230px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+  .report-footer {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 28px;
+  padding-top: 10px;
+  border-top: 1.5px solid #cbd5e1;
+}
 }
 </style>
 </head>
@@ -493,31 +534,33 @@ function setReportLang(lang) {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
-  document.getElementById('btnBackText').textContent = d.btnBack;
-  document.getElementById('btnPrintText').textContent = d.btnPrint;
-  document.getElementById('btnPdfText').textContent = d.btnPdf;
-  document.getElementById('tipText').innerHTML = d.tip;
-  document.getElementById('tBrandTitle').textContent = d.brandTitle;
-  document.getElementById('tBrandSub').textContent = d.brandSub;
-  document.getElementById('tLblDwg').textContent = d.lblDwg;
-  document.getElementById('tLblRev').textContent = d.lblRev;
-  document.getElementById('tLblDate').textContent = d.lblDate;
-  document.getElementById('tLblRef').textContent = d.lblRef;
-  document.getElementById('tValRef').textContent = d.valRef;
-  document.getElementById('tReportTitle').textContent = d.reportTitle;
-  document.getElementById('tReportDesc').textContent = d.reportDesc;
-  document.getElementById('tSpecsHeader').textContent = d.specsHeader;
-  document.getElementById('tSpecsList').innerHTML = d.specsList.map(li => `<li>${li}</li>`).join('');
-  document.getElementById('tSec1Header').textContent = d.sec1Header;
-  document.getElementById('tSec1Desc').innerHTML = d.sec1Desc;
-  document.getElementById('tSec2Header').textContent = d.sec2Header;
-  document.getElementById('tSec2List').innerHTML = d.sec2List.map(li => `<li>${li}</li>`).join('');
-  document.getElementById('tSec3Header').textContent = d.sec3Header;
-  document.getElementById('tSec3List').innerHTML = d.sec3List.map(li => `<li>${li}</li>`).join('');
-  document.getElementById('tLblSignAuthor').textContent = d.lblSignAuthor;
-  document.getElementById('tValSignRole').textContent = d.valSignRole;
-  document.getElementById('tLblSignDept').textContent = d.lblSignDept;
-  document.getElementById('tValSignDept').textContent = d.valSignDept;
+  const setTxt = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+  const setHtml = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+
+  setTxt('btnBackText', d.btnBack);
+  setTxt('btnPrintText', d.btnPrint);
+  setHtml('tipText', d.tip);
+  setTxt('tBrandTitle', d.brandTitle);
+  setHtml('tBrandSub', d.brandSub);
+  setTxt('tLblDwg', d.lblDwg);
+  setTxt('tLblRev', d.lblRev);
+  setTxt('tLblDate', d.lblDate);
+  setTxt('tLblRef', d.lblRef);
+  setTxt('tValRef', d.valRef);
+  setTxt('tReportTitle', d.reportTitle);
+  setTxt('tReportDesc', d.reportDesc);
+  setTxt('tSpecsHeader', d.specsHeader);
+  if (d.specsList) setHtml('tSpecsList', d.specsList.map(li => `<li>${li}</li>`).join(''));
+  setTxt('tSec1Header', d.sec1Header);
+  setHtml('tSec1Desc', d.sec1Desc);
+  setTxt('tSec2Header', d.sec2Header);
+  if (d.sec2List) setHtml('tSec2List', d.sec2List.map(li => `<li>${li}</li>`).join(''));
+  setTxt('tSec3Header', d.sec3Header);
+  if (d.sec3List) setHtml('tSec3List', d.sec3List.map(li => `<li>${li}</li>`).join(''));
+  setTxt('tLblSignAuthor', d.lblSignAuthor);
+  setTxt('tValSignRole', d.valSignRole);
+  setTxt('tLblSignDept', d.lblSignDept);
+  setTxt('tValSignDept', d.valSignDept);
 }
 
 // Kiểm tra tham số URL (?lang=ko, ?action=print)
